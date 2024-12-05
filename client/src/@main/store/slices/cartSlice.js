@@ -1,12 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getCart, addProductToCart, deleteProductFromCart, deleteCart } from '../actions/cartActions';
+import { createSlice } from "@reduxjs/toolkit";
+
+import { addProductToCart, deleteCart, deleteProductFromCart, getCart } from "../actions/cartActions";
 
 const initialState = {
 	data: [],
 };
 
 export const cartSlice = createSlice({
-	name: 'cart',
+	name: "cart",
 	initialState,
 	reducers: {
 		clearUnauthCart(state) {
@@ -14,7 +15,7 @@ export const cartSlice = createSlice({
 		},
 	},
 
-	extraReducers: (builder) => {
+	extraReducers: builder => {
 		builder.addCase(getCart.fulfilled, (state, action) => {
 			state.data = action.payload?.products || [];
 		});

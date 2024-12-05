@@ -1,5 +1,5 @@
-import { styled } from '@mui/material';
-import { Container } from '@mui/material';
+import { styled } from "@mui/material";
+import { Container } from "@mui/material";
 
 export const ContentWrapper = styled(Container)`
 	display: flex;

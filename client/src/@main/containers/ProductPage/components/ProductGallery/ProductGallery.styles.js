@@ -1,9 +1,10 @@
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import CloseIcon from '@mui/icons-material/Close';
+import { styled } from "@mui/material/styles";
 
-export const StyledBigImage = styled('img')`
+import CloseIcon from "@mui/icons-material/Close";
+import { Box } from "@mui/material";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+export const StyledBigImage = styled("img")`
 	width: 100%;
 	height: 100%;
 	grid-column-start: 0;
@@ -12,7 +13,7 @@ export const StyledBigImage = styled('img')`
 	cursor: zoom-in;
 `;
 
-export const StyledSmallImage = styled('img')`
+export const StyledSmallImage = styled("img")`
 	width: 100%;
 	height: 100%;
 	grid-column-start: 0;
@@ -46,7 +47,7 @@ export const StyledSwiperSlide = styled(SwiperSlide)`
 	max-height: 460px;
 `;
 
-export const StyledMobileImage = styled('img')`
+export const StyledMobileImage = styled("img")`
 	width: 100%;
 	height: 100%;
 	min-width: 183px;
@@ -54,7 +55,7 @@ export const StyledMobileImage = styled('img')`
 	min-height: 294px;
 	object-fit: cover;
 
-	${(props) => props.theme.breakpoints.up('sm')} {
+	${props => props.theme.breakpoints.up("sm")} {
 		max-height: 603px;
 		max-width: 400px;
 	}
@@ -103,7 +104,7 @@ export const StyledCloseIcon = styled(CloseIcon)`
 	}
 `;
 
-export const StyledOverlayImage = styled('img')`
+export const StyledOverlayImage = styled("img")`
 	width: 100%;
 	height: 100%;
 	min-width: 183px;
@@ -111,7 +112,7 @@ export const StyledOverlayImage = styled('img')`
 	min-height: 294px;
 	object-fit: cover;
 
-	${(props) => props.theme.breakpoints.up('sm')} {
+	${props => props.theme.breakpoints.up("sm")} {
 		max-height: 630px;
 		max-width: 500px;
 	}

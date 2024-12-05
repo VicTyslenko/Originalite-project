@@ -1,14 +1,15 @@
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
+
 import {
-	ContainerWrapper,
 	CategoryH1,
 	CategoryLink,
-	ImageText,
+	ContainerWrapper,
 	FlexContainer,
 	GridItem,
+	ImageText,
 	ImageWrap,
-} from './Categories.styles.js';
-import { itemData } from './data.js';
+} from "./Categories.styles.js";
+import { itemData } from "./data.js";
 
 // function srcset(image) {
 // 	return {
@@ -23,7 +24,7 @@ function Categories() {
 			<Container maxWidth="lg">
 				<CategoryH1>Shop by Category</CategoryH1>
 				<FlexContainer>
-					{itemData.map((item) => (
+					{itemData.map(item => (
 						<GridItem key={item.img} flex={item.fullWidth}>
 							<CategoryLink to={item.path} area={item.area}>
 								<img src={item.img} alt={item.title} loading="lazy" />

@@ -1,15 +1,16 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
-import Profile from "../containers/Profile/";
+import MyAccount from "../MyAccount/MyAccount";
+import TabAddressBook from "../MyAccount/TabAddressBook";
+import TabPurchase from "../MyAccount/TabPurchase";
+import TabWishList from "../MyAccount/TabWishList";
 import AddressBook from "../containers/AddressBook/";
+import AddressDetails from "../containers/AdressDetails/AddressDetails";
 import MyProfile from "../containers/MyProfile/";
-import Wishlist from "../containers/Wishlist/";
+import Profile from "../containers/Profile/";
 import PurchaseHistory from "../containers/PurchaseHistory/";
-import MyAccount from '../MyAccount/MyAccount';
-import TabPurchase from '../MyAccount/TabPurchase';
-import TabWishList from '../MyAccount/TabWishList';
-import TabAddressBook from '../MyAccount/TabAddressBook';
-import AddressDetails from '../containers/AdressDetails/AddressDetails';
+import Wishlist from "../containers/Wishlist/";
+
 function ProfileRoutes() {
 	return (
 		<Routes>
@@ -23,7 +24,6 @@ function ProfileRoutes() {
 			<Route path="/profile/tab-address" element={<TabAddressBook />} />
 			<Route path="/profile/myAccount" element={<MyAccount />} />
 			<Route path="/profile/address-details" element={<AddressDetails />} />
-		
 		</Routes>
 	);
 }

@@ -1,1 +1,1 @@
-export const addressSelector = (state) => state.address.data;
+export const addressSelector = state => state.address.data;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { Container } from '@mui/system';
-import { validationSchema } from './validation';
+// import { validationSchema } from './validation';
 import { InputItem, InputsWrapp, ButtonBlock, StyledButton } from './StyledLandingPageLogin';
 
 function LandingLoginPage() {

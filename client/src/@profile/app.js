@@ -1,4 +1,5 @@
-import {Fragment} from 'react'
+import { Fragment } from "react";
+
 import ProfileRoutes from "./router";
 
 function Profile() {

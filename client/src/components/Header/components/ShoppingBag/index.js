@@ -1,1 +1,1 @@
-export { default } from './ShoppingBag';
+export { default } from "./ShoppingBag";

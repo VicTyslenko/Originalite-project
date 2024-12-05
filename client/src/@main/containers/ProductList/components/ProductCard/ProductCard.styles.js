@@ -1,5 +1,6 @@
-import { Box, Typography, CardContent } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+
+import { Box, CardContent, Typography } from "@mui/material";
 
 export const ProductHeader = styled(Box)`
 	display: flex;
@@ -13,10 +14,10 @@ export const StyledTitle = styled(Typography)`
 	text-overflow: ellipsis;
 	overflow: hidden;
 
-	${(props) => props.theme.breakpoints.down('md')} {
+	${props => props.theme.breakpoints.down("md")} {
 		height: 44px;
 	}
-	${(props) => props.theme.breakpoints.down('sm')} {
+	${props => props.theme.breakpoints.down("sm")} {
 		height: 32px;
 	}
 `;
@@ -25,14 +26,14 @@ export const StyledCardContent = styled(CardContent)`
 	height: 125px;
 	box-sizing: border-box;
 	display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
 
-	${(props) => props.theme.breakpoints.down('md')} {
+	${props => props.theme.breakpoints.down("md")} {
 		height: 104px;
 	}
-	${(props) => props.theme.breakpoints.down('sm')} {
+	${props => props.theme.breakpoints.down("sm")} {
 		height: 73px;
 	}
 `;

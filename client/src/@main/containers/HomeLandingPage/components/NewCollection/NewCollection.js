@@ -1,6 +1,7 @@
-import { ContainerWrapper, NewInH1, NewInLink, ImageText, GridContainer, GridItem } from './NewCollection.styles';
-import { itemData } from './data.ts';
-import { Container } from '@mui/material';
+import { Container } from "@mui/material";
+
+import { ContainerWrapper, GridContainer, GridItem, ImageText, NewInH1, NewInLink } from "./NewCollection.styles";
+import { itemData } from "./data.ts";
 
 function srcset(image, size, rows = 1, cols = 1) {
 	return {
@@ -16,7 +17,7 @@ function NewCollection() {
 			<Container maxWidth="lg">
 				<NewInH1>New</NewInH1>
 				<GridContainer>
-					{itemData.map((item) => (
+					{itemData.map(item => (
 						<GridItem key={item.img} area={item.area}>
 							<NewInLink to={item.path}>
 								<img {...srcset(item.img, 121, item.rows, item.cols)} alt={item.title} loading="lazy" />

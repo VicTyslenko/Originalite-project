@@ -1,20 +1,20 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from "react-router-dom";
 
-import ProductList from '../containers/ProductList';
-import ProductPage from '../containers/ProductPage';
-import HomeLandingPage from '../containers/HomeLandingPage';
-import ShoppingCart from '../containers/ShoppingCart';
-import RegisterForm from '../containers/LoginForm/RegisterForm';
-import LandingPageLogin from '../containers/LandingPageLogin/LandingPageLogin';
-import PaymentPage from '../containers/ShoppingCart/PaymentPage/PaymentPage';
-import ContactLandingPage from '../containers/ContactLandingPage';
-import HistoryBrandLandingPage from '../containers/HistoryBrandLandingPage';
-import PaymentLandingPage from '../containers/PaymentLandingPage';
-import PolicyLandingPage from '../containers/PolicyLandingPage';
-import QuestionsLandingPage from '../containers/QuestionsLandingPage';
-import WorkUsLandingPage from '../containers/WorkUsLandingPage';
-import EmptyCart from '../containers/ShoppingCart/EmptyCart/EmptyCart';
-import SearchResultPage from '../containers/SearchResultPage';
+import ContactLandingPage from "../containers/ContactLandingPage";
+import HistoryBrandLandingPage from "../containers/HistoryBrandLandingPage";
+import HomeLandingPage from "../containers/HomeLandingPage";
+import LandingPageLogin from "../containers/LandingPageLogin/LandingPageLogin";
+import RegisterForm from "../containers/LoginForm/RegisterForm";
+import PaymentLandingPage from "../containers/PaymentLandingPage";
+import PolicyLandingPage from "../containers/PolicyLandingPage";
+import ProductList from "../containers/ProductList";
+import ProductPage from "../containers/ProductPage";
+import QuestionsLandingPage from "../containers/QuestionsLandingPage";
+import SearchResultPage from "../containers/SearchResultPage";
+import ShoppingCart from "../containers/ShoppingCart";
+import EmptyCart from "../containers/ShoppingCart/EmptyCart/EmptyCart";
+import PaymentPage from "../containers/ShoppingCart/PaymentPage/PaymentPage";
+import WorkUsLandingPage from "../containers/WorkUsLandingPage";
 
 function MainRoutes() {
 	return (

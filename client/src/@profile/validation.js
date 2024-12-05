@@ -13,5 +13,5 @@
 //     mobile: yup.number().required('Phone number is required').
 //     min(5,'number is too short')
 //     // max(9,'number is too long')
-    
+
 // });

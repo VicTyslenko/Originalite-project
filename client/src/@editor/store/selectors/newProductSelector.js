@@ -1,1 +1,1 @@
-export const productDataSelector = (state) => state.newProduct.data;
+export const productDataSelector = state => state.newProduct.data;

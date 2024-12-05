@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const ContainerWrapper = styled.div`
 	background-color: #000;
@@ -40,8 +40,7 @@ export const FlexContainer = styled.div`
 `;
 export const GridItem = styled.div`
 	position: relative;
-w
-	img {
+	w img {
 		width: 100%;
 	}
 `;

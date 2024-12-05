@@ -1,9 +1,10 @@
-import React from 'react';
-import { Typography, Card, CardActionArea, CardMedia } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Card, CardActionArea, CardMedia, Typography } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+
+import PropTypes from "prop-types";
 
 import { StyledCardContent, StyledTitle } from "./ProductMore.styles";
-import { useNavigate } from 'react-router-dom';
 
 function ProductMoreCard({ url, title, price, id, itemNo }) {
 	const navigate = useNavigate();
@@ -27,7 +28,7 @@ function ProductMoreCard({ url, title, price, id, itemNo }) {
 			</CardActionArea>
 		</Card>
 	);
-};
+}
 
 ProductMoreCard.propTypes = {
 	title: PropTypes.string,

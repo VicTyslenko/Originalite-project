@@ -1,1 +1,1 @@
-export const selectColors = (state) => state.colors.data;
+export const selectColors = state => state.colors.data;

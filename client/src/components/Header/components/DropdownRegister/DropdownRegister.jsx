@@ -1,19 +1,20 @@
+import { Button, Container } from "@mui/material";
+import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+
+import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
+import { errorDataAuth } from "../../../../@main/store/selectors/authSelector";
 import {
-	WrappAnimate,
 	BoxWrapp,
-	Header,
-	InputItem,
 	ButtonBlock,
 	FormPages,
-	LinkItem,
+	Header,
+	InputItem,
 	InputsWrapp,
-} from './StyledDropdownRegister';
-import { validationSchema } from './validation';
-import { Container, Button } from '@mui/material';
-import { Formik } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import { actionFetchAuth } from '../../../../@main/store/actions/authActions';
-import { errorDataAuth } from '../../../../@main/store/selectors/authSelector';
+	LinkItem,
+	WrappAnimate,
+} from "./StyledDropdownRegister";
+import { validationSchema } from "./validation";
 
 function DropdownRegister({ active, closeFormPages }) {
 	const dispatch = useDispatch();
@@ -28,15 +29,15 @@ function DropdownRegister({ active, closeFormPages }) {
 					</Header>
 					<Formik
 						initialValues={{
-							loginOrEmail: '',
-							password: '',
+							loginOrEmail: "",
+							password: "",
 						}}
 						validationSchema={validationSchema}
-						onSubmit={async (values) => {
-							const data = await dispatch(actionFetchAuth(values));
+						onSubmit={async values => {
+							await dispatch(actionFetchAuth(values));
 						}}
 					>
-						{(props) => (
+						{props => (
 							<form onSubmit={props.handleSubmit}>
 								<InputsWrapp>
 									<InputItem

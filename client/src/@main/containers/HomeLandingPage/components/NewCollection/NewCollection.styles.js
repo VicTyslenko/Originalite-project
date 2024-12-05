@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const ContainerWrapper = styled.div`
 	background-color: #000;
@@ -34,18 +34,18 @@ export const GridContainer = styled.div`
 	display: grid;
 
 	grid-template-areas:
-		'a a b'
-		'a a b'
-		'a a c';
+		"a a b"
+		"a a b"
+		"a a c";
 
 	grid-column-gap: 24px;
 	grid-row-gap: 24px;
 `;
 export const GridItem = styled.div`
 	position: relative;
-	grid-column: ${(props) => `span ${props.column}`};
-	grid-row: ${(props) => `span ${props.row}`};
-	grid-area: ${(props) => props.area};
+	grid-column: ${props => `span ${props.column}`};
+	grid-row: ${props => `span ${props.row}`};
+	grid-area: ${props => props.area};
 
 	img {
 		height: 100%;

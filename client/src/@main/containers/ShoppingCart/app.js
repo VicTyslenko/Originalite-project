@@ -1,14 +1,12 @@
-import {lazy} from 'react'
+import { lazy } from "react";
 
-const ShoppingCart = lazy(() => import(
-
-	/* webpackChunkName: "ShoppingCart/app" */
-	"./ShoppingCart"
-	));
-
+const ShoppingCart = lazy(() =>
+	import(
+		/* webpackChunkName: "ShoppingCart/app" */
+		"./ShoppingCart"
+	),
+);
 
 export default function () {
-	return (
-		<ShoppingCart />
-	);
-};
+	return <ShoppingCart />;
+}

@@ -1,13 +1,13 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import {
 	getCart as fetchCart,
-	addProductToCart as fetchProductToCart,
-	deleteProductFromCart as fetchProductFromCart,
 	deleteCart as fetchDeleteCart,
-} from '../../../services/api/cartApi';
+	deleteProductFromCart as fetchProductFromCart,
+	addProductToCart as fetchProductToCart,
+} from "../../../services/api/cartApi";
 
-export const getCart = createAsyncThunk('cart/getCart', async (_, { getState }) => {
+export const getCart = createAsyncThunk("cart/getCart", async (_, { getState }) => {
 	const { auth } = getState();
 
 	const { data } = await fetchCart({
@@ -18,7 +18,7 @@ export const getCart = createAsyncThunk('cart/getCart', async (_, { getState }) 
 	return data;
 });
 
-export const addProductToCart = createAsyncThunk('cart/addProductToCart', async (id, { getState }) => {
+export const addProductToCart = createAsyncThunk("cart/addProductToCart", async (id, { getState }) => {
 	const { auth, product, cart } = getState();
 
 	if (auth.data !== null) {
@@ -51,7 +51,7 @@ export const addProductToCart = createAsyncThunk('cart/addProductToCart', async 
 	}
 });
 
-export const deleteProductFromCart = createAsyncThunk('cart/deleteProductFromCart', async (id, { getState }) => {
+export const deleteProductFromCart = createAsyncThunk("cart/deleteProductFromCart", async (id, { getState }) => {
 	const { auth, cart } = getState();
 
 	if (auth.data !== null) {
@@ -68,7 +68,7 @@ export const deleteProductFromCart = createAsyncThunk('cart/deleteProductFromCar
 		return { products };
 	}
 });
-export const deleteCart = createAsyncThunk('cart/deleteCart', async (user, { getState }) => {
+export const deleteCart = createAsyncThunk("cart/deleteCart", async (user, { getState }) => {
 	const { auth, cart } = getState();
 
 	if (auth.data !== null) {

@@ -1,4 +1,4 @@
-import AdminDashboard from './containers/AdminDashboard';
+import AdminDashboard from "./containers/AdminDashboard";
 
 function Editor() {
 	return <AdminDashboard />;

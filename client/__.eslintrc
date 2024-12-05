@@ -3,8 +3,9 @@
 		"browser": true,
 		"es2021": true
 	},
-	"extends": ["airbnb", "prettier", "plugin:react/recommended", "plugin:react/jsx-runtime"],
-	"overrides": [
+	"extends": ["airbnb", "prettier", "plugin:react/recommended", "plugin:react/jsx-runtime","plugin:prettier/recommended"],
+  
+	    "overrides": [
 		{
 			"files": ["**/*.spec.js", "**/*.spec.jsx", "**/*.test.js", "**/*.test.jsx"],
 			"env": {

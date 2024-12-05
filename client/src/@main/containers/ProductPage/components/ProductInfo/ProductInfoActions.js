@@ -1,20 +1,20 @@
-import React, { useCallback, useState } from 'react';
-import { Button, IconButton, Tooltip } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProductToCart, deleteProductFromCart } from '../../../../store/actions/cartActions';
-import { addProductToWishlist, deleteProductFromWishlist } from '../../../../store/actions/wishlistActions';
-import { selectCurrentColor, selectCurrentSize } from '../../../../store/selectors/productSelector';
-import { isAuthSelector } from '../../../../store/selectors/authSelector';
-import { selectIsCart } from '../../../../store/selectors/cartSelector';
-import { selectIsWishlist } from '../../../../store/selectors/wishSelector';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Button, IconButton, Tooltip } from "@mui/material";
+import React, { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { ActionsWrapper, StyledButton } from './ProductInfo.styles';
+import { addProductToCart, deleteProductFromCart } from "../../../../store/actions/cartActions";
+import { addProductToWishlist, deleteProductFromWishlist } from "../../../../store/actions/wishlistActions";
+import { isAuthSelector } from "../../../../store/selectors/authSelector";
+import { selectIsCart } from "../../../../store/selectors/cartSelector";
+import { selectCurrentColor, selectCurrentSize } from "../../../../store/selectors/productSelector";
+import { selectIsWishlist } from "../../../../store/selectors/wishSelector";
+import { ActionsWrapper, StyledButton } from "./ProductInfo.styles";
 
 function ProductInfoActions({ id }) {
 	const dispatch = useDispatch();
-	const isCart = useSelector((state) => selectIsCart(state, id));
-	const isWishlist = useSelector((state) => selectIsWishlist(state, id));
+	const isCart = useSelector(state => selectIsCart(state, id));
+	const isWishlist = useSelector(state => selectIsWishlist(state, id));
 	const isAuth = useSelector(isAuthSelector);
 
 	const currentSize = useSelector(selectCurrentSize);
@@ -64,12 +64,12 @@ function ProductInfoActions({ id }) {
 						onClick={handleClickCart}
 						disabled={(!currentSize || !currentColor) && !isCart}
 					>
-						{isCart ? 'Delete' : 'Add to cart'}
+						{isCart ? "Delete" : "Add to cart"}
 					</StyledButton>
 				</span>
 			</Tooltip>
 			{isAuth && (
-				<IconButton onClick={handleClickWishlist} sx={{ color: isWishlist ? '#E01515' : '#fff' }}>
+				<IconButton onClick={handleClickWishlist} sx={{ color: isWishlist ? "#E01515" : "#fff" }}>
 					<FavoriteBorderIcon />
 				</IconButton>
 			)}

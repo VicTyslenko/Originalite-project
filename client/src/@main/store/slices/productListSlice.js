@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { getProductList } from '../actions/productListActions';
+import { getProductList } from "../actions/productListActions";
 
 const initialState = {
 	data: [],
@@ -8,17 +8,17 @@ const initialState = {
 };
 
 export const productListSlice = createSlice({
-	name: 'productList',
+	name: "productList",
 	initialState,
 	reducers: {},
-	extraReducers: (builder) => {
+	extraReducers: builder => {
 		builder.addCase(getProductList.fulfilled, (state, action) => {
 			const { products, productsQuantity } = action.payload;
 
 			state.data = products;
 			state.count = productsQuantity;
-		})
-	}
+		});
+	},
 });
 
 export default productListSlice.reducer;

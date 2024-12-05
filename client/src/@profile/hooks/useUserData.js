@@ -1,8 +1,8 @@
-import jwt_decode from 'jwt-decode';
+import jwt_decode from "jwt-decode";
+import { useSelector } from "react-redux";
 
-import { tokenDataSelector } from '../../@main/store/selectors/registrationSelector';
-import { profileUserSelector } from '../../@main/store/selectors/profileUserSelector';
-import { useSelector } from 'react-redux';
+import { profileUserSelector } from "../../@main/store/selectors/profileUserSelector";
+import { tokenDataSelector } from "../../@main/store/selectors/registrationSelector";
 
 export const useUserData = () => {
 	const register = useSelector(tokenDataSelector);

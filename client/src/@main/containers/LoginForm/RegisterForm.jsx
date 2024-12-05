@@ -1,32 +1,34 @@
-import { useState } from 'react';
-import { TabList, TabPanel, TabContext } from '@mui/lab';
-import { Tab, Checkbox } from '@mui/material';
-import { validationRegisterSchema } from './validation';
-import { Formik, Form } from 'formik';
-import { Container } from '@mui/system';
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Checkbox, Tab } from "@mui/material";
+import { Container } from "@mui/system";
+import { Form, Formik } from "formik";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { registerFetchData } from "../../store/actions/registrationActions";
+import { errorDataRegister } from "../../store/selectors/registrationSelector";
 import {
-	ContainerWrapper,
-	HeadWrapp,
-	Description,
-	InputsWrapp,
-	CheckBoxWrapp,
-	StyledButton,
 	ButtonWrapp,
+	ButtonWrappReg,
+	CheckBoxWrapp,
+	ContainerWrapper,
+	CssTextField,
+	Description,
+	HeadWrapp,
+	InputsWrapp,
+	InputsWrappReg,
 	LoginWrapper,
 	LoginWrapperReg,
-	ButtonWrappReg,
+	StyledButton,
 	StyledButtonReg,
-	InputsWrappReg,
-	CssTextField,
-} from './StyledRegisterForm';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerFetchData } from '../../store/actions/registrationActions';
-import { errorDataRegister } from '../../store/selectors/registrationSelector';
+} from "./StyledRegisterForm";
+import { validationRegisterSchema } from "./validation";
+
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 
 	const error = useSelector(errorDataRegister);
-	const [value, setValue] = useState('1');
+	const [value, setValue] = useState("1");
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -37,9 +39,9 @@ const RegisterForm = () => {
 			<Container
 				maxWidth="lg"
 				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
+					display: "flex",
+					flexDirection: "column",
+					alignItems: "center",
 				}}
 			>
 				<TabContext value={value}>
@@ -52,8 +54,8 @@ const RegisterForm = () => {
 					<TabPanel value="1">
 						<Formik
 							initialValues={{
-								email: '',
-								password: '',
+								email: "",
+								password: "",
 							}}
 						>
 							<LoginWrapper>
@@ -66,8 +68,8 @@ const RegisterForm = () => {
 									<CheckBoxWrapp>
 										<Checkbox
 											sx={{
-												'& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)': {
-													color: 'white',
+												"& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)": {
+													color: "white",
 												},
 											}}
 										/>
@@ -85,19 +87,19 @@ const RegisterForm = () => {
 					<TabPanel value="2">
 						<Formik
 							initialValues={{
-								firstName: '',
-								lastName: '',
-								login: '',
-								email: '',
-								password: '',
-								confirmPassword: '',
+								firstName: "",
+								lastName: "",
+								login: "",
+								email: "",
+								password: "",
+								confirmPassword: "",
 							}}
 							validationSchema={validationRegisterSchema}
-							onSubmit={async (values) => {
+							onSubmit={async values => {
 								const data = await dispatch(registerFetchData(values));
 							}}
 						>
-							{(props) => (
+							{props => (
 								<LoginWrapperReg>
 									<form onSubmit={props.handleSubmit}>
 										<InputsWrappReg>
