@@ -20,15 +20,16 @@
   ],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "requireConfigFile": false, // Позволяет использовать Babel без отдельного конфигурационного файла
+    "requireConfigFile": false,
     "ecmaVersion": 2021,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true // Если вы используете React
+      "jsx": true
     }
   },
   "plugins": ["react", "prettier", "unused-imports"],
   "rules": {
+    "padding-line-between-statements": ["warn", { "blankLine": "always", "prev": "function", "next": "*" }],
     "import/no-unresolved": "error",
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": 0,

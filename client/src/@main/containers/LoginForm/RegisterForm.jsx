@@ -61,9 +61,10 @@ const RegisterForm = () => {
 								password: "",
 								confirmPassword: "",
 							}}
-							validationSchema={validationRegisterSchema}
+							// validationSchema={validationRegisterSchema}
 							onSubmit={async values => {
 								const data = await dispatch(registerFetchData(values));
+								console.log(values);
 							}}
 						>
 							{props => (
