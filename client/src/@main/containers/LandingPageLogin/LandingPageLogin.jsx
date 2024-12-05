@@ -23,18 +23,8 @@ function LandingLoginPage() {
 			>
 				<Form>
 					<InputsWrapp>
-						<InputItem
-							variant="standard"
-							id="demo-helper-text-misaligned-no-helper"
-							label="E-mail"
-							type="string"
-						/>
-						<InputItem
-							variant="standard"
-							id="demo-helper-text-misaligned-no-helper"
-							label="Password"
-							type="password"
-						/>
+						<InputItem variant="standard" id="demo-helper-text-misaligned-no-helper" label="E-mail" type="string" />
+						<InputItem variant="standard" id="demo-helper-text-misaligned-no-helper" label="Password" type="password" />
 					</InputsWrapp>
 					<ButtonBlock>
 						<StyledButton>Log in</StyledButton>
