@@ -1,7 +1,6 @@
-import styled from 'styled-components';
-import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
-// eslint-disable-next-line import/prefer-default-export
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const ShoppingCartWrapp = styled.div`
 	display: flex;
@@ -18,7 +17,7 @@ export const StyledLink = styled(Link)`
 	color: white;
 	text-transform: uppercase;
 	text-decoration: none;
-	padding:1rem 0 1rem 0 ;
+	padding: 1rem 0 1rem 0;
 `;
 
 export const RemoveButton = styled(Button)`
@@ -28,7 +27,7 @@ export const RemoveButton = styled(Button)`
 		font-weight: 600;
 		font-size: 14px;
 		line-height: 19px;
-		font-family: 'Open Sans';
+		font-family: "Open Sans";
 	}
 `;
 
@@ -62,14 +61,14 @@ export const RightSideWrapp = styled.div`
 		font-weight: 700;
 		font-size: 16px;
 		line-height: 16px;
-		font-family: 'Josefin Sans';
+		font-family: "Josefin Sans";
 		text-transform: uppercase;
 	}
 	& .discount {
 		font-weight: 400;
 		font-size: 12px;
 		line-height: 16px;
-		font-family: 'Open Sans';
+		font-family: "Open Sans";
 		text-transform: uppercase;
 		margin: 0;
 	}
@@ -84,7 +83,7 @@ export const RightSideWrapp = styled.div`
 		font-weight: 400;
 		font-size: 14px;
 		line-height: 14px;
-		font-family: 'Josefin Sans';
+		font-family: "Josefin Sans";
 		text-transform: uppercase;
 		margin-bottom: 30px;
 	}
@@ -101,7 +100,7 @@ export const RightSideWrapp = styled.div`
 		font-size: 14px;
 		line-height: 14px;
 		text-transform: uppercase;
-		font-family: 'Josefin Sans';
+		font-family: "Josefin Sans";
 		margin-bottom: 130px;
 		margin-top: 3rem;
 	}
@@ -116,13 +115,12 @@ export const Content = styled.div`
 	padding: 0 0 2rem 0;
 	& .btn-wrapp {
 		display: flex;
-		gap:2rem;
-
+		gap: 2rem;
 	}
 	& .btn-qnt {
 		border: none;
 		cursor: pointer;
-	background-color:white ;
+		background-color: white;
 	}
 	& {
 		border-bottom: 1px solid #c4c4c4;
@@ -139,7 +137,7 @@ export const Content = styled.div`
 		font-weight: 700;
 		font-size: 18px;
 		line-height: 25px;
-		font-family: 'Open Sans';
+		font-family: "Open Sans";
 		text-transform: uppercase;
 	}
 	& li {
@@ -154,7 +152,7 @@ export const Content = styled.div`
 		font-weight: 700;
 		font-size: 18px;
 		line-height: 25px;
-		font-family: 'Open Sans';
+		font-family: "Open Sans";
 	}
 	& .qnt-btn {
 		border: none;

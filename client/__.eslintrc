@@ -27,8 +27,9 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "prettier", "unused-imports"],
+  "plugins": ["react", "prettier", "unused-imports", "import"],
   "rules": {
+    "import/prefer-default-export": "off",
     "padding-line-between-statements": ["warn", { "blankLine": "always", "prev": "function", "next": "*" }],
     "import/no-unresolved": "error",
     "react/jsx-filename-extension": 0,
