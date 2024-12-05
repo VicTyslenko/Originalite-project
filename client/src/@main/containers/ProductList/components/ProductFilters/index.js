@@ -1,15 +1,15 @@
-import React from 'react';
-import { Box } from '@mui/material';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { Box } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import React from "react";
 
-import ProductFilterColors from './ProductFilterColors';
-import ProductFilterPrice from './ProductFilterPrice';
-import ProductFilterCategories from './ProductFilterCategories';
-import MobileFilter from './MobileFilters';
-import { StyledBox } from './ProductFilters.styles';
+import MobileFilter from "./MobileFilters";
+import ProductFilterCategories from "./ProductFilterCategories";
+import ProductFilterColors from "./ProductFilterColors";
+import ProductFilterPrice from "./ProductFilterPrice";
+import { StyledBox } from "./ProductFilters.styles";
 
 function ProductFilters() {
-	const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+	const isMobile = useMediaQuery(theme => theme.breakpoints.down("sm"));
 
 	return (
 		<>
@@ -17,7 +17,7 @@ function ProductFilters() {
 				<MobileFilter />
 			) : (
 				<StyledBox>
-					<Box sx={{ color: 'white' }} mb={4}>
+					<Box sx={{ color: "white" }} mb={4}>
 						<ProductFilterCategories />
 					</Box>
 					<Box mb={4}>
@@ -30,6 +30,6 @@ function ProductFilters() {
 			)}
 		</>
 	);
-};
+}
 
 export default ProductFilters;

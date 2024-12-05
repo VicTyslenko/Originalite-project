@@ -1,33 +1,33 @@
-import { useState } from 'react';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import PropTypes from 'prop-types';
-import Modal from '@mui/material/Modal';
+import Modal from "@mui/material/Modal";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useState } from "react";
+import { Controller, Navigation, Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
-import { Pagination, Navigation, Controller } from 'swiper';
+import PropTypes from "prop-types";
 
 import {
 	StyledBigImage,
-	StyledSmallImage,
+	StyledCloseIcon,
 	StyledGallery,
 	StyledMobileImage,
-	StyledSwiperSlide,
-	StyledSwiper,
+	StyledOverlayImage,
 	StyledOverlaySwiper,
 	StyledOverlaySwiperSlide,
-	StyledCloseIcon,
-	StyledOverlayImage,
-} from './ProductGallery.styles';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import 'swiper/css/navigation';
+	StyledSmallImage,
+	StyledSwiper,
+	StyledSwiperSlide,
+} from "./ProductGallery.styles";
 
 function ProductGallery({ images }) {
-	const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
+	const isMobile = useMediaQuery(theme => theme.breakpoints.down("md"));
 
 	const [open, setOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
 
-	const handleOpen = (index) => {
+	const handleOpen = index => {
 		setCurrentIndex(index);
 		setOpen(true);
 	};
@@ -46,21 +46,23 @@ function ProductGallery({ images }) {
 					}}
 					modules={[Pagination, Controller]}
 				>
-					{images && images.map((url, index) => (
-						<StyledSwiperSlide onClick={() => handleOpen(index)} key={index}>
-							<StyledMobileImage src={url} />
-						</StyledSwiperSlide>
-					))}
+					{images &&
+						images.map((url, index) => (
+							<StyledSwiperSlide onClick={() => handleOpen(index)} key={index}>
+								<StyledMobileImage src={url} />
+							</StyledSwiperSlide>
+						))}
 				</StyledSwiper>
 			) : (
 				<StyledGallery>
-					{images && images.map((url, index) =>
-						index < 2 ? (
-							<StyledBigImage onClick={() => handleOpen(index)} key={index} src={url} />
-						) : (
-							<StyledSmallImage onClick={() => handleOpen(index)} key={index} src={url} />
-						),
-					)}
+					{images &&
+						images.map((url, index) =>
+							index < 2 ? (
+								<StyledBigImage onClick={() => handleOpen(index)} key={index} src={url} />
+							) : (
+								<StyledSmallImage onClick={() => handleOpen(index)} key={index} src={url} />
+							),
+						)}
 				</StyledGallery>
 			)}
 			<Modal
@@ -71,16 +73,13 @@ function ProductGallery({ images }) {
 			>
 				<>
 					<StyledCloseIcon fontSize="large" onClick={handleClose} />
-					<StyledOverlaySwiper
-						navigation
-						modules={[Navigation, Controller]}
-						initialSlide={currentIndex}
-					>
-						{images && images.map((url, index) => (
-							<StyledOverlaySwiperSlide key={index}>
-								<StyledOverlayImage src={url} />
-							</StyledOverlaySwiperSlide>
-						))}
+					<StyledOverlaySwiper navigation modules={[Navigation, Controller]} initialSlide={currentIndex}>
+						{images &&
+							images.map((url, index) => (
+								<StyledOverlaySwiperSlide key={index}>
+									<StyledOverlayImage src={url} />
+								</StyledOverlaySwiperSlide>
+							))}
 					</StyledOverlaySwiper>
 				</>
 			</Modal>

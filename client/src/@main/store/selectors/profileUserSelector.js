@@ -1,1 +1,1 @@
-export const profileUserSelector = (state) => state.auth.data;
+export const profileUserSelector = state => state.auth.data;

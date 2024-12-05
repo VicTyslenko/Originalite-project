@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledText = styled.h1`
 	text-transform: uppercase;
 	font-weight: 700;
 	font-size: 39px;
 	margin-bottom: 28px;
-`
+`;
 
 export const StyledDiv = styled.div`
 	color: #fff;
@@ -15,13 +15,13 @@ export const StyledDiv = styled.div`
 	&:hover {
 		text-decoration: underline;
 	}
-	>span {
+	> span {
 		text-decoration: underline;
 	}
-`
+`;
 
 export const StyledWrapper = styled.div`
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: "Josefin Sans", sans-serif;
 	width: 266px;
 	position: absolute;
 	display: flex;
@@ -30,4 +30,4 @@ export const StyledWrapper = styled.div`
 	top: 16.5%;
 	left: 61%;
 	color: #fff;
-`
+`;

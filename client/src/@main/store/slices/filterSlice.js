@@ -8,15 +8,15 @@ const initialState = {
 };
 
 export const filterSlice = createSlice({
-	name: 'filters',
+	name: "filters",
 	initialState,
 	reducers: {
 		setFilters: (state, action) => {
 			return {
 				...state,
-				...action.payload
-			}
-		}
+				...action.payload,
+			};
+		},
 	},
 });
 

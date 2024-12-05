@@ -1,1 +1,1 @@
-export { default } from './DropdownRegister';
+export { default } from "./DropdownRegister";

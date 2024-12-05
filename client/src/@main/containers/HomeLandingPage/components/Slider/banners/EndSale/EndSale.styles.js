@@ -1,28 +1,28 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const StyledText = styled.h1`
 	text-transform: uppercase;
 	font-weight: 700;
 	margin-bottom: 28px;
 	font-size: 38px;
-	color: #E01515;
+	color: #e01515;
 `;
 
 export const StyledDiv = styled.div`
-	color: #3F3D3D;
+	color: #3f3d3d;
 	font-size: 30px;
 	font-weight: 300;
 	text-decoration: none;
 	&:hover {
 		text-decoration: underline;
 	}
-	>span {
+	> span {
 		text-decoration: underline;
 	}
 `;
 
 export const StyledWrapper = styled.div`
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: "Josefin Sans", sans-serif;
 	width: 272px;
 	position: absolute;
 	display: flex;

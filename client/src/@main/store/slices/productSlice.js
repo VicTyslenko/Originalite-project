@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { getProduct } from '../actions/productActions';
+import { getProduct } from "../actions/productActions";
 
 const initialState = {
 	data: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const productSlice = createSlice({
-	name: 'product',
+	name: "product",
 	initialState,
 	reducers: {
 		setSize: (state, action) => {
@@ -19,7 +19,7 @@ export const productSlice = createSlice({
 			state.currentColor = action.payload;
 		},
 	},
-	extraReducers: (builder) => {
+	extraReducers: builder => {
 		builder.addCase(getProduct.fulfilled, (state, action) => {
 			state.data = { ...action.payload };
 		});

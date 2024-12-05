@@ -1,5 +1,6 @@
-import { Box, Typography, Container } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+
+import { Box, Container, Typography } from "@mui/material";
 
 export const StyledContainer = styled(Container)`
 	display: flex;
@@ -7,7 +8,7 @@ export const StyledContainer = styled(Container)`
 	justify-content: stretch;
 	gap: 2rem;
 
-	${(props) => props.theme.breakpoints.down('sm')} {
+	${props => props.theme.breakpoints.down("sm")} {
 		flex-direction: column;
 		gap: 1rem;
 	}
@@ -21,7 +22,7 @@ export const StyledBox = styled(Box)`
 	row-gap: 4rem;
 	margin-bottom: 16px;
 
-	${(props) => props.theme.breakpoints.down('sm')} {
+	${props => props.theme.breakpoints.down("sm")} {
 		justify-items: center;
 		column-gap: 1.5rem;
 		row-gap: 2rem;
@@ -33,7 +34,7 @@ export const StyledTitle = styled(Typography)`
 	margin-bottom: 1rem;
 	text-transform: capitalize;
 
-	${(props) => props.theme.breakpoints.down('sm')} {
+	${props => props.theme.breakpoints.down("sm")} {
 		display: none;
 	}
 `;

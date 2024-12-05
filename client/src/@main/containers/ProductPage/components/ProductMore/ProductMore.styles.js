@@ -1,5 +1,6 @@
-import { Box, CardContent, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
+
+import { Box, CardContent, Typography } from "@mui/material";
 
 export const StyledBox = styled(Box)`
 	display: grid;
@@ -20,11 +21,11 @@ export const StyledCardContent = styled(CardContent)`
 	height: 80px;
 	box-sizing: border-box;
 	display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
 
-	${(props) => props.theme.breakpoints.down('md')} {
+	${props => props.theme.breakpoints.down("md")} {
 		height: 104px;
 	}
 `;
@@ -35,7 +36,7 @@ export const StyledTitle = styled(Typography)`
 	overflow: hidden;
 	color: #000;
 
-	${(props) => props.theme.breakpoints.down('md')} {
+	${props => props.theme.breakpoints.down("md")} {
 		height: 44px;
 	}
 `;

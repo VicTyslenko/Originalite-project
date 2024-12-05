@@ -1,12 +1,9 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { getProductById as fetchProductById } from '../../../services/api/productsApi';
+import { getProductById as fetchProductById } from "../../../services/api/productsApi";
 
-export const getProduct = createAsyncThunk(
-	'product/getProductById',
-	async (itemNo) => {
-		const { data } = await fetchProductById(itemNo);
+export const getProduct = createAsyncThunk("product/getProductById", async itemNo => {
+	const { data } = await fetchProductById(itemNo);
 
-		return data;
-	}
-);
+	return data;
+});

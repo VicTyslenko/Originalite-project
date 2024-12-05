@@ -1,11 +1,11 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 
-import NoMatch from './NoMatch';
+import NoMatch from "./NoMatch";
 
-const Main = React.lazy(() => import('../@main/app'));
-const Profile = React.lazy(() => import('../@profile/app'));
-const Editor = React.lazy(() => import('../@editor/app'));
+const Main = React.lazy(() => import("../@main/app"));
+const Profile = React.lazy(() => import("../@profile/app"));
+const Editor = React.lazy(() => import("../@editor/app"));
 
 function AppRoutes() {
 	return (
@@ -13,7 +13,7 @@ function AppRoutes() {
 			<Route
 				path="/*"
 				element={
-					<React.Suspense fallback={'...Loading'}>
+					<React.Suspense fallback={"...Loading"}>
 						<Main />
 					</React.Suspense>
 				}

@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { StyledDiv, StyledText, StyledWrapper } from './NewCollection.styles';
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { StyledDiv, StyledText, StyledWrapper } from "./NewCollection.styles";
 
 function NewCollection() {
 	return (

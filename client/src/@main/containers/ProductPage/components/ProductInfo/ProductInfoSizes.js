@@ -1,23 +1,23 @@
+import { ListItemText, Popover, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ListItemText, Typography, Popover } from "@mui/material";
-import { setSize } from "../../../../store/slices/productSlice";
-import { selectCurrentSize } from "../../../../store/selectors/productSelector";
 
-import img from './sizeguide.jpg';
-import { SizeList, ListStyled, ListItemButtonStyled } from "./ProductInfo.styles";
+import { selectCurrentSize } from "../../../../store/selectors/productSelector";
+import { setSize } from "../../../../store/slices/productSlice";
+import { ListItemButtonStyled, ListStyled, SizeList } from "./ProductInfo.styles";
+import img from "./sizeguide.jpg";
 
 function ProductInfoSizes({ sizes }) {
 	const currentSize = useSelector(selectCurrentSize);
 	const dispatch = useDispatch();
 
-	const handleListSizeClick = (value) => {
-    	dispatch(setSize(value));
-  	};
+	const handleListSizeClick = value => {
+		dispatch(setSize(value));
+	};
 
 	const [anchorEl, setAnchorEl] = useState(null);
 
-	const handleClick = (event) => {
+	const handleClick = event => {
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -26,37 +26,35 @@ function ProductInfoSizes({ sizes }) {
 	};
 
 	const open = Boolean(anchorEl);
-	const anchor = open ? 'simple-popover' : undefined;
+	const anchor = open ? "simple-popover" : undefined;
 
 	return (
 		<SizeList>
 			<Typography variant="subtitle2">Size</Typography>
 			<ListStyled>
-				{sizes.map((item) => (
-					<ListItemButtonStyled
-						key={item}
-						selected={currentSize === item}
-						onClick={() => handleListSizeClick(item)}
-					>
+				{sizes.map(item => (
+					<ListItemButtonStyled key={item} selected={currentSize === item} onClick={() => handleListSizeClick(item)}>
 						<ListItemText primary={item} />
 					</ListItemButtonStyled>
 				))}
 			</ListStyled>
-			<Typography variant="caption" onClick={handleClick} sx={{cursor: 'pointer'}} aria-describedby={anchor}>Size guide</Typography>
+			<Typography variant="caption" onClick={handleClick} sx={{ cursor: "pointer" }} aria-describedby={anchor}>
+				Size guide
+			</Typography>
 			<Popover
 				anchor={anchor}
 				open={open}
 				anchorEl={anchorEl}
 				onClose={handleClose}
 				anchorOrigin={{
-				vertical: 'bottom',
-				horizontal: 'center',
+					vertical: "bottom",
+					horizontal: "center",
 				}}
 			>
-					<img src={img} />
+				<img src={img} />
 			</Popover>
 		</SizeList>
-	)
-};
+	);
+}
 
 export default ProductInfoSizes;

@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 
 export const StyledGrid = styled(Box)`
 	display: grid;

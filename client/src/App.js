@@ -1,9 +1,9 @@
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from "@mui/material/styles";
 
-import AppRoutes from './routes';
-import theme from './theme';
-import Footer from './components/Footer/Footer';
-import Header from './components/Header/Header';
+import Footer from "./components/Footer/Footer";
+import Header from "./components/Header/Header";
+import AppRoutes from "./routes";
+import theme from "./theme";
 
 function App() {
 	return (

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 import { getCategories } from "../actions/categoriesActions";
 
 const initialState = {
@@ -9,11 +10,11 @@ export const categoriesSlice = createSlice({
 	name: "categories",
 	initialState,
 	reducers: {},
-	extraReducers: (builder) => {
+	extraReducers: builder => {
 		builder.addCase(getCategories.fulfilled, (state, action) => {
 			state.data = action.payload;
-		})
-	}
+		});
+	},
 });
 
 export default categoriesSlice.reducer;

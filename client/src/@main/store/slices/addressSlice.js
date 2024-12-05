@@ -1,29 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-import { addressFetchData } from '../actions/addressActions';
+import { addressFetchData } from "../actions/addressActions";
 
 const initialState = {
 	data: null,
-	status: 'loading',
+	status: "loading",
 	error: null,
 };
 
 const addressReducer = createSlice({
-	name: 'address',
+	name: "address",
 	initialState,
 	reducers: {},
-	extraReducers: (builder) => {
-		builder.addCase(addressFetchData.pending, (state) => {
-			state.status = 'loading';
+	extraReducers: builder => {
+		builder.addCase(addressFetchData.pending, state => {
+			state.status = "loading";
 			state.data = null;
 		});
 		builder.addCase(addressFetchData.fulfilled, (state, { payload }) => {
-			state.status = 'leaded';
+			state.status = "leaded";
 			state.data = payload;
-			console.log(payload)
+			console.log(payload);
 		});
 		builder.addCase(addressFetchData.rejected, (state, { payload }) => {
-			state.status = 'error';
+			state.status = "error";
 			state.error = payload;
 		});
 	},

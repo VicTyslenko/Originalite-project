@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { StyledDiv, StyledText, StyledWrapper } from './EnjoyOff.styles';
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { StyledDiv, StyledText, StyledWrapper } from "./EnjoyOff.styles";
 
 function EnjoyOff() {
 	return (

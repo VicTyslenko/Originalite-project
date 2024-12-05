@@ -11,7 +11,7 @@ function HomeLandingPage() {
 
 	useEffect(() => {
 		dispatch(getProductList());
-		window.scrollTo(0, 0);
+	        	window.scrollTo(0, 0);
 	}, [dispatch]);
 
 	return (

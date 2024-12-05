@@ -1,7 +1,7 @@
-import axiosInstance from './axios';
+import axiosInstance from "./axios";
 
 export function getCart(config) {
-	return axiosInstance.get('cart', config);
+	return axiosInstance.get("cart", config);
 }
 export function deleteCart(id, config) {
 	return axiosInstance.delete(`cart/`, config);

@@ -1,1 +1,1 @@
-export { default } from './WomenMenu';
+export { default } from "./WomenMenu";

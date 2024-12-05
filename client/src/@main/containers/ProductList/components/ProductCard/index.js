@@ -1,8 +1,9 @@
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { CardActionArea, Typography, CardMedia, Card } from '@mui/material';
+import { Card, CardActionArea, CardMedia, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-import { StyledTitle, StyledCardContent } from './ProductCard.styles';
+import PropTypes from "prop-types";
+
+import { StyledCardContent, StyledTitle } from "./ProductCard.styles";
 
 function ProductCard({ url, alt, title, price, id }) {
 	const navigate = useNavigate();
