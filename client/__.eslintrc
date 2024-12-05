@@ -1,27 +1,47 @@
 {
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": ["airbnb", "prettier", "plugin:react/recommended", "plugin:react/jsx-runtime","plugin:prettier/recommended"],
-  
-	    "overrides": [
-		{
-			"files": ["**/*.spec.js", "**/*.spec.jsx", "**/*.test.js", "**/*.test.jsx"],
-			"env": {
-				"jest": true
-			}
-		}
-	],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"plugins": ["react", "prettier"],
-	"rules": {
-		"import/no-unresolved": "error",
-		"react/jsx-filename-extension": 0,
-		"react/jsx-props-no-spreading": 0,
-		   "no-undef": "error"
-	}
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:prettier/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.spec.js", "**/*.spec.jsx", "**/*.test.js", "**/*.test.jsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "requireConfigFile": false, // Позволяет использовать Babel без отдельного конфигурационного файла
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // Если вы используете React
+    }
+  },
+  "plugins": ["react", "prettier", "unused-imports"],
+  "rules": {
+    "import/no-unresolved": "error",
+    "react/jsx-filename-extension": 0,
+    "react/jsx-props-no-spreading": 0,
+    "no-undef": "error",
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
+    ]
+  }
 }

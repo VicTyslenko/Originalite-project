@@ -33,8 +33,9 @@ function DropdownRegister({ active, closeFormPages }) {
 							password: "",
 						}}
 						validationSchema={validationSchema}
-						onSubmit={async values => {
+						onSubmit={async (values, { resetForm }) => {
 							await dispatch(actionFetchAuth(values));
+							resetForm();
 						}}
 					>
 						{props => (

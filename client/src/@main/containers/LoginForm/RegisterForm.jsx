@@ -1,27 +1,22 @@
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Checkbox, Tab } from "@mui/material";
 import { Container } from "@mui/system";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { registerFetchData } from "../../store/actions/registrationActions";
 import { errorDataRegister } from "../../store/selectors/registrationSelector";
 import {
-	ButtonWrapp,
 	ButtonWrappReg,
-	CheckBoxWrapp,
 	ContainerWrapper,
 	CssTextField,
-	Description,
 	HeadWrapp,
-	InputsWrapp,
 	InputsWrappReg,
-	LoginWrapper,
 	LoginWrapperReg,
-	StyledButton,
 	StyledButtonReg,
 } from "./StyledRegisterForm";
+import { LoginForm } from "./extensions/LoginForm";
 import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
@@ -51,37 +46,9 @@ const RegisterForm = () => {
 							<Tab className="list-item registration" label="Registration" value="2" />
 						</TabList>
 					</HeadWrapp>
-					<TabPanel value="1">
-						<Formik
-							initialValues={{
-								email: "",
-								password: "",
-							}}
-						>
-							<LoginWrapper>
-								<Description>Please enter your account details to log in</Description>
-								<Form>
-									<InputsWrapp>
-										<CssTextField variant="standard" label="E-mail" fullWidth />
-										<CssTextField variant="standard" label="Password" fullWidth />
-									</InputsWrapp>
-									<CheckBoxWrapp>
-										<Checkbox
-											sx={{
-												"& .MuiSvgIcon-root:not(.MuiSvgIcon-root ~ .MuiSvgIcon-root)": {
-													color: "white",
-												},
-											}}
-										/>
-										<p className="box-text">Keep me signed in</p>
-									</CheckBoxWrapp>
 
-									<ButtonWrapp>
-										<StyledButton>LOG IN</StyledButton>
-									</ButtonWrapp>
-								</Form>
-							</LoginWrapper>
-						</Formik>
+					<TabPanel value="1">
+						<LoginForm />
 					</TabPanel>
 
 					<TabPanel value="2">
