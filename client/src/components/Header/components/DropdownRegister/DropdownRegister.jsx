@@ -1,5 +1,7 @@
+import { clearErrorAuth } from "@main/store/slices/authSlice";
 import { Button, Container } from "@mui/material";
 import { Formik } from "formik";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
@@ -18,7 +20,11 @@ import { validationSchema } from "./validation";
 
 function DropdownRegister({ active, closeFormPages }) {
 	const dispatch = useDispatch();
-	const errorMessage = useSelector(errorDataAuth);
+	let errorMessage = useSelector(errorDataAuth);
+
+	useEffect(() => {
+		dispatch(clearErrorAuth());
+	}, [active, dispatch]);
 
 	return (
 		<WrappAnimate id="example-panel" duration={500} height={active}>
@@ -38,39 +44,44 @@ function DropdownRegister({ active, closeFormPages }) {
 							resetForm();
 						}}
 					>
-						{props => (
-							<form onSubmit={props.handleSubmit}>
-								<InputsWrapp>
-									<InputItem
-										variant="standard"
-										name="loginOrEmail"
-										label="E-mail"
-										value={props.values.loginOrEmail}
-										onChange={props.handleChange}
-										error={props.touched.loginOrEmail && Boolean(props.errors.loginOrEmail)}
-										helperText={props.touched.loginOrEmail && props.errors.loginOrEmail}
-									/>
-									<InputItem
-										variant="standard"
-										name="password"
-										label="Password"
-										type="password"
-										value={props.values.password}
-										onChange={props.handleChange}
-										error={props.touched.password && Boolean(props.errors.password)}
-										helperText={props.touched.password && props.errors.password}
-									/>
-								</InputsWrapp>
+						{props => {
+							useEffect(() => {
+								props.resetForm();
+							}, [active]);
+							return (
+								<form onSubmit={props.handleSubmit}>
+									<InputsWrapp>
+										<InputItem
+											variant="standard"
+											name="loginOrEmail"
+											label="E-mail"
+											value={props.values.loginOrEmail}
+											onChange={props.handleChange}
+											error={props.touched.loginOrEmail && Boolean(props.errors.loginOrEmail)}
+											helperText={props.touched.loginOrEmail && props.errors.loginOrEmail}
+										/>
+										<InputItem
+											variant="standard"
+											name="password"
+											label="Password"
+											type="password"
+											value={props.values.password}
+											onChange={props.handleChange}
+											error={props.touched.password && Boolean(props.errors.password)}
+											helperText={props.touched.password && props.errors.password}
+										/>
+									</InputsWrapp>
 
-								{errorMessage && <span className="error-message">{Object.values(errorMessage)}</span>}
+									{errorMessage && <span className="error-message">{Object.values(errorMessage)}</span>}
 
-								<ButtonBlock>
-									<Button variant="contained" color="success" type="submit">
-										Log in
-									</Button>
-								</ButtonBlock>
-							</form>
-						)}
+									<ButtonBlock>
+										<Button variant="contained" color="success" type="submit">
+											Log in
+										</Button>
+									</ButtonBlock>
+								</form>
+							);
+						}}
 					</Formik>
 
 					<FormPages>
