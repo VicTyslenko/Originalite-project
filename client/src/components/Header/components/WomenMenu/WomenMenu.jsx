@@ -1,25 +1,21 @@
-import { Categories, StyledLink } from './StyledWomenMenu';
-import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Container } from '@mui/material';
-import { AnimateMenu, ContentWrap } from '../../StyledHeader';
-import { selectSubCategories } from '../../../../@main/store/selectors/categoriesSelector';
-import { getCategories } from '../../../../@main/store/actions/categoriesActions';
-import { setFilters } from '../../../../@main/store/slices/filterSlice';
-import { selectFilterCategories } from '../../../../@main/store/selectors/filterSelector';
+import { Container } from "@mui/material";
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { selectSubCategories } from "../../../../@main/store/selectors/categoriesSelector";
+import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
+import { setFilters } from "../../../../@main/store/slices/filterSlice";
+import { AnimateMenu, ContentWrap } from "../../StyledHeader";
+import { Categories, StyledLink } from "./StyledWomenMenu";
 
 function WomanMenu({ active, closeСategories }) {
 	const dispatch = useDispatch();
 
-	const subCategories = useSelector((state) => selectSubCategories(state, 'woman'));
+	const subCategories = useSelector(state => selectSubCategories(state, "woman"));
 	const filterCategories = useSelector(selectFilterCategories);
 
-	useEffect(() => {
-		dispatch(getCategories());
-	}, []);
-
 	const handleSetFilter = useCallback(
-		(value) => {
+		value => {
 			dispatch(
 				setFilters({
 					categories: filterCategories === value ? null : value,

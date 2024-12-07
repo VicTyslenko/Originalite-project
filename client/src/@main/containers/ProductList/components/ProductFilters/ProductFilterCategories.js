@@ -2,11 +2,10 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Collapse, List, ListItemButton, ListItemText, Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { getCategories } from "../../../../store/actions/categoriesActions";
 import { selectSubCategories } from "../../../../store/selectors/categoriesSelector";
 import { selectFilterCategories } from "../../../../store/selectors/filterSelector";
 import { setFilters } from "../../../../store/slices/filterSlice";
@@ -21,10 +20,6 @@ function ProductFilterCategories() {
 	const filterCategories = useSelector(selectFilterCategories);
 
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getCategories());
-	}, [dispatch]);
 
 	const handleSetFilter = useCallback(
 		value => {

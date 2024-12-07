@@ -1,9 +1,10 @@
+import { getCategories } from "@main/store/actions/categoriesActions";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Container } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { isAuthSelector } from "../../@main/store/selectors/authSelector";
@@ -30,7 +31,12 @@ function Header() {
 	const isRegistration = useSelector(isRegistrationSelector);
 	const navigate = useNavigate();
 
+	const dispatch = useDispatch();
 	const rootEl = useRef(null);
+
+	useEffect(() => {
+		dispatch(getCategories());
+	}, [dispatch]);
 
 	const [isShoppingBag, setIsShoppingBag] = useState(false);
 	const [dataMenu, setDataMenu] = useState(null);

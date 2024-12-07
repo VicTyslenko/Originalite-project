@@ -4,5 +4,6 @@ import { getCategories as fetchCategories } from "../../../services/api/categori
 
 export const getCategories = createAsyncThunk("categories/getCategories", async () => {
 	const { data } = await fetchCategories();
+
 	return data;
 });
