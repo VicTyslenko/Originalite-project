@@ -2,6 +2,7 @@ import { clearErrorAuth } from "@main/store/slices/authSlice";
 import { Button, Container } from "@mui/material";
 import { Formik } from "formik";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
@@ -40,8 +41,11 @@ function DropdownRegister({ active, closeFormPages }) {
 						}}
 						// validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => {
-							await dispatch(actionFetchAuth(values));
-							resetForm();
+							const data = await dispatch(actionFetchAuth(values));
+							if (!data.error) {
+								toast.success("Login successful!");
+								resetForm();
+							}
 						}}
 					>
 						{props => {
