@@ -5,9 +5,7 @@ const _ = require("lodash");
 exports.addCategory = (req, res, next) => {
   Catalog.findOne({ id: req.body.id }).then((category) => {
     if (category) {
-      return res
-        .status(400)
-        .json({ message: `Category with id "${category.id}" already exists` });
+      return res.status(400).json({ message: `Category with id "${category.id}" already exists` });
     } else {
       const newCategory = new Catalog(queryCreator(req.body));
 
@@ -34,11 +32,7 @@ exports.aupdateCategory = (req, res, next) => {
         const initialQuery = _.cloneDeep(req.body);
         const updatedCategory = queryCreator(initialQuery);
 
-        Catalog.findOneAndUpdate(
-          { id: req.params.id },
-          { $set: updatedCategory },
-          { new: true }
-        )
+        Catalog.findOneAndUpdate({ id: req.params.id }, { $set: updatedCategory }, { new: true })
           .then((category) => res.json(category))
           .catch((err) =>
             res.status(400).json({
