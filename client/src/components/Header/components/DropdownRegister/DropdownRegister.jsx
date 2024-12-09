@@ -42,8 +42,9 @@ function DropdownRegister({ active, closeFormPages }) {
 						// validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => {
 							const data = await dispatch(actionFetchAuth(values));
-							if (!data.error) {
+							if (data) {
 								toast.success("Login successful!");
+								closeFormPages();
 								resetForm();
 							}
 						}}
