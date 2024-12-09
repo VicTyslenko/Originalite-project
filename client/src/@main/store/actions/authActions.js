@@ -8,7 +8,6 @@ export const actionFetchAuth = createAsyncThunk("auth/actionFetchData", async (p
 
 		return data;
 	} catch (err) {
-		console.log({ error: err.response });
 		return rejectWithValue(err.response.data);
 	}
 });

@@ -28,6 +28,7 @@ import WomanMenu from "./components/WomenMenu";
 
 function Header() {
 	const isAuth = useSelector(isAuthSelector);
+
 	const isRegistration = useSelector(isRegistrationSelector);
 	const navigate = useNavigate();
 
@@ -60,16 +61,16 @@ function Header() {
 	}, []);
 
 	useEffect(() => {
-		if (isAuth) {
-			setRegistrationBox(!registrationBox);
-		}
+		// if (isAuth) {
+		// 	setRegistrationBox(!registrationBox);
+		// }
 
 		if (isRegistration) {
 			navigate("/");
 		}
 
 		window.scrollTo(0, 0);
-	}, [isAuth, isRegistration]);
+	}, [isRegistration]);
 
 	const buttonAuthorization =
 		isAuth || isRegistration ? (
@@ -163,7 +164,7 @@ function Header() {
 					</BoxTechnical>
 					<DropdownRegister
 						active={registrationBox && dataMenu === "menuRegistration" ? "auto" : 0}
-						closeFormPages={() => setRegistrationBox(!registrationBox)}
+						closeFormPages={() => setRegistrationBox(false)}
 					/>
 				</ContentWrapper>
 

@@ -2,6 +2,8 @@ import { actionFetchAuth } from "@main/store/actions/authActions";
 import { Checkbox } from "@mui/material";
 import { Form, Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import {
 	ButtonWrapp,
@@ -15,6 +17,9 @@ import {
 
 export const LoginForm = () => {
 	const dispatch = useStoreDispatch();
+
+	const navigate = useNavigate();
+
 	return (
 		<>
 			<Formik
@@ -23,8 +28,13 @@ export const LoginForm = () => {
 					password: "",
 				}}
 				onSubmit={async (values, { resetForm }) => {
-					await dispatch(actionFetchAuth(values));
-					resetForm();
+					const data = await dispatch(actionFetchAuth(values));
+
+					if (data) {
+						navigate("/");
+						toast.success("Login successfull!");
+						resetForm();
+					}
 				}}
 			>
 				{props => (
