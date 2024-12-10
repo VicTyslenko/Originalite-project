@@ -39,10 +39,12 @@ function DropdownRegister({ active, closeFormPages }) {
 							loginOrEmail: "",
 							password: "",
 						}}
-						// validationSchema={validationSchema}
+						validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => {
 							const data = await dispatch(actionFetchAuth(values));
-							if (data) {
+							console.log({ values: values });
+
+							if (!data.error) {
 								toast.success("Login successful!");
 								closeFormPages();
 								resetForm();
