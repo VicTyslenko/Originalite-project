@@ -42,19 +42,16 @@ function DropdownRegister({ active, closeFormPages }) {
 						validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => {
 							const data = await dispatch(actionFetchAuth(values));
-							console.log({ values: values });
 
 							if (!data.error) {
 								toast.success("Login successful!");
 								closeFormPages();
+								dispatch(clearErrorAuth());
 								resetForm();
 							}
 						}}
 					>
 						{props => {
-							useEffect(() => {
-								props.resetForm();
-							}, [active]);
 							return (
 								<form onSubmit={props.handleSubmit}>
 									<InputsWrapp>

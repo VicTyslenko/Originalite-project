@@ -52,6 +52,14 @@ export const LoginWrapper = styled.div`
 	width: 467px;
 	margin-top: 70px;
 	margin-bottom: 162px;
+
+	& .error-message {
+		font-size: 14px;
+		color: #d32f2f;
+		border-bottom: 1px solid #d32f2f;
+		display: inline-block;
+		font-weight: 600;
+	}
 `;
 
 export const ButtonWrapp = styled.div`

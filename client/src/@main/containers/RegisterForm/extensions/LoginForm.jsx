@@ -1,8 +1,11 @@
 import { actionFetchAuth } from "@main/store/actions/authActions";
+import { errorDataAuth } from "@main/store/selectors/authSelector";
 import { Checkbox } from "@mui/material";
+import { validationSchema } from "components/Header/components/DropdownRegister/validation";
 import { Form, Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -18,6 +21,8 @@ import {
 export const LoginForm = () => {
 	const dispatch = useStoreDispatch();
 
+	const errorMessage = useSelector(errorDataAuth);
+
 	const navigate = useNavigate();
 
 	return (
@@ -27,10 +32,11 @@ export const LoginForm = () => {
 					loginOrEmail: "",
 					password: "",
 				}}
+				validationSchema={validationSchema}
 				onSubmit={async (values, { resetForm }) => {
 					const data = await dispatch(actionFetchAuth(values));
 
-					if (data) {
+					if (!data.error) {
 						navigate("/");
 						toast.success("Login successfull!");
 						resetForm();
@@ -50,6 +56,8 @@ export const LoginForm = () => {
 									name="loginOrEmail"
 									value={props.values.loginOrEmail}
 									onChange={props.handleChange}
+									error={props.touched.loginOrEmail && Boolean(props.errors.loginOrEmail)}
+									helperText={props.touched.loginOrEmail && props.errors.loginOrEmail}
 								/>
 								<CssTextField
 									variant="standard"
@@ -59,8 +67,13 @@ export const LoginForm = () => {
 									type="password"
 									value={props.values.password}
 									onChange={props.handleChange}
+									error={props.touched.password && Boolean(props.errors.password)}
+									helperText={props.touched.password && props.errors.password}
 								/>
 							</InputsWrapp>
+							{errorMessage && !Object.keys(props.errors).length && (
+								<span className="error-message">{Object.values(errorMessage)}</span>
+							)}
 							<CheckBoxWrapp>
 								<Checkbox
 									sx={{
