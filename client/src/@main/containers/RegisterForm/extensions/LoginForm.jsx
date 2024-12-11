@@ -1,11 +1,9 @@
 import { actionFetchAuth } from "@main/store/actions/authActions";
-import { errorDataAuth } from "@main/store/selectors/authSelector";
 import { Checkbox } from "@mui/material";
 import { validationSchema } from "components/Header/components/DropdownRegister/validation";
 import { Form, Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -17,11 +15,12 @@ import {
 	LoginWrapper,
 	StyledButton,
 } from "../StyledRegisterForm";
+import { useFormLogin } from "../hooks";
 
 export const LoginForm = () => {
 	const dispatch = useStoreDispatch();
 
-	const errorMessage = useSelector(errorDataAuth);
+	const { errorMessage } = useFormLogin();
 
 	const navigate = useNavigate();
 

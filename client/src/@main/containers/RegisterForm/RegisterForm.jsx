@@ -3,10 +3,10 @@ import { Checkbox, Tab } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 import { registerFetchData } from "../../store/actions/registrationActions";
-import { errorDataRegister } from "../../store/selectors/registrationSelector";
 import {
 	ButtonWrappReg,
 	ContainerWrapper,
@@ -17,12 +17,12 @@ import {
 	StyledButtonReg,
 } from "./StyledRegisterForm";
 import { LoginForm } from "./extensions/LoginForm";
+import { useFormLogin } from "./hooks";
 import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
-
-	const error = useSelector(errorDataRegister);
+	const { registerError } = useFormLogin();
 	const [value, setValue] = useState("1");
 
 	const handleChange = (event, newValue) => {
@@ -61,10 +61,13 @@ const RegisterForm = () => {
 								password: "",
 								confirmPassword: "",
 							}}
-							// validationSchema={validationRegisterSchema}
-							onSubmit={async values => {
+							validationSchema={validationRegisterSchema}
+							onSubmit={async (values, { resetForm }) => {
 								const data = await dispatch(registerFetchData(values));
-								console.log(values);
+								if (!data.error) {
+									toast.success("Register success!");
+									resetForm();
+								}
 							}}
 						>
 							{props => (
@@ -143,7 +146,9 @@ const RegisterForm = () => {
 												helperText={props.touched.confirmPassword && props.errors.confirmPassword}
 											/>
 										</InputsWrappReg>
-										<div className="flex-error">{error && <span className="message">{Object.values(error)}</span>}</div>
+										<div className="flex-error">
+											{registerError && <span className="message">{Object.values(error)}</span>}
+										</div>
 										<ButtonWrappReg>
 											<StyledButtonReg type="submit">Register</StyledButtonReg>
 										</ButtonWrappReg>

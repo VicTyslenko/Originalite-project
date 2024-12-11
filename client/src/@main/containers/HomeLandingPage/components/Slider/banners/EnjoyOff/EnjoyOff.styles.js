@@ -9,7 +9,6 @@ export const StyledText = styled.h1`
 `;
 
 export const StyledDiv = styled.div`
-	color: #3f3d3d;
 	font-size: 30px;
 	font-weight: 300;
 	text-decoration: none;

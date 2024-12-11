@@ -76,7 +76,9 @@ function DropdownRegister({ active, closeFormPages }) {
 										/>
 									</InputsWrapp>
 
-									{errorMessage && <span className="error-message">{Object.values(errorMessage)}</span>}
+									{errorMessage && !Object.keys(props.errors).length && (
+										<span className="error-message">{Object.values(errorMessage)}</span>
+									)}
 
 									<ButtonBlock>
 										<Button variant="contained" color="success" type="submit">
