@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
+import { useCategories } from "components/Header/hooks";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectSubCategories } from "../../../../@main/store/selectors/categoriesSelector";
 import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
 import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
@@ -11,7 +11,7 @@ import { Categories, StyledLink } from "./StyledMenMenu";
 function ManMenu({ active, closeСategories }) {
 	const dispatch = useDispatch();
 
-	const subCategories = useSelector(state => selectSubCategories(state, "man"));
+	const { filteredCategories: manCategories } = useCategories("man");
 
 	const filterCategories = useSelector(selectFilterCategories);
 
@@ -41,8 +41,8 @@ function ManMenu({ active, closeСategories }) {
 					<StyledLink to="/store/man" onClick={() => handleClearFilter()}>
 						View all
 					</StyledLink>
-					{subCategories &&
-						subCategories.map(({ name, _id }) => (
+					{manCategories &&
+						manCategories.map(({ name, _id }) => (
 							<StyledLink key={_id} to="/store/man" onClick={() => handleSetFilter(name)}>
 								{name}
 							</StyledLink>
@@ -54,7 +54,3 @@ function ManMenu({ active, closeСategories }) {
 }
 
 export default ManMenu;
-
-ManMenu.defaultProps = {
-	height: 0,
-};

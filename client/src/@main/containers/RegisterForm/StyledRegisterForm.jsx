@@ -30,21 +30,14 @@ export const CssTextField = styled(TextField)({
 	"& label.Mui-focused": {
 		color: "white",
 	},
-
-	"& .MuiInput-underline:after": {
+	"& .MuiInput-underline:before": {
 		borderBottomColor: "white",
 	},
-	"& .MuiInput-underline:before": { borderBottomColor: "white" },
-	"& .MuiOutlinedInput-root": {
-		"& fieldset": {
-			borderColor: "red",
-		},
-		"&:hover textfield": {
-			borderColor: "white",
-		},
-		"& .MuiInput-root": {
-			color: "white",
-		},
+	"& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+		borderBottomColor: "white",
+	},
+	"& .MuiInput-underline:after": {
+		borderBottomColor: "white",
 	},
 });
 

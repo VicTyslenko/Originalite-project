@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
+import { useCategories } from "components/Header/hooks";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectSubCategories } from "../../../../@main/store/selectors/categoriesSelector";
 import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
 import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
@@ -11,7 +11,8 @@ import { Categories, StyledLink } from "./StyledAccessory";
 function Accessory({ active, closeСategories }) {
 	const dispatch = useDispatch();
 
-	const subCategories = useSelector(state => selectSubCategories(state, "accessories"));
+	const { filteredCategories: accessoriesCategories } = useCategories("accessories");
+
 	const filterCategories = useSelector(selectFilterCategories);
 
 	const handleSetFilter = useCallback(
@@ -40,8 +41,8 @@ function Accessory({ active, closeСategories }) {
 					<StyledLink to="/store/accessories" onClick={() => handleClearFilter()}>
 						View all
 					</StyledLink>
-					{subCategories &&
-						subCategories.map(({ name, _id }) => (
+					{accessoriesCategories &&
+						accessoriesCategories.map(({ name, _id }) => (
 							<StyledLink key={_id} to="/store/accessories" onClick={() => handleSetFilter(name)}>
 								{name}
 							</StyledLink>
@@ -53,7 +54,3 @@ function Accessory({ active, closeСategories }) {
 }
 
 export default Accessory;
-
-Accessory.defaultProps = {
-	height: 0,
-};

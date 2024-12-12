@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
-import { Drawer, Container } from '@mui/material';
-import EmptyCart from '../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart';
-import { cartDataSelect } from '../../../../@main/store/selectors/cartSelector';
+import CloseIcon from "@mui/icons-material/Close";
+import { Container, Drawer } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
+import { deleteProductFromCart } from "../../../../@main/store/actions/cartActions";
+import { cartDataSelect } from "../../../../@main/store/selectors/cartSelector";
 import {
-	WrappContainer,
 	ButtonShoppingBag,
-	Title,
-	MainContent,
-	ImageWrapp,
+	CloseItemIcon,
 	ContentItem,
 	Description,
-	CloseItemIcon,
-	NameItem,
 	FooterContent,
-	TotalPrice,
+	ImageWrapp,
+	MainContent,
+	NameItem,
 	Price,
-} from './StyledShoppingBag';
-import { Link } from 'react-router-dom';
-
-import { useSelector, useDispatch } from 'react-redux';
-import CloseIcon from '@mui/icons-material/Close';
-import { deleteProductFromCart } from '../../../../@main/store/actions/cartActions';
+	Title,
+	TotalPrice,
+	WrappContainer,
+} from "./StyledShoppingBag";
 
 function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
 	const dispatch = useDispatch();
@@ -29,32 +29,35 @@ function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
 
 	const dataProducts = useSelector(cartDataSelect);
 
-	const productItem = dataProducts?.map(({ product }) => product && (
-		<ContentItem key={product._id}>
-			<Link to={`product/${product.itemNo}`}>
-				<ImageWrapp className="image-wrapp">
-					<img className="image" src={product.imageUrls[0]} alt="" />
-				</ImageWrapp>
-			</Link>
-			<Description className="list">
-				<div className="description">
-					<NameItem>{product.name}</NameItem>
-					<Price>
-						Price : <span className="price">{product.currentPrice} $</span>
-					</Price>
-				</div>
-				<CloseItemIcon
-					onClick={(e) => {
-						dispatch(deleteProductFromCart(product._id));
-					}}
-				>
-					<CloseIcon />
-				</CloseItemIcon>
-			</Description>
-		</ContentItem>
-	));
+	const productItem = dataProducts?.map(
+		({ product }) =>
+			product && (
+				<ContentItem key={product._id}>
+					<Link to={`product/${product.itemNo}`}>
+						<ImageWrapp className="image-wrapp">
+							<img className="image" src={product.imageUrls[0]} alt="" />
+						</ImageWrapp>
+					</Link>
+					<Description className="list">
+						<div className="description">
+							<NameItem>{product.name}</NameItem>
+							<Price>
+								Price : <span className="price">{product.currentPrice} $</span>
+							</Price>
+						</div>
+						<CloseItemIcon
+							onClick={e => {
+								dispatch(deleteProductFromCart(product._id));
+							}}
+						>
+							<CloseIcon />
+						</CloseItemIcon>
+					</Description>
+				</ContentItem>
+			),
+	);
 
-	const priceItem = dataProducts.map(({ product, cartQuantity }) => product && (product.currentPrice * cartQuantity));
+	const priceItem = dataProducts.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
 
 	useEffect(() => {
 		setTotalPrice(priceItem.reduce((accum, item) => accum + item, 0));
@@ -88,5 +91,4 @@ function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
 		</>
 	);
 }
-ShoppingBag.defaultProps = { ShoppingBagData: [] };
 export default ShoppingBag;
