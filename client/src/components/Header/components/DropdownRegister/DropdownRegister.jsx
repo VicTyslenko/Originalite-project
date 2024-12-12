@@ -39,20 +39,19 @@ function DropdownRegister({ active, closeFormPages }) {
 							loginOrEmail: "",
 							password: "",
 						}}
-						// validationSchema={validationSchema}
+						validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => {
 							const data = await dispatch(actionFetchAuth(values));
-							if (data) {
+
+							if (!data.error) {
 								toast.success("Login successful!");
 								closeFormPages();
+								dispatch(clearErrorAuth());
 								resetForm();
 							}
 						}}
 					>
 						{props => {
-							useEffect(() => {
-								props.resetForm();
-							}, [active]);
 							return (
 								<form onSubmit={props.handleSubmit}>
 									<InputsWrapp>
@@ -77,7 +76,9 @@ function DropdownRegister({ active, closeFormPages }) {
 										/>
 									</InputsWrapp>
 
-									{errorMessage && <span className="error-message">{Object.values(errorMessage)}</span>}
+									{errorMessage && !Object.keys(props.errors).length && (
+										<span className="error-message">{Object.values(errorMessage)}</span>
+									)}
 
 									<ButtonBlock>
 										<Button variant="contained" color="success" type="submit">

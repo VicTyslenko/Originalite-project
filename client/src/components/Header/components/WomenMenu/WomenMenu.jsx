@@ -1,8 +1,8 @@
 import { Container } from "@mui/material";
+import { useCategories } from "components/Header/hooks";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectSubCategories } from "../../../../@main/store/selectors/categoriesSelector";
 import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
 import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
@@ -11,9 +11,9 @@ import { Categories, StyledLink } from "./StyledWomenMenu";
 function WomanMenu({ active, closeСategories }) {
 	const dispatch = useDispatch();
 
-	const subCategories = useSelector(state => selectSubCategories(state, "woman"));
-	const filterCategories = useSelector(selectFilterCategories);
+	const { filteredCategories: womanCategories } = useCategories("woman");
 
+	const filterCategories = useSelector(selectFilterCategories);
 	const handleSetFilter = useCallback(
 		value => {
 			dispatch(
@@ -40,8 +40,8 @@ function WomanMenu({ active, closeСategories }) {
 					<StyledLink to="/store/woman" onClick={() => handleClearFilter()}>
 						View all
 					</StyledLink>
-					{subCategories &&
-						subCategories.map(({ name, _id }) => (
+					{womanCategories &&
+						womanCategories.map(({ name, _id }) => (
 							<StyledLink key={_id} to="/store/woman" onClick={() => handleSetFilter(name)}>
 								{name}
 							</StyledLink>
@@ -53,7 +53,3 @@ function WomanMenu({ active, closeСategories }) {
 }
 
 export default WomanMenu;
-
-WomanMenu.defaultProps = {
-	height: 0,
-};

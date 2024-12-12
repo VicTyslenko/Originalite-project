@@ -30,21 +30,14 @@ export const CssTextField = styled(TextField)({
 	"& label.Mui-focused": {
 		color: "white",
 	},
-
-	"& .MuiInput-underline:after": {
+	"& .MuiInput-underline:before": {
 		borderBottomColor: "white",
 	},
-	"& .MuiInput-underline:before": { borderBottomColor: "white" },
-	"& .MuiOutlinedInput-root": {
-		"& fieldset": {
-			borderColor: "red",
-		},
-		"&:hover textfield": {
-			borderColor: "white",
-		},
-		"& .MuiInput-root": {
-			color: "white",
-		},
+	"& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+		borderBottomColor: "white",
+	},
+	"& .MuiInput-underline:after": {
+		borderBottomColor: "white",
 	},
 });
 
@@ -52,6 +45,14 @@ export const LoginWrapper = styled.div`
 	width: 467px;
 	margin-top: 70px;
 	margin-bottom: 162px;
+
+	& .error-message {
+		font-size: 14px;
+		color: #d32f2f;
+		border-bottom: 1px solid #d32f2f;
+		display: inline-block;
+		font-weight: 600;
+	}
 `;
 
 export const ButtonWrapp = styled.div`
