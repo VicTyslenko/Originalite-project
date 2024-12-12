@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
-import { useCategories } from "components/Header/hooks";
-import { useCallback, useEffect } from "react";
+import { useCategories } from "hooks/use-categories";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";

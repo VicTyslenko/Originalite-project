@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { useCategories } from "components/Header/hooks";
+import { useCategories } from "hooks/use-categories";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
