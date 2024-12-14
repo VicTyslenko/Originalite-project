@@ -32,6 +32,7 @@ function Header() {
 	const isRegistration = useSelector(isRegistrationSelector);
 	const navigate = useNavigate();
 
+
 	const dispatch = useDispatch();
 	const rootEl = useRef(null);
 
@@ -61,10 +62,6 @@ function Header() {
 	}, []);
 
 	useEffect(() => {
-		// if (isAuth) {
-		// 	setRegistrationBox(!registrationBox);
-		// }
-
 		if (isRegistration) {
 			navigate("/");
 		}

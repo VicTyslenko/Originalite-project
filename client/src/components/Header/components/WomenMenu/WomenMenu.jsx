@@ -14,6 +14,7 @@ function WomanMenu({ active, closeСategories }) {
 	const { filteredCategories: womanCategories } = useCategories("woman");
 
 	const filterCategories = useSelector(selectFilterCategories);
+
 	const handleSetFilter = useCallback(
 		value => {
 			dispatch(
