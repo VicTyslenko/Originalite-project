@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import AnimateHeight from 'react-animate-height';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
+import IconButton from "@mui/material/IconButton";
+import Paper from "@mui/material/Paper";
+import AnimateHeight from "react-animate-height";
+import styled from "styled-components";
 
 export const PaperStyles = styled(Paper)`
 	position: absolute;
@@ -23,8 +23,19 @@ export const SearchWrappAnimate = styled(AnimateHeight)`
 
 export const ButtonSearch = styled(IconButton)`
 	&&& {
+		position: absolute;
+		top: 126px;
+		right: 26px;
 		background-color: #fff;
 		color: #000;
-		margin-top: 2px;
+		padding: 0;
+		height: 0;
+		width: 0;
 	}
+`;
+
+export const TextFieldWrapp = styled.div`
+	position: relative;
+	min-width: 500px;
+	padding: 100px 0;
 `;

@@ -2,11 +2,11 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Collapse, List, ListItemButton, ListItemText, Typography } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useCategories } from "hooks/use-categories";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectSubCategories } from "../../../../store/selectors/categoriesSelector";
 import { selectFilterCategories } from "../../../../store/selectors/filterSelector";
 import { setFilters } from "../../../../store/slices/filterSlice";
 import { FlexBox } from "./ProductFilters.styles";
@@ -16,7 +16,7 @@ function ProductFilterCategories() {
 	const [openMobile, setOpenMobile] = useState(false);
 	const { category } = useParams();
 
-	const subCategories = useSelector(state => selectSubCategories(state, category));
+	const { filteredCategories: paramsCategories } = useCategories(category);
 	const filterCategories = useSelector(selectFilterCategories);
 
 	const dispatch = useDispatch();
@@ -59,8 +59,8 @@ function ProductFilterCategories() {
 							<ListItemButton sx={{ pl: 4 }} selected={filterCategories === null}>
 								<ListItemText primary="View all" onClick={() => handleCLearFilter()} />
 							</ListItemButton>
-							{subCategories &&
-								subCategories.map(({ _id: id, name }) => (
+							{paramsCategories &&
+								paramsCategories.map(({ _id: id, name }) => (
 									<ListItemButton
 										sx={{ pl: 4 }}
 										key={id}
@@ -84,8 +84,8 @@ function ProductFilterCategories() {
 							<ListItemButton sx={{ pl: 4 }} selected={filterCategories === null}>
 								<ListItemText secondary="View all" onClick={() => handleCLearFilter()} />
 							</ListItemButton>
-							{subCategories &&
-								subCategories.map(({ _id: id, name }) => (
+							{paramsCategories &&
+								paramsCategories.map(({ _id: id, name }) => (
 									<ListItemButton
 										sx={{ pl: 4 }}
 										key={id}

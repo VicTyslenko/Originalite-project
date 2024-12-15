@@ -1,5 +1,6 @@
+import { closeModal } from "@main/store/slices/modalSlice";
 import { Container } from "@mui/material";
-import { useCategories } from "components/Header/hooks";
+import { useCategories } from "hooks/use-categories";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,12 +9,13 @@ import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
 import { Categories, StyledLink } from "./StyledWomenMenu";
 
-function WomanMenu({ active, closeСategories }) {
+function WomanMenu({ active }) {
 	const dispatch = useDispatch();
 
 	const { filteredCategories: womanCategories } = useCategories("woman");
 
 	const filterCategories = useSelector(selectFilterCategories);
+
 	const handleSetFilter = useCallback(
 		value => {
 			dispatch(
@@ -21,7 +23,7 @@ function WomanMenu({ active, closeСategories }) {
 					categories: filterCategories === value ? null : value,
 				}),
 			);
-			closeСategories();
+			dispatch(closeModal());
 		},
 		[filterCategories],
 	);
@@ -29,7 +31,7 @@ function WomanMenu({ active, closeСategories }) {
 	const handleClearFilter = useCallback(() => {
 		dispatch(setFilters({ categories: null }));
 
-		closeСategories();
+		dispatch(closeModal());
 	}, [filterCategories]);
 
 	return (

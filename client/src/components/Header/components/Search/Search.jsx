@@ -1,24 +1,47 @@
-import { TextField } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { useEffect, useState } from 'react';
+import SearchIcon from "@mui/icons-material/Search";
+import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { SearchWrappAnimate, PaperStyles, ButtonSearch } from './StyledSearch';
-import {  useNavigate } from 'react-router-dom'
+import { ButtonSearch, PaperStyles, SearchWrappAnimate, TextFieldWrapp } from "./StyledSearch";
+import { SearchResults } from "./components/SearchResults";
 
 function Search({ active }) {
-
-	const [ searchId, setSearchId] = useState();
 	const navigate = useNavigate();
+
+	const [searchedItems, setSearchedItems] = useState([]);
+
+	const allCategories = useSelector(state => state.categories.data);
+
+	const handleChange = event => {
+		const inputValue = event.target.value;
+
+		if (!inputValue.trim()) {
+			setSearchedItems([]);
+			return;
+		}
+		const filtered = allCategories.filter(el => el.name.toLowerCase().includes(inputValue.toLowerCase()));
+
+		setSearchedItems(filtered);
+	};
 
 	return (
 		<PaperStyles elevation={4}>
 			<SearchWrappAnimate id="example-panel" duration={700} height={active}>
-				<form>
-					<TextField sx={{ width: 500 }} onChange={event => setSearchId(event.target.value.toLowerCase())} id="standard-basic" label="Search for item" variant="standard" />
-					<ButtonSearch onClick={() => navigate(`/search/${searchId}`)}  type="button" aria-label="search">
-						<SearchIcon  />
+				<TextFieldWrapp>
+					<TextField
+						sx={{ width: "100%" }}
+						onChange={event => handleChange(event)}
+						id="standard-basic"
+						label="Search for item"
+						variant="standard"
+					/>
+					<ButtonSearch onClick={() => null} type="button" aria-label="search">
+						<SearchIcon />
 					</ButtonSearch>
-				</form>
+					{searchedItems.length > 0 && <SearchResults items={searchedItems} />}
+				</TextFieldWrapp>
 			</SearchWrappAnimate>
 		</PaperStyles>
 	);

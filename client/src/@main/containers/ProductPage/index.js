@@ -15,6 +15,7 @@ function ProductPage() {
 	const dispatch = useDispatch();
 	const { id } = useParams();
 
+
 	useEffect(() => {
 		if (id) {
 			dispatch(getProduct(id));
