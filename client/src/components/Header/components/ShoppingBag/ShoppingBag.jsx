@@ -1,3 +1,4 @@
+import { closeModal } from "@main/store/slices/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { Container, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -22,11 +23,10 @@ import {
 	WrappContainer,
 } from "./StyledShoppingBag";
 
-function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
+function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
 
 	const [totalPrice, setTotalPrice] = useState(0);
-
 	const dataProducts = useSelector(cartDataSelect);
 
 	const productItem = dataProducts?.map(
@@ -65,8 +65,14 @@ function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
 
 	return (
 		<>
-			<Drawer anchor="right" open={isShoppingBag} onClose={() => closeShoppingBag()}>
-				<Container>
+			<Drawer
+				anchor="right"
+				open={isShoppingBag}
+				onClose={() => {
+					dispatch(closeModal());
+				}}
+			>
+				<Container onClick={e => e.stopPropagation()}>
 					<Title>Shopping Bag</Title>
 					<WrappContainer>
 						{dataProducts.length > 0 ? (
@@ -77,7 +83,7 @@ function ShoppingBag({ isShoppingBag, closeShoppingBag }) {
 									<TotalPrice>
 										<span>Total : {totalPrice} $</span>
 									</TotalPrice>
-									<ButtonShoppingBag onClick={() => closeShoppingBag()} to="/shopping-cart">
+									<ButtonShoppingBag onClick={() => dispatch(closeModal())} to="/shopping-cart">
 										Basket
 									</ButtonShoppingBag>
 								</FooterContent>

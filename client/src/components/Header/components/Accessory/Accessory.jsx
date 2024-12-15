@@ -1,3 +1,4 @@
+import { closeModal } from "@main/store/slices/modalSlice";
 import { Container } from "@mui/material";
 import { useCategories } from "hooks/use-categories";
 import { useCallback } from "react";
@@ -8,7 +9,7 @@ import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
 import { Categories, StyledLink } from "./StyledAccessory";
 
-function Accessory({ active, closeСategories }) {
+function Accessory({ active }) {
 	const dispatch = useDispatch();
 
 	const { filteredCategories: accessoriesCategories } = useCategories("accessories");
@@ -22,7 +23,7 @@ function Accessory({ active, closeСategories }) {
 					categories: filterCategories === value ? null : value,
 				}),
 			);
-			closeСategories();
+			dispatch(closeModal());
 		},
 		[filterCategories],
 	);
@@ -30,7 +31,7 @@ function Accessory({ active, closeСategories }) {
 	const handleClearFilter = useCallback(() => {
 		dispatch(setFilters({ categories: null }));
 
-		closeСategories();
+		dispatch(closeModal());
 	}, [filterCategories]);
 
 	return (

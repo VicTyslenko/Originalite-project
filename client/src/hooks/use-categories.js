@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 
 export const useCategories = category => {
-	const categories = useSelector(state => state.categories.data);
+	const allCategories = useSelector(state => state.categories.data);
 
-	const filteredCategories = categories.filter(item => item.parentId === category);
 
-	return { filteredCategories };
+	const filteredCategories = allCategories.filter(item => item.parentId === category);
+
+	return { filteredCategories, allCategories };
 };

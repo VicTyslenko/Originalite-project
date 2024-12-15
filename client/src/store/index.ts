@@ -10,44 +10,46 @@ import cart from "../@main/store/slices/cartSlice";
 import categories from "../@main/store/slices/categoriesSlice";
 import colors from "../@main/store/slices/colorsSlice";
 import filters from "../@main/store/slices/filterSlice";
+import modal from "../@main/store/slices/modalSlice";
 import productList from "../@main/store/slices/productListSlice";
 import product from "../@main/store/slices/productSlice";
 import registration from "../@main/store/slices/registrationSlice";
 import wishlist from "../@main/store/slices/wishlistSlice";
 
 const persistConfig = {
-	key: "root",
-	storage,
-	blacklist: ["filters", "product"],
+  key: "root",
+  storage,
+  blacklist: ["filters", "product"],
 };
 
 const rootReduser = combineReducers({
-	productList,
-	product,
-	auth,
-	registration,
-	cart,
-	wishlist,
-	filters,
-	colors,
-	categories,
-	users,
-	newProduct,
-	addressSlice,
+  productList,
+  product,
+  auth,
+  registration,
+  cart,
+  modal,
+  wishlist,
+  filters,
+  colors,
+  categories,
+  users,
+  newProduct,
+  addressSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReduser);
 
 function setupStore() {
-	return configureStore({
-		reducer: persistedReducer,
-		middleware: getDefaultMiddleware =>
-			getDefaultMiddleware({
-				serializableCheck: {
-					ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-				},
-			}),
-	});
+  return configureStore({
+    reducer: persistedReducer,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }),
+  });
 }
 
 export const store = setupStore();

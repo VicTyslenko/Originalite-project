@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { ButtonSearch, PaperStyles, SearchWrappAnimate } from "./StyledSearch";
+import { ButtonSearch, PaperStyles, SearchWrappAnimate, TextFieldWrapp } from "./StyledSearch";
+import { SearchResults } from "./components/SearchResults";
 
 function Search({ active }) {
 	const navigate = useNavigate();
@@ -28,27 +29,20 @@ function Search({ active }) {
 	return (
 		<PaperStyles elevation={4}>
 			<SearchWrappAnimate id="example-panel" duration={700} height={active}>
-				<TextField
-					sx={{ width: 500 }}
-					onChange={event => handleChange(event)}
-					id="standard-basic"
-					label="Search for item"
-					variant="standard"
-				/>
-				<ButtonSearch onClick={() => null} type="button" aria-label="search">
-					<SearchIcon />
-				</ButtonSearch>
+				<TextFieldWrapp>
+					<TextField
+						sx={{ width: "100%" }}
+						onChange={event => handleChange(event)}
+						id="standard-basic"
+						label="Search for item"
+						variant="standard"
+					/>
+					<ButtonSearch onClick={() => null} type="button" aria-label="search">
+						<SearchIcon />
+					</ButtonSearch>
+					{searchedItems.length > 0 && <SearchResults items={searchedItems} />}
+				</TextFieldWrapp>
 			</SearchWrappAnimate>
-
-			{searchedItems.length > 0 && (
-				<div className="">
-					{searchedItems.map(item => (
-						<div className="" key={item._id}>
-							{item.name}
-						</div>
-					))}
-				</div>
-			)}
 		</PaperStyles>
 	);
 }

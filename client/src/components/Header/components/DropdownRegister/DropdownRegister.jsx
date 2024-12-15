@@ -1,4 +1,5 @@
 import { clearErrorAuth } from "@main/store/slices/authSlice";
+import { closeModal } from "@main/store/slices/modalSlice";
 import { Button, Container } from "@mui/material";
 import { Formik } from "formik";
 import { useEffect } from "react";
@@ -19,7 +20,7 @@ import {
 } from "./StyledDropdownRegister";
 import { validationSchema } from "./validation";
 
-function DropdownRegister({ active, closeFormPages }) {
+function DropdownRegister({ active }) {
 	const dispatch = useDispatch();
 	let errorMessage = useSelector(errorDataAuth);
 
@@ -45,7 +46,7 @@ function DropdownRegister({ active, closeFormPages }) {
 
 							if (!data.error) {
 								toast.success("Login successful!");
-								closeFormPages();
+								dispatch(closeModal());
 								dispatch(clearErrorAuth());
 								resetForm();
 							}
@@ -92,7 +93,7 @@ function DropdownRegister({ active, closeFormPages }) {
 
 					<FormPages>
 						Not registered yet ?
-						<LinkItem to="/login-form" onClick={() => closeFormPages()}>
+						<LinkItem to="/login-form" onClick={() => dispatch(closeModal())}>
 							Sing Up
 						</LinkItem>
 					</FormPages>
