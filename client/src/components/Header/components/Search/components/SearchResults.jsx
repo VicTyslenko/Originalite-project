@@ -8,20 +8,27 @@ export const SearchResults = ({ items }) => {
 	const dispatch = useDispatch();
 
 	const handleSetFilter = value => {
-		setFilters({
-			categories: value,
-		});
+		dispatch(
+			setFilters({
+				categories: value,
+			}),
+		);
 		dispatch(closeModal());
 	};
+	console.log(items);
+
 	return (
 		<S.SearchWrapper>
 			{items.map(item => (
 				<S.ItemWrapp key={item._id}>
 					<S.StyledLink
 						to={`/store/${item.parentId ? item.parentId : item.name}`}
-						onClick={() => handleSetFilter(item.name)}
+						onClick={() => {
+							handleSetFilter(item.name);
+						}}
 					>
-						{item.name}
+						<S.SearchedItem>{item.name}</S.SearchedItem>
+						<S.Categories>{item.parentId}</S.Categories>
 					</S.StyledLink>
 				</S.ItemWrapp>
 			))}

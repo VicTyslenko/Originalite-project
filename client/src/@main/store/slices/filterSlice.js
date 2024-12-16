@@ -12,6 +12,8 @@ export const filterSlice = createSlice({
 	initialState,
 	reducers: {
 		setFilters: (state, action) => {
+			console.log({ fromStore: action.payload });
+
 			return {
 				...state,
 				...action.payload,

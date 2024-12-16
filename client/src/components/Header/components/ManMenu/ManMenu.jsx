@@ -32,6 +32,7 @@ function ManMenu({ active }) {
 
 	const handleClearFilter = useCallback(() => {
 		dispatch(setFilters({ categories: null }));
+		dispatch(closeModal());
 	}, [filterCategories]);
 
 	return (

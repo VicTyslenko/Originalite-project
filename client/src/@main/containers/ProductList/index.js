@@ -24,12 +24,12 @@ function ProductList() {
 	const [startPage, setPage] = useState(1);
 	const { category } = useParams();
 
-	const products = useSelector(selectProductList);
+	const products = useSelector(state => state.productList.data);
 	const count = useSelector(selectCount);
 	const minPrice = useSelector(selectMinPrice);
 	const maxPrice = useSelector(selectMaxPrice);
 	const colors = useSelector(selectFilterColors);
-	const categories = useSelector(selectFilterCategories);
+	const categories = useSelector(state => state.filters.categories);
 
 	const dispatch = useDispatch();
 

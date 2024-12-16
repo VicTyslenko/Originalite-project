@@ -11,7 +11,20 @@ export const ItemWrapp = styled.div`
 export const StyledLink = styled(Link)`
 	&&& {
 		text-decoration: none;
-		display: block;
-		color: grey;
+		display: flex;
+		align-items: center;
+		gap: 30px;
 	}
+`;
+export const SearchedItem = styled.h1`
+	color: black;
+	font-size: 18px;
+	font-weight: 500;
+	margin: 0;
+`;
+
+export const Categories = styled.p`
+	color: grey;
+	font-size: 16px;
+	margin: 0;
 `;
