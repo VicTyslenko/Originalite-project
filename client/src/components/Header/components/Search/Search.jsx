@@ -21,6 +21,7 @@ function Search({ active }) {
 			setSearchedItems([]);
 			return;
 		}
+
 		const filtered = allCategories.filter(el => el.name.toLowerCase().includes(inputValue.toLowerCase()));
 
 		setSearchedItems(filtered);

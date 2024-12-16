@@ -1,10 +1,9 @@
 import { closeModal } from "@main/store/slices/modalSlice";
 import { Container } from "@mui/material";
 import { useCategories } from "hooks/use-categories";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
 import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
 import { Categories, StyledLink } from "./StyledAccessory";
@@ -14,19 +13,16 @@ function Accessory({ active }) {
 
 	const { filteredCategories: accessoriesCategories } = useCategories("accessories");
 
-	const filterCategories = useSelector(selectFilterCategories);
+	const filterCategories = useSelector(state => state.filters.categories);
 
-	const handleSetFilter = useCallback(
-		value => {
-			dispatch(
-				setFilters({
-					categories: filterCategories === value ? null : value,
-				}),
-			);
-			dispatch(closeModal());
-		},
-		[filterCategories],
-	);
+	const handleSetFilter = useCallback(value => {
+		dispatch(
+			setFilters({
+				categories: value,
+			}),
+		);
+		dispatch(closeModal());
+	}, []);
 
 	const handleClearFilter = useCallback(() => {
 		dispatch(setFilters({ categories: null }));
