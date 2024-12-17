@@ -128,9 +128,10 @@ export const Content = styled.div`
 	}
 
 	& .image {
-		min-width: 174.67px;
-		width: 174.67px;
-		height: 253px;
+		min-width: 174px;
+		width: 174px;
+		/* height: 253px; */
+		object-fit: cover;
 	}
 	& .title {
 		color: black;

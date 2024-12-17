@@ -8,21 +8,20 @@ import { ButtonSearch, PaperStyles, SearchWrappAnimate, TextFieldWrapp } from ".
 import { SearchResults } from "./components/SearchResults";
 
 function Search({ active }) {
-	const navigate = useNavigate();
-
+	const allCategories = useSelector(state => state.categories.data);
+	const [inputValue, setInputValue] = useState("");
 	const [searchedItems, setSearchedItems] = useState([]);
 
-	const allCategories = useSelector(state => state.categories.data);
-
 	const handleChange = event => {
-		const inputValue = event.target.value;
+		const value = event.target.value;
 
-		if (!inputValue.trim()) {
+		setInputValue(value);
+
+		if (!value.trim()) {
 			setSearchedItems([]);
 			return;
 		}
-
-		const filtered = allCategories.filter(el => el.name.toLowerCase().includes(inputValue.toLowerCase()));
+		const filtered = allCategories.filter(el => el.name.toLowerCase().includes(value.toLowerCase()));
 
 		setSearchedItems(filtered);
 	};
@@ -33,15 +32,26 @@ function Search({ active }) {
 				<TextFieldWrapp>
 					<TextField
 						sx={{ width: "100%" }}
-						onChange={event => handleChange(event)}
+						onChange={event => {
+							handleChange(event);
+						}}
 						id="standard-basic"
 						label="Search for item"
 						variant="standard"
+						value={inputValue}
 					/>
-					<ButtonSearch onClick={() => null} type="button" aria-label="search">
+					<ButtonSearch onClick={() => null} type="button">
 						<SearchIcon />
 					</ButtonSearch>
-					{searchedItems.length > 0 && <SearchResults items={searchedItems} />}
+					{searchedItems.length > 0 && (
+						<SearchResults
+							clearInput={() => {
+								setInputValue("");
+							}}
+							items={searchedItems}
+							setSearchItems={setSearchedItems}
+						/>
+					)}
 				</TextFieldWrapp>
 			</SearchWrappAnimate>
 		</PaperStyles>

@@ -6,13 +6,6 @@ import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import { getProductList } from "../../store/actions/productListActions";
-import {
-	selectFilterCategories,
-	selectFilterColors,
-	selectMaxPrice,
-	selectMinPrice,
-} from "../../store/selectors/filterSelector";
-import { selectCount, selectProductList } from "../../store/selectors/productListSelectors";
 import { StyledBox, StyledContainer, StyledTitle } from "./ProductList.styles";
 import EmptyProductPage from "./components/EmptyProductPage/EmptyProductPage";
 import ProductCard from "./components/ProductCard";
@@ -24,16 +17,18 @@ function ProductList() {
 	const [startPage, setPage] = useState(1);
 	const { category } = useParams();
 
-	const products = useSelector(state => state.productList.data);
-	const count = useSelector(selectCount);
-	const minPrice = useSelector(selectMinPrice);
-	const maxPrice = useSelector(selectMaxPrice);
-	const colors = useSelector(selectFilterColors);
-	const categories = useSelector(state => state.filters.categories);
+	const { products, count, minPrice, maxPrice, colors, categories } = useSelector(state => ({
+		products: state.productList.data,
+		count: state.productList.count,
+		minPrice: state.filters.minPrice,
+		maxPrice: state.filters.maxPrice,
+		colors: state.filters.colors,
+		categories: state.filters.categories,
+	}));
 
 	const dispatch = useDispatch();
 
-	const handleChange = (event, value) => {
+	const handleChange = value => {
 		setPage(value);
 	};
 

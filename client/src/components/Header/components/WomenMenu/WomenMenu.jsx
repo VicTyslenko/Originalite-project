@@ -13,6 +13,7 @@ function WomanMenu({ active }) {
 	const dispatch = useDispatch();
 
 	const { filteredCategories: womanCategories } = useCategories("woman");
+	console.log({ test: womanCategories });
 
 	const filterCategories = useSelector(selectFilterCategories);
 

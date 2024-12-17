@@ -1,24 +1,23 @@
-import { React, useState, useEffect, useCallback } from 'react';
-import { Container } from '@mui/system';
+import TextField from "@mui/material/TextField";
+import { Container } from "@mui/system";
+import { React, useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { useUserData } from '../../../@profile/hooks/useUserData';
-import { cartDataSelect } from '../../store/selectors/cartSelector';
-import { Link } from 'react-router-dom';
-import { addProductToCart, deleteProductFromCart } from '../../store/actions/cartActions';
-import EmptyCart from '../ShoppingCart/EmptyCart/EmptyCart';
+import { useUserData } from "../../../@profile/hooks/useUserData";
+import { addProductToCart, deleteProductFromCart } from "../../store/actions/cartActions";
+import { cartDataSelect } from "../../store/selectors/cartSelector";
+import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import {
-	ShoppingCartWrapp,
-	RemoveButton,
-	StyledLink,
-	LeftSideWrapp,
 	Content,
-	RightSideWrapp,
 	ContentWrapp,
+	LeftSideWrapp,
+	RemoveButton,
+	RightSideWrapp,
+	ShoppingCartWrapp,
 	StyledDiv,
-} from './StyledShoppingCart';
-
-import { useSelector, useDispatch } from 'react-redux';
-import TextField from '@mui/material/TextField';
+	StyledLink,
+} from "./StyledShoppingCart";
 
 function ShoppingCart() {
 	const dispatch = useDispatch();
@@ -33,7 +32,7 @@ function ShoppingCart() {
 	}, [cart]);
 
 	const handleClickIncremet = useCallback(
-		(value) => {
+		value => {
 			dispatch(addProductToCart(value._id));
 		},
 		[dispatch],
@@ -72,8 +71,8 @@ function ShoppingCart() {
 		<Container
 			maxWidth="lg"
 			sx={{
-				marginBottom: '50px',
-				marginTop: '40px',
+				marginBottom: "50px",
+				marginTop: "40px",
 			}}
 		>
 			{cart.length > 0 ? (
@@ -87,10 +86,10 @@ function ShoppingCart() {
 						<p className="order">Order value :</p>
 						<p className="delivery">Delivery :</p>
 						<p className="total">
-							Total price: <span className="total-price">{totalPrice} $ </span>{' '}
+							Total price: <span className="total-price">{totalPrice} $ </span>{" "}
 						</p>
 						<div className="button-wrapp">
-							<StyledLink to={'/account/profile/address-details'}>Checkout</StyledLink>
+							<StyledLink to={"/account/profile/address-details"}>Checkout</StyledLink>
 						</div>
 					</RightSideWrapp>
 				</ShoppingCartWrapp>
