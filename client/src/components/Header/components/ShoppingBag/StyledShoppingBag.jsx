@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const Title = styled.h3`
 	text-align: center;
 	padding-top: 8px;
 	font-size: 22px;
-	font-family: 'Josefin Sans';
+	font-family: "Josefin Sans";
 	text-transform: uppercase;
 `;
 
@@ -28,7 +28,7 @@ export const ButtonShoppingBag = styled(Link)`
 	letter-spacing: 0.8px;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-family: 'Josefin Sans';
+	font-family: "Josefin Sans";
 
 	&:hover {
 		background: #434342;
@@ -37,6 +37,8 @@ export const ButtonShoppingBag = styled(Link)`
 
 export const MainContent = styled.div`
 	position: relative;
+	max-height: 570px;
+	overflow: auto;
 `;
 
 export const ContentItem = styled.div`
@@ -55,6 +57,7 @@ export const ImageWrapp = styled.div`
 
 	img {
 		height: 100%;
+		object-fit: cover;
 	}
 `;
 
@@ -67,7 +70,7 @@ export const Description = styled.div`
 export const NameItem = styled.h3`
 	margin: 0;
 	font-size: 16px;
-	font-family: 'Open Sans';
+	font-family: "Open Sans";
 	text-transform: uppercase;
 `;
 
@@ -104,5 +107,5 @@ export const TotalPrice = styled.div`
 	font-size: 20px;
 	font-weight: 600;
 	text-transform: uppercase;
-	font-family: 'Josefin Sans';
+	font-family: "Josefin Sans";
 `;

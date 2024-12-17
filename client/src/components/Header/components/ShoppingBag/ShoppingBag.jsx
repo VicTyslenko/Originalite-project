@@ -72,12 +72,17 @@ function ShoppingBag({ isShoppingBag }) {
 					dispatch(closeModal());
 				}}
 			>
-				<Container onClick={e => e.stopPropagation()}>
+				<Container
+					onClick={e => e.stopPropagation()}
+					style={{
+						overflow: "hidden",
+					}}
+				>
 					<Title>Shopping Bag</Title>
 					<WrappContainer>
 						{dataProducts.length > 0 ? (
-							<MainContent>
-								{productItem}
+							<>
+								<MainContent>{productItem}</MainContent>
 
 								<FooterContent>
 									<TotalPrice>
@@ -87,7 +92,7 @@ function ShoppingBag({ isShoppingBag }) {
 										Basket
 									</ButtonShoppingBag>
 								</FooterContent>
-							</MainContent>
+							</>
 						) : (
 							<EmptyCart />
 						)}
