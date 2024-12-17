@@ -29,7 +29,7 @@ export const SearchResults = ({ items, clearInput, setSearchItems }) => {
 							setSearchItems([]);
 						}}
 					>
-						<S.SearchedItem>{item.name}</S.SearchedItem>
+						<S.SearchedItem>{item.name || item.parentId}</S.SearchedItem>
 						<S.Categories>{item.parentId}</S.Categories>
 					</S.StyledLink>
 				</S.ItemWrapp>
