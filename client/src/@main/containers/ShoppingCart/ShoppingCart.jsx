@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
-import { React, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { useUserData } from "../../../@profile/hooks/useUserData";
 import { addProductToCart, deleteProductFromCart } from "../../store/actions/cartActions";
 import { cartDataSelect } from "../../store/selectors/cartSelector";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
+import PaymentModal from "./Modal/Modal";
 import {
 	Content,
 	ContentWrapp,
@@ -24,6 +25,8 @@ function ShoppingCart() {
 	const user = useUserData();
 	const [totalPrice, setTotalPrice] = useState(0);
 	const cart = useSelector(cartDataSelect);
+
+	const [open, setOpen] = useState(false);
 
 	const priceItem = cart?.map(({ product, cartQuantity }) => product.currentPrice * cartQuantity);
 
@@ -62,9 +65,21 @@ function ShoppingCart() {
 						<li className="price">Price : {product.currentPrice} $ </li>
 						<li className="total">Total : {product.currentPrice * cartQuantity} $</li>
 					</ul>
-					<RemoveButton onClick={() => dispatch(deleteProductFromCart(product._id))}>Remove</RemoveButton>
+					<RemoveButton onClick={() => setOpen(true)}>Remove</RemoveButton>
 				</StyledDiv>
 			</Content>
+			{open && (
+				<PaymentModal
+					open={open}
+					close={() => setOpen(false)}
+					text="Do you want to remove this item from your Shopping Bag?"
+					actions
+					customStyles={{
+						width: "600px",
+					}}
+					product={product}
+				/>
+			)}
 		</ContentWrapp>
 	));
 	return (

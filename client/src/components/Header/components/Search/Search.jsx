@@ -21,7 +21,14 @@ function Search({ active }) {
 			setSearchedItems([]);
 			return;
 		}
-		const filtered = allCategories.filter(el => el.name.toLowerCase().includes(value.toLowerCase()));
+
+		const filtered = allCategories.filter(el => {
+			if (el.name) {
+				return el.name.toLowerCase().includes(value.toLowerCase());
+			} else {
+				return el.parentId.toLowerCase().includes(value.toLowerCase());
+			}
+		});
 
 		setSearchedItems(filtered);
 	};
