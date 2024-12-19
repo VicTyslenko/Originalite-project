@@ -17,6 +17,7 @@ const modalReducer = createSlice({
 		toggleModal(state) {
 			state.modal = !state.modal;
 		},
+
 		openModal(state) {
 			state.modal = true;
 		},

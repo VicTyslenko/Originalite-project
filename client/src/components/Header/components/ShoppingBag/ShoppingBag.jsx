@@ -1,4 +1,5 @@
 import { closeModal } from "@main/store/slices/modalSlice";
+import { openModal } from "@main/store/slices/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { Container, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
