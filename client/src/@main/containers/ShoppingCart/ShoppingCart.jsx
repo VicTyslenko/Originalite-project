@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { useUserData } from "../../../@profile/hooks/useUserData";
-import { addProductToCart, deleteProductFromCart } from "../../store/actions/cartActions";
-import { cartDataSelect } from "../../store/selectors/cartSelector";
+import { addProductToCart, decrementItemInCart } from "../../store/actions/cartActions";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import PaymentModal from "./Modal/Modal";
 import {
@@ -22,9 +21,9 @@ import {
 
 function ShoppingCart() {
 	const dispatch = useDispatch();
-	const user = useUserData();
+
 	const [totalPrice, setTotalPrice] = useState(0);
-	const cart = useSelector(cartDataSelect);
+	const cart = useSelector(state => state.cart.data);
 
 	const [open, setOpen] = useState(false);
 
@@ -34,12 +33,13 @@ function ShoppingCart() {
 		setTotalPrice(priceItem.reduce((a, b) => a + b, 0));
 	}, [cart]);
 
-	const handleClickIncremet = useCallback(
-		value => {
-			dispatch(addProductToCart(value._id));
-		},
-		[dispatch],
-	);
+	const handleIncrement = id => {
+		dispatch(addProductToCart(id));
+	};
+
+	const hanleDecrement = id => {
+		dispatch(decrementItemInCart(id));
+	};
 
 	const productItem = cart?.map(({ product, color, size, cartQuantity }) => (
 		<ContentWrapp key={product._id}>
@@ -55,9 +55,11 @@ function ShoppingCart() {
 						<li className="color">Color : {color}</li>
 						<li className="size">Size : {size}</li>
 						<div className="btn-wrapp">
-							<button className="btn-qnt">-</button>
+							<button className="btn-qnt" onClick={() => hanleDecrement(product._id)}>
+								-
+							</button>
 							{cartQuantity}
-							<button className="btn-qnt" onClick={() => handleClickIncremet(product)}>
+							<button className="btn-qnt" onClick={() => handleIncrement(product._id)}>
 								+
 							</button>
 						</div>

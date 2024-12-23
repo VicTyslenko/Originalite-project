@@ -1,20 +1,17 @@
-import { React } from 'react';
-import { useNavigate  } from 'react-router-dom';
-import { Container, TextField } from '@mui/material';
+import { Container, TextField } from "@mui/material";
+import { Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { Link } from 'react-router-dom';
+import { addressFetchData } from "../../../@main/store/actions/addressActions";
+import { useUserData } from "../../hooks/useUserData";
+import { validationDeliverySchema } from "../../validation";
+import { ContentForm, StyledLink, Title } from "../AdressDetails/StyledAddressDetails";
 
-import { Title, ContentForm, StyledLink } from '../AdressDetails/StyledAddressDetails';
-import { validationDeliverySchema } from '../../validation';
-import { useDispatch, useSelector } from 'react-redux';
-import { addressFetchData } from '../../../@main/store/actions/addressActions';
-import { useUserData } from '../../hooks/useUserData';
-import { cartDataSelect } from '../../../@main/store/selectors/cartSelector';
-import { Formik } from 'formik';
 const AddressDetails = () => {
 	const dispatch = useDispatch();
 	const user = useUserData();
-	const products = useSelector(cartDataSelect);
+	const products = useSelector(state => state.cart.data);
 
 	const navigate = useNavigate();
 
@@ -22,25 +19,25 @@ const AddressDetails = () => {
 		<Container
 			maxWidth="lg"
 			sx={{
-				display: 'flex',
-				justifyContent: 'center',
+				display: "flex",
+				justifyContent: "center",
 			}}
 		>
 			<Formik
 				initialValues={{
-					firstName: '',
-					lastName: '',
-					email: '',
-					mobile: '',
-					address: '',
+					firstName: "",
+					lastName: "",
+					email: "",
+					mobile: "",
+					address: "",
 				}}
 				validationSchema={validationDeliverySchema}
-				onSubmit={async (values) => {
+				onSubmit={async values => {
 					dispatch(addressFetchData({ ...values, customerId: user?.id, products }));
-					navigate('/payment');
+					navigate("/payment");
 				}}
 			>
-				{(props) => (
+				{props => (
 					<ContentForm>
 						<form onSubmit={props.handleSubmit}>
 							<Title>Please,fill the form with your details and delivery address</Title>
@@ -57,7 +54,7 @@ const AddressDetails = () => {
 								placeholder="Email"
 								multiline
 								variant="standard"
-								sx={{ mb: '6px' }}
+								sx={{ mb: "6px" }}
 							/>
 							<TextField
 								type="string"
@@ -70,7 +67,7 @@ const AddressDetails = () => {
 								onChange={props.handleChange}
 								error={props.touched.firstName && Boolean(props.errors.firstName)}
 								helperText={props.touched.firstName && props.errors.firstName}
-								sx={{ mb: '6px' }}
+								sx={{ mb: "6px" }}
 							/>
 							<TextField
 								name="lastName"
@@ -84,7 +81,7 @@ const AddressDetails = () => {
 								onChange={props.handleChange}
 								error={props.touched.lastName && Boolean(props.errors.lastName)}
 								helperText={props.touched.lastName && props.errors.lastName}
-								sx={{ mb: '6px' }}
+								sx={{ mb: "6px" }}
 							/>
 
 							<TextField
@@ -99,7 +96,7 @@ const AddressDetails = () => {
 								onChange={props.handleChange}
 								error={props.touched.mobile && Boolean(props.errors.mobile)}
 								helperText={props.touched.mobile && props.errors.mobile}
-								sx={{ mb: '6px' }}
+								sx={{ mb: "6px" }}
 							/>
 							<TextField
 								type="string"
@@ -113,16 +110,12 @@ const AddressDetails = () => {
 								onChange={props.handleChange}
 								error={props.touched.address && Boolean(props.errors.address)}
 								helperText={props.touched.address && props.errors.address}
-								sx={{ mb: '6px' }}
+								sx={{ mb: "6px" }}
 							/>
 
 							<div>
 								<div className="button-wrapp">
-									<StyledLink
-								
-										as="button"
-										type="submit"
-									>
+									<StyledLink as="button" type="submit">
 										Save
 									</StyledLink>
 								</div>
@@ -136,5 +129,3 @@ const AddressDetails = () => {
 };
 
 export default AddressDetails;
-
-

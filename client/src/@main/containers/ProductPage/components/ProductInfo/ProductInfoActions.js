@@ -14,6 +14,7 @@ import { ActionsWrapper, StyledButton } from "./ProductInfo.styles";
 function ProductInfoActions({ id }) {
 	const dispatch = useDispatch();
 	const isCart = useSelector(state => selectIsCart(state, id));
+
 	const isWishlist = useSelector(state => selectIsWishlist(state, id));
 	const isAuth = useSelector(isAuthSelector);
 

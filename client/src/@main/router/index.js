@@ -7,7 +7,7 @@ import LandingPageLogin from "../containers/LandingPageLogin/LandingPageLogin";
 import PaymentLandingPage from "../containers/PaymentLandingPage";
 import PolicyLandingPage from "../containers/PolicyLandingPage";
 import ProductList from "../containers/ProductList/ProductList";
-import ProductPage from "../containers/ProductPage";
+import ProductPage from "../containers/ProductPage/ProductPage";
 import QuestionsLandingPage from "../containers/QuestionsLandingPage";
 import RegisterForm from "../containers/RegisterForm/RegisterForm";
 import SearchResultPage from "../containers/SearchResultPage";

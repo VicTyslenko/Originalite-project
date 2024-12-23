@@ -36,20 +36,4 @@ function ProductInfo({ id, name, productUrl, currentPrice, colors, sizes, produc
 	);
 }
 
-ProductInfo.propTypes = {
-	id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-	productUrl: PropTypes.string.isRequired,
-	currentPrice: PropTypes.number.isRequired,
-	colors: PropTypes.arrayOf(
-		PropTypes.shape({
-			color: PropTypes.string.isRequired,
-			hash: PropTypes.string.isRequired,
-		}),
-	).isRequired,
-	sizes: PropTypes.arrayOf(PropTypes.string).isRequired,
-	productDetails: PropTypes.string.isRequired,
-	productDelivery: PropTypes.string.isRequired,
-};
-
 export default ProductInfo;
