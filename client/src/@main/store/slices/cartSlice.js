@@ -22,6 +22,7 @@ export const cartSlice = createSlice({
 
 		builder.addCase(addProductToCart.fulfilled, (state, action) => {
 			const { products } = action.payload;
+
 			state.data = [...products];
 		});
 

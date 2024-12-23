@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 
 import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import { deleteProductFromCart } from "../../../../@main/store/actions/cartActions";
-import { cartDataSelect } from "../../../../@main/store/selectors/cartSelector";
 import {
 	ButtonShoppingBag,
 	CloseItemIcon,
@@ -28,7 +27,7 @@ function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
 
 	const [totalPrice, setTotalPrice] = useState(0);
-	const dataProducts = useSelector(cartDataSelect);
+	const dataProducts = useSelector(state => state.cart.data);
 
 	const productItem = dataProducts?.map(
 		({ product }) =>

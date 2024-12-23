@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 import { useUserData } from "../../../@profile/hooks/useUserData";
 import { addProductToCart, deleteProductFromCart } from "../../store/actions/cartActions";
-import { cartDataSelect } from "../../store/selectors/cartSelector";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import PaymentModal from "./Modal/Modal";
 import {
@@ -22,9 +21,9 @@ import {
 
 function ShoppingCart() {
 	const dispatch = useDispatch();
-	const user = useUserData();
+
 	const [totalPrice, setTotalPrice] = useState(0);
-	const cart = useSelector(cartDataSelect);
+	const cart = useSelector(state => state.cart.data);
 
 	const [open, setOpen] = useState(false);
 
@@ -34,12 +33,9 @@ function ShoppingCart() {
 		setTotalPrice(priceItem.reduce((a, b) => a + b, 0));
 	}, [cart]);
 
-	const handleClickIncremet = useCallback(
-		value => {
-			dispatch(addProductToCart(value._id));
-		},
-		[dispatch],
-	);
+	const handleIncrement = id => {
+		dispatch(addProductToCart(id));
+	};
 
 	const productItem = cart?.map(({ product, color, size, cartQuantity }) => (
 		<ContentWrapp key={product._id}>
@@ -57,7 +53,7 @@ function ShoppingCart() {
 						<div className="btn-wrapp">
 							<button className="btn-qnt">-</button>
 							{cartQuantity}
-							<button className="btn-qnt" onClick={() => handleClickIncremet(product)}>
+							<button className="btn-qnt" onClick={() => handleIncrement(product._id)}>
 								+
 							</button>
 						</div>

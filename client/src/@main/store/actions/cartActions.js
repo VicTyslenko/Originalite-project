@@ -35,18 +35,20 @@ export const addProductToCart = createAsyncThunk("cart/addProductToCart", async 
 				},
 			},
 		);
-
 		return data;
 	} else {
-		const products = [
-			...cart.data,
-			{
-				product: product.data,
-				cartQuantity: 1,
-				size: product.currentSize,
-				color: product.currentColor,
-			},
-		];
+		const products = cart.data.find(item => item.product._id === id)
+			? cart.data.map(item => (item.product._id === id ? { ...item, cartQuantity: item.cartQuantity + 1 } : item))
+			: [
+					...cart.data,
+					{
+						product: product.data,
+						cartQuantity: 1,
+						size: product.currentSize,
+						color: product.currentColor,
+					},
+			  ];
+
 		return { products };
 	}
 });

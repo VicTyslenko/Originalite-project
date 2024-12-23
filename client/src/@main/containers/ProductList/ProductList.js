@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import PropTypes from "prop-types";
-
 import { getProductList } from "../../store/actions/productListActions";
 import { StyledBox, StyledContainer, StyledTitle } from "./ProductList.styles";
 import EmptyProductPage from "./components/EmptyProductPage/EmptyProductPage";
@@ -74,21 +72,5 @@ function ProductList() {
 		</>
 	);
 }
-
-ProductList.propTypes = {
-	title: PropTypes.string,
-	articul: PropTypes.number,
-	price: PropTypes.number,
-	colors: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.number,
-			color: PropTypes.string,
-			colorHash: PropTypes.string,
-		}),
-	),
-	sizes: PropTypes.arrayOf(PropTypes.number),
-	productDetails: PropTypes.string,
-	productDelivery: PropTypes.string,
-};
 
 export default ProductList;
