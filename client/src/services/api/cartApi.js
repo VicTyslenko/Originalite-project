@@ -6,6 +6,9 @@ export function getCart(config) {
 export function deleteCart(id, config) {
 	return axiosInstance.delete(`cart/`, config);
 }
+export function decreaseQuantity(id, config) {
+	return axiosInstance.delete(`cart/product/${id}`, config);
+}
 
 export function addProductToCart(id, data, config) {
 	return axiosInstance.put(`cart/${id}`, data, config);

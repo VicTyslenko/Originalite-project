@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { useUserData } from "../../../@profile/hooks/useUserData";
-import { addProductToCart, deleteProductFromCart } from "../../store/actions/cartActions";
+import { addProductToCart, decrementItemInCart } from "../../store/actions/cartActions";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import PaymentModal from "./Modal/Modal";
 import {
@@ -37,6 +37,10 @@ function ShoppingCart() {
 		dispatch(addProductToCart(id));
 	};
 
+	const hanleDecrement = id => {
+		dispatch(decrementItemInCart(id));
+	};
+
 	const productItem = cart?.map(({ product, color, size, cartQuantity }) => (
 		<ContentWrapp key={product._id}>
 			<Content>
@@ -51,7 +55,9 @@ function ShoppingCart() {
 						<li className="color">Color : {color}</li>
 						<li className="size">Size : {size}</li>
 						<div className="btn-wrapp">
-							<button className="btn-qnt">-</button>
+							<button className="btn-qnt" onClick={() => hanleDecrement(product._id)}>
+								-
+							</button>
 							{cartQuantity}
 							<button className="btn-qnt" onClick={() => handleIncrement(product._id)}>
 								+
