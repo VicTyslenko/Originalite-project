@@ -95,8 +95,9 @@ export const deleteProductFromCart = createAsyncThunk("cart/deleteProductFromCar
 		return { products };
 	}
 });
-export const deleteCart = createAsyncThunk("cart/deleteCart", async (user, { getState }) => {
-	const { auth, cart } = getState();
+
+export const deleteCart = createAsyncThunk("cart/deleteCart", async (_, { getState }) => {
+	const { auth } = getState();
 
 	if (auth.data !== null) {
 		const { data } = await fetchDeleteCart(
@@ -105,10 +106,8 @@ export const deleteCart = createAsyncThunk("cart/deleteCart", async (user, { get
 				headers: {
 					Authorization: auth.data?.token,
 				},
-				user,
 			},
 		);
-
 		return data;
 	}
 });

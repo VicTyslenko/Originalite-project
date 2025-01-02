@@ -3,8 +3,8 @@ import { Route, Routes } from "react-router-dom";
 
 import NoMatch from "./NoMatch";
 
-const Main = React.lazy(() => import("../@main/app"));
-const Profile = React.lazy(() => import("../@profile/app"));
+const Main = React.lazy(() => import("../@main/main"));
+const Profile = React.lazy(() => import("../@profile/profile"));
 const Editor = React.lazy(() => import("../@editor/app"));
 
 function AppRoutes() {

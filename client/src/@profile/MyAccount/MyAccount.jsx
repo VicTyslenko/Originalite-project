@@ -1,32 +1,18 @@
-import { useState } from 'react';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { Container } from '@mui/system';
-import AddressBook from '../containers/AddressBook';
-import MyProfile from '../containers/MyProfile';
-import Wishlist from '../containers/Wishlist';
-import PurchaseHistory from '../containers/PurchaseHistory';
-import { MenuList, Title } from './StyledMyAccount';
-// import { makeStyles } from '@mui/styles';
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
+import Tab from "@mui/material/Tab";
+import { Container } from "@mui/system";
+import { useState } from "react";
 
+import AddressBook from "../containers/AddressBook";
+import MyProfile from "../containers/MyProfile";
+import PurchaseHistory from "../containers/PurchaseHistory";
+import Wishlist from "../containers/Wishlist";
+import { MenuList, Title } from "./StyledMyAccount";
 
 function MyAccount() {
-
-	// const useStyles = makeStyles({
-	// 	tabs: {
-	// 		'& .MuiTabs-indicator': {
-	// 			backgroundColor: 'orange',
-	// 			height: 3,
-	// 		},
-	// 		'& .MuiTab-root.Mui-selected': {
-	// 			color: 'red',
-	// 		},
-	// 	},
-	// });
-	const [value, setValue] = useState('1');
-	// const classes = useStyles();
+	const [value, setValue] = useState("1");
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
@@ -38,8 +24,7 @@ function MyAccount() {
 				<MenuList>
 					<TabList onChange={handleChange}>
 						<Tab
-							// className={classes.tabs}
-							className='list-item'
+							className="list-item"
 							label="My profile"
 							value="1"
 						/>

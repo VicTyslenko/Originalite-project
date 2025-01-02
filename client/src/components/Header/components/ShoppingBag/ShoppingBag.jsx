@@ -1,5 +1,4 @@
 import { closeModal } from "@main/store/slices/modalSlice";
-import { openModal } from "@main/store/slices/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { Container, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -8,20 +7,7 @@ import { Link } from "react-router-dom";
 
 import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import { deleteProductFromCart } from "../../../../@main/store/actions/cartActions";
-import {
-	ButtonShoppingBag,
-	CloseItemIcon,
-	ContentItem,
-	Description,
-	FooterContent,
-	ImageWrapp,
-	MainContent,
-	NameItem,
-	Price,
-	Title,
-	TotalPrice,
-	WrappContainer,
-} from "./StyledShoppingBag";
+import * as S from "./StyledShoppingBag";
 
 function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
@@ -32,28 +18,28 @@ function ShoppingBag({ isShoppingBag }) {
 	const productItem = dataProducts?.map(
 		({ product }) =>
 			product && (
-				<ContentItem key={product._id}>
+				<S.ContentItem key={product._id}>
 					<Link to={`product/${product.itemNo}`}>
-						<ImageWrapp className="image-wrapp">
+						<S.ImageWrapp className="image-wrapp">
 							<img className="image" src={product.imageUrls[0]} alt="" />
-						</ImageWrapp>
+						</S.ImageWrapp>
 					</Link>
-					<Description className="list">
+					<S.Description className="list">
 						<div className="description">
-							<NameItem>{product.name}</NameItem>
-							<Price>
+							<S.NameItem>{product.name}</S.NameItem>
+							<S.Price>
 								Price : <span className="price">{product.currentPrice} $</span>
-							</Price>
+							</S.Price>
 						</div>
-						<CloseItemIcon
+						<S.CloseItemIcon
 							onClick={e => {
 								dispatch(deleteProductFromCart(product._id));
 							}}
 						>
 							<CloseIcon />
-						</CloseItemIcon>
-					</Description>
-				</ContentItem>
+						</S.CloseItemIcon>
+					</S.Description>
+				</S.ContentItem>
 			),
 	);
 
@@ -78,25 +64,25 @@ function ShoppingBag({ isShoppingBag }) {
 						overflow: "hidden",
 					}}
 				>
-					<Title>Shopping Bag</Title>
-					<WrappContainer>
+					<S.Title>Shopping Bag</S.Title>
+					<S.WrappContainer>
 						{dataProducts.length > 0 ? (
 							<>
-								<MainContent>{productItem}</MainContent>
+								<S.MainContent>{productItem}</S.MainContent>
 
-								<FooterContent>
-									<TotalPrice>
+								<S.FooterContent>
+									<S.TotalPrice>
 										<span>Total : {totalPrice} $</span>
-									</TotalPrice>
-									<ButtonShoppingBag onClick={() => dispatch(closeModal())} to="/shopping-cart">
+									</S.TotalPrice>
+									<S.ButtonShoppingBag onClick={() => dispatch(closeModal())} to="/shopping-cart">
 										Basket
-									</ButtonShoppingBag>
-								</FooterContent>
+									</S.ButtonShoppingBag>
+								</S.FooterContent>
 							</>
 						) : (
 							<EmptyCart />
 						)}
-					</WrappContainer>
+					</S.WrappContainer>
 				</Container>
 			</Drawer>
 		</>
