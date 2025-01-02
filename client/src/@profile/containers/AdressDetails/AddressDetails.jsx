@@ -10,7 +10,9 @@ import { ContentForm, StyledLink, Title } from "../AdressDetails/StyledAddressDe
 
 const AddressDetails = () => {
 	const dispatch = useDispatch();
+
 	const user = useUserData();
+
 	const products = useSelector(state => state.cart.data);
 
 	const navigate = useNavigate();
@@ -40,7 +42,7 @@ const AddressDetails = () => {
 				{props => (
 					<ContentForm>
 						<form onSubmit={props.handleSubmit}>
-							<Title>Please,fill the form with your details and delivery address</Title>
+							<Title>Please, fill the form with your details and delivery address</Title>
 
 							<TextField
 								type="string"
@@ -115,9 +117,10 @@ const AddressDetails = () => {
 
 							<div>
 								<div className="button-wrapp">
-									<StyledLink as="button" type="submit">
+									{/* <StyledLink as="button" type="submit">
 										Save
-									</StyledLink>
+									</StyledLink> */}
+									<button type="submit">Save</button>
 								</div>
 							</div>
 						</form>

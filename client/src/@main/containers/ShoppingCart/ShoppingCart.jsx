@@ -1,10 +1,9 @@
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { useUserData } from "../../../@profile/hooks/useUserData";
 import { addProductToCart, decrementItemInCart } from "../../store/actions/cartActions";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import PaymentModal from "./Modal/Modal";

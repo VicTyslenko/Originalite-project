@@ -16,7 +16,7 @@ export const cartSlice = createSlice({
 	name: "cart",
 	initialState,
 	reducers: {
-		clearUnauthCart(state) {
+		clearCart(state) {
 			state.data = [];
 		},
 	},
@@ -49,6 +49,6 @@ export const cartSlice = createSlice({
 		});
 	},
 });
-export const { clearUnauthCart } = cartSlice.actions;
+export const { clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

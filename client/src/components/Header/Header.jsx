@@ -1,6 +1,5 @@
 import { getCategories } from "@main/store/actions/categoriesActions";
 import { closeModal, openModal, toggleModal } from "@main/store/slices/modalSlice";
-import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Container } from "@mui/material";
@@ -16,7 +15,6 @@ import {
 	ContainerWrapper,
 	ContentWrapper,
 	ItemButton,
-	LinkItem,
 	Logo,
 } from "./StyledHeader";
 import Accessory from "./components/Accessory";
@@ -68,7 +66,6 @@ function Header() {
 						<Link to="#">
 							<ButtonItem
 								data-menu="menuMen"
-								aria-controls="example-panel"
 								onClick={e => {
 									dispatch(toggleModal());
 									setDataMenu(e.target.dataset.menu);
@@ -80,7 +77,6 @@ function Header() {
 						<Link to="#">
 							<ButtonItem
 								data-menu="menuWomen"
-								aria-controls="example-panel"
 								onClick={e => {
 									dispatch(toggleModal());
 									setDataMenu(e.target.dataset.menu);
@@ -92,7 +88,6 @@ function Header() {
 						<Link to="#">
 							<ButtonItem
 								data-menu="menuAccessory"
-								aria-controls="example-panel"
 								onClick={e => {
 									dispatch(toggleModal());
 									setDataMenu(e.target.dataset.menu);
@@ -110,7 +105,6 @@ function Header() {
 					<BoxTechnical>
 						<ButtonGroup
 							data-menu="menuSearch"
-							aria-controls="example-panel"
 							onClick={e => {
 								dispatch(toggleModal());
 								setDataMenu(e.target.dataset.menu);

@@ -1,8 +1,10 @@
-import { Container, TextField, Radio, RadioGroup, FormControlLabel, FormControl, Button } from '@mui/material';
-import { Title, ContentForm, ContainerWrapp, Form } from './StyledMyProfile';
-import { useDispatch } from 'react-redux';
-import { useUserData } from '../../hooks/useUserData';
-import { Formik } from 'formik';
+import { Button, Container, FormControl, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
+import { Formik } from "formik";
+import { useDispatch } from "react-redux";
+
+import { useUserData } from "../../hooks/useUserData";
+import { ContainerWrapp, ContentForm, Form, Title } from "./StyledMyProfile";
+
 function MyProfile() {
 	const dispatch = useDispatch();
 	const user = useUserData();
@@ -14,15 +16,15 @@ function MyProfile() {
 				<ContentForm>
 					<Formik
 						initialValues={{
-							firstName: '',
-							lastName: '',
-							email: '',
-							mobile: '',
-							address: '',
-							birthday: '',
+							firstName: "",
+							lastName: "",
+							email: "",
+							mobile: "",
+							address: "",
+							birthday: "",
 						}}
 					>
-						{(props) => (
+						{props => (
 							<Form onSubmit={props.handleSubmit}>
 								<TextField
 									id="standard-basic"
@@ -34,7 +36,7 @@ function MyProfile() {
 									onChange={props.handleChange}
 									multiline
 									variant="standard"
-									sx={{ mb: '6px' }}
+									sx={{ mb: "6px" }}
 								/>
 								<TextField
 									id="standard-basic"
@@ -46,7 +48,7 @@ function MyProfile() {
 									onChange={props.handleChange}
 									multiline
 									variant="standard"
-									sx={{ mb: '6px' }}
+									sx={{ mb: "6px" }}
 								/>
 								<TextField
 									id="standard-basic"
@@ -57,7 +59,7 @@ function MyProfile() {
 									onChange={props.handleChange}
 									multiline
 									variant="standard"
-									sx={{ mb: '6px' }}
+									sx={{ mb: "6px" }}
 								/>
 
 								<TextField
@@ -69,15 +71,10 @@ function MyProfile() {
 									placeholder="+38"
 									multiline
 									variant="standard"
-									sx={{ mb: '6px' }}
+									sx={{ mb: "6px" }}
 								/>
 								<FormControl>
-									<RadioGroup
-										sx={{ borderRadius: '12px' }}
-										row
-										aria-labelledby="demo-row-radio-buttons-group-label"
-										name="row-radio-buttons-group"
-									>
+									<RadioGroup sx={{ borderRadius: "12px" }} row name="row-radio-buttons-group">
 										<FormControlLabel value="female" control={<Radio />} label="Male" />
 										<FormControlLabel value="male" control={<Radio />} label="Female" />
 									</RadioGroup>
@@ -93,7 +90,7 @@ function MyProfile() {
 									placeholder="Dd/mm/yyyy"
 									multiline
 									variant="standard"
-									sx={{ mb: '6px' }}
+									sx={{ mb: "6px" }}
 								/>
 							</Form>
 						)}
@@ -103,9 +100,8 @@ function MyProfile() {
 						type="submit"
 						variant="contained"
 						sx={{
-							backgroundColor: 'black',
+							backgroundColor: "black",
 						}}
-						
 					>
 						SAVE
 					</Button>
