@@ -22,7 +22,6 @@ export const ButtonAuthorization = ({ setDataMenu }) => {
 	return (
 		<ButtonGroup
 			data-menu="menuRegistration"
-			aria-controls="example-panel"
 			onClick={e => {
 				dispatch(toggleModal());
 				setDataMenu(e.target.dataset.menu);

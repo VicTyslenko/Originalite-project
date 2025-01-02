@@ -3,7 +3,7 @@ import axiosInstance from "./axios";
 export function getCart(config) {
 	return axiosInstance.get("cart", config);
 }
-export function deleteCart(id, config) {
+export function deleteCart(config) {
 	return axiosInstance.delete(`cart/`, config);
 }
 export function decreaseQuantity(id, config) {

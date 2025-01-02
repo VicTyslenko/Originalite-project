@@ -1,12 +1,12 @@
 import { Link, MenuItem, Select, TextField } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { useUserData } from "../../../../@profile/hooks/useUserData";
 import { deleteCart } from "../../../store/actions/cartActions";
-import { clearUnauthCart } from "../../../store/slices/cartSlice";
+import { clearCart } from "../../../store/slices/cartSlice";
 import PaymentModal from "../Modal/Modal";
 import SVG from "../SVG/SVG";
 import SVGMaestro from "../SVG/SVGMaestro";
@@ -16,11 +16,12 @@ import { CardsWrapper, PaymentWrapper, StyledButton, Title } from "./StyledPayme
 const PaymentPage = () => {
 	const dispatch = useDispatch();
 	const user = useUserData();
-	const clearCart = () => {
+
+	const handleClearCart = () => {
 		if (user) {
 			dispatch(deleteCart(user));
 		} else {
-			dispatch(clearUnauthCart());
+			dispatch(clearCart());
 		}
 	};
 	const [month, setMonth] = useState("");
@@ -28,12 +29,11 @@ const PaymentPage = () => {
 	const [open, setOpen] = useState(false);
 	const handleOpen = () => setOpen(!open);
 
-
 	const handleClose = () => {
 		navigate("/");
 		setOpen(!open);
 	};
-	
+
 	const navigate = useNavigate();
 	const monthChange = event => {
 		setMonth(event.target.value);
@@ -125,7 +125,7 @@ const PaymentPage = () => {
 				<StyledButton
 					onClick={() => {
 						handleOpen();
-						clearCart();
+						handleClearCart();
 					}}
 				>
 					Pay

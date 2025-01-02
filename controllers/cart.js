@@ -193,17 +193,16 @@ exports.decreaseCartProductQuantity = async (req, res, next) => {
     );
 };
 
-exports.deleteCart = (req, res, next) => {
+exports.deleteCart = (req, res) => {
   Cart.findOne({ customerId: req.user.id }).then(async (cart) => {
     if (!cart) {
       return res.status(400).json({ message: `Cart for this customer is not found.` });
     } else {
-      const cartToDelete = await Cart.findOne({ customerId: req.user.id });
-
       Cart.deleteOne({ customerId: req.user.id })
+
         .then((deletedCount) =>
           res.status(200).json({
-            message: `Cart witn id "${cartToDelete._id}" is successfully deletes from DB `,
+            message: `Cart witn id "${cart._id}" is successfully deleted from DB `,
           })
         )
         .catch((err) =>
