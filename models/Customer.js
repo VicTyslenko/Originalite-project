@@ -56,7 +56,7 @@ const CustomerSchema = new Schema(
       default: Date.now
     }
   },
-  { strict: false }
+  { strict: true }
 );
 
 CustomerSchema.methods.comparePassword = function(candidatePassword, cb) {
