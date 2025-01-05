@@ -64,6 +64,7 @@ const RegisterForm = () => {
 							validationSchema={validationRegisterSchema}
 							onSubmit={async (values, { resetForm }) => {
 								const data = await dispatch(registerFetchData(values));
+
 								if (!data.error) {
 									toast.success("Register success!");
 									resetForm();

@@ -85,7 +85,7 @@ export const Price = styled.p`
 	}
 `;
 
-export const CloseItemIcon = styled.div`
+export const RemoveIcon = styled.div`
 	cursor: pointer;
 	position: absolute;
 	bottom: 6px;

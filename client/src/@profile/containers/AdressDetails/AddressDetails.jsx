@@ -34,8 +34,10 @@ const AddressDetails = () => {
 					address: "",
 				}}
 				validationSchema={validationDeliverySchema}
-				onSubmit={async values => {
+				onSubmit={async (values, { resetForm }) => {
 					dispatch(addressFetchData({ ...values, customerId: user?.id, products }));
+
+					resetForm();
 					navigate("/payment");
 				}}
 			>
@@ -91,7 +93,7 @@ const AddressDetails = () => {
 								fullWidth
 								name="mobile"
 								label="Mobile Phone"
-								placeholder="+38"
+								placeholder="+44"
 								multiline
 								variant="standard"
 								value={props.values.mobile}
@@ -117,10 +119,9 @@ const AddressDetails = () => {
 
 							<div>
 								<div className="button-wrapp">
-									{/* <StyledLink as="button" type="submit">
+									<StyledLink as="button" type="submit">
 										Save
-									</StyledLink> */}
-									<button type="submit">Save</button>
+									</StyledLink>
 								</div>
 							</div>
 						</form>
