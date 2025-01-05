@@ -43,7 +43,7 @@ exports.createCustomer = (req, res, next) => {
         }
       }
 
-      // Create query object for qustomer for saving him to DB
+      // Create query object for customer for saving him to DB
       const newCustomer = new Customer(queryCreator(initialQuery));
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -57,6 +57,7 @@ exports.createCustomer = (req, res, next) => {
           }
 
           newCustomer.password = hash;
+
           newCustomer
             .save()
             .then((customer) => {
@@ -66,6 +67,8 @@ exports.createCustomer = (req, res, next) => {
                 lastName: customer.lastName,
                 isAdmin: customer.isAdmin,
                 email: customer.email,
+                address: customer.address,
+                telephone: customer.telephone,
               }; // Create JWT Payload
 
               // Sign Token
@@ -126,6 +129,8 @@ exports.loginCustomer = async (req, res, next) => {
             lastName: customer.lastName,
             isAdmin: customer.isAdmin,
             email: customer.email,
+            address: customer.address,
+            telephone: customer.telephone,
           }; // Create JWT Payload
 
           // Sign Token

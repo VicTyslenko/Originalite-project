@@ -20,7 +20,7 @@ const addressReducer = createSlice({
 		builder.addCase(addressFetchData.fulfilled, (state, { payload }) => {
 			state.status = "leaded";
 			state.data = payload;
-			console.log(payload);
+			console.log({ orderPayload: payload });
 		});
 		builder.addCase(addressFetchData.rejected, (state, { payload }) => {
 			state.status = "error";
@@ -30,3 +30,5 @@ const addressReducer = createSlice({
 });
 
 export default addressReducer.reducer;
+
+

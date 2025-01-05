@@ -1,13 +1,11 @@
-import { isAuthSelector } from "@main/store/selectors/authSelector";
-import { isRegistrationSelector } from "@main/store/selectors/registrationSelector";
 import { toggleModal } from "@main/store/slices/modalSlice";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { ButtonGroup, ItemButton, LinkItem } from "components/Header/StyledHeader";
 import { useDispatch, useSelector } from "react-redux";
 
 export const ButtonAuthorization = ({ setDataMenu }) => {
-	const isAuth = useSelector(isAuthSelector);
-	const isRegistration = useSelector(isRegistrationSelector);
+	const isAuth = useSelector(state => state.auth.data);
+	const isRegistration = useSelector(state => Boolean(state.registration.data));
 
 	const dispatch = useDispatch();
 	if (isAuth || isRegistration) {

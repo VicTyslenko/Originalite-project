@@ -41,7 +41,7 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
-    mobile: {
+    telephone: {
       type: String,
       required: true,
     },
