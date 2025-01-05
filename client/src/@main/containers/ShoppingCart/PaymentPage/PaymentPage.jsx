@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useUserData } from "../../../../@profile/hooks/useUserData";
+import { useUserData } from "../../../../hooks/use-user-data";
 import { deleteCart } from "../../../store/actions/cartActions";
 import { clearCart } from "../../../store/slices/cartSlice";
 import PaymentModal from "../Modal/Modal";

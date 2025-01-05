@@ -12,7 +12,7 @@ function ProductInfoActions({ id }) {
 	const isCart = useSelector((state, id) => state.cart.data?.find(({ product }) => id === product?._id));
 
 	const isWishlist = useSelector((state, id) => state.wishlist.data?.find(el => id === el._id));
-	const isAuth = useSelector(state.auth.data);
+	const isAuth = useSelector(state => state.auth.data);
 
 	const currentSize = useSelector(state => state.product.currentSize);
 	const currentColor = useSelector(state => state.product.currentColor);

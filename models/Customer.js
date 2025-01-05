@@ -7,60 +7,64 @@ const CustomerSchema = new Schema(
   {
     customerNo: {
       type: String,
-      required: true
+      required: true,
     },
     firstName: {
       type: String,
-      required: true
+      required: true,
     },
     lastName: {
       type: String,
-      required: true
+      required: true,
     },
     login: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
       type: String,
-      required: true
+      required: true,
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     telephone: {
-      type: String
+      type: String,
     },
     birthdate: {
-      type: String
+      type: String,
     },
     gender: {
-      type: String
+      type: String,
     },
     avatarUrl: {
-      type: String
+      type: String,
     },
     isAdmin: {
       type: Boolean,
       required: true,
-      default: false
+      default: false,
     },
+    address: {
+      type: String,
+    },
+
     enabled: {
       type: Boolean,
       required: true,
-      default: true
+      default: true,
     },
     date: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   { strict: true }
 );
 
-CustomerSchema.methods.comparePassword = function(candidatePassword, cb) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+CustomerSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) return cb(err);
     cb(null, isMatch);
   });

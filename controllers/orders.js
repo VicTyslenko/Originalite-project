@@ -8,6 +8,8 @@ const productAvailibilityChecker = require("../commonHelpers/productAvailibility
 const subtractProductsFromCart = require("../commonHelpers/subtractProductsFromCart");
 const _ = require("lodash");
 
+const Customer = require("../models/Customer");
+
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(1000000, 9999999);
 
@@ -92,6 +94,17 @@ exports.placeOrder = async (req, res, next) => {
     newOrder
       .save()
       .then(async (order) => {
+        if (req.body.address || req.body.telephone) {
+          const customer = await Customer.findById(order.customerId);
+
+          if (customer) {
+            customer.address = req.body.address || customer.address;
+            customer.telephone = req.body.telephone || customer.telephone;
+
+            await customer.save();
+          }
+        }
+
         const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
 
         for (item of order.products) {

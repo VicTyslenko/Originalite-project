@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addressFetchData } from "../../../@main/store/actions/addressActions";
-import { useUserData } from "../../hooks/useUserData";
+import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
 import { ContentForm, StyledLink, Title } from "../AdressDetails/StyledAddressDetails";
 
@@ -12,7 +12,6 @@ const AddressDetails = () => {
 	const dispatch = useDispatch();
 
 	const user = useUserData();
-	console.log({ user: user });
 
 	const products = useSelector(state => state.cart.data);
 
@@ -31,7 +30,7 @@ const AddressDetails = () => {
 					firstName: user?.firstName || "",
 					lastName: user?.lastName || "",
 					email: user?.email || "",
-					mobile: user?.mobile || "",
+					telephone: user?.telephone || "",
 					address: user?.address || "",
 				}}
 				enableReinitialize
@@ -93,7 +92,7 @@ const AddressDetails = () => {
 							<TextField
 								type="number"
 								fullWidth
-								name="mobile"
+								name="telephone"
 								label="Mobile Phone"
 								placeholder="+44"
 								multiline

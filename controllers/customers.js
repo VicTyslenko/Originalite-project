@@ -58,8 +58,6 @@ exports.createCustomer = (req, res, next) => {
 
           newCustomer.password = hash;
 
-          // delete newCustomer._doc.confirmPassword;
-
           newCustomer
             .save()
             .then((customer) => {
@@ -69,6 +67,8 @@ exports.createCustomer = (req, res, next) => {
                 lastName: customer.lastName,
                 isAdmin: customer.isAdmin,
                 email: customer.email,
+                address: customer.address,
+                telephone: customer.telephone,
               }; // Create JWT Payload
 
               // Sign Token
@@ -129,6 +129,8 @@ exports.loginCustomer = async (req, res, next) => {
             lastName: customer.lastName,
             isAdmin: customer.isAdmin,
             email: customer.email,
+            address: customer.address,
+            telephone: customer.telephone,
           }; // Create JWT Payload
 
           // Sign Token

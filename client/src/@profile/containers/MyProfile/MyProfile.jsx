@@ -2,7 +2,7 @@ import { Button, Container, FormControl, FormControlLabel, Radio, RadioGroup, Te
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 
-import { useUserData } from "../../hooks/useUserData";
+import { useUserData } from "../../../hooks/use-user-data";
 import { ContainerWrapp, ContentForm, Form, Title } from "./StyledMyProfile";
 
 function MyProfile() {
