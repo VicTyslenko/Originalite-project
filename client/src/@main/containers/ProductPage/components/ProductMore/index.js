@@ -3,12 +3,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import React from "react";
 import { useSelector } from "react-redux";
 
-import { selectProductList } from "../../../../store/selectors/productListSelectors";
 import { StyledBox } from "./ProductMore.styles";
 import ProductMoreCard from "./ProductMoreCard";
 
 function ProductMore() {
-	const products = useSelector(selectProductList);
+	const products = useSelector(state => state.productList.data);
 	const isMobile = useMediaQuery(theme => theme.breakpoints.down("sm"));
 
 	return (

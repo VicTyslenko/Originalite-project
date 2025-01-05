@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { isRegistrationSelector } from "../../@main/store/selectors/registrationSelector";
 import {
 	BoxTechnical,
 	ButtonGroup,
@@ -26,7 +25,7 @@ import ShoppingBag from "./components/ShoppingBag";
 import WomanMenu from "./components/WomenMenu";
 
 function Header() {
-	const isRegistration = useSelector(isRegistrationSelector);
+	const isRegistration = useSelector( state => Boolean(state.registration.data));
 
 	const navigate = useNavigate();
 

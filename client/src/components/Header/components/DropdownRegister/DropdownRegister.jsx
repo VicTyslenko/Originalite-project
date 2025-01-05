@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
-import { errorDataAuth } from "../../../../@main/store/selectors/authSelector";
 import {
 	BoxWrapp,
 	ButtonBlock,
@@ -22,7 +21,7 @@ import { validationSchema } from "./validation";
 
 function DropdownRegister({ active }) {
 	const dispatch = useDispatch();
-	let errorMessage = useSelector(errorDataAuth);
+	let errorMessage = useSelector(state => state.auth.error);
 
 	useEffect(() => {
 		dispatch(clearErrorAuth());

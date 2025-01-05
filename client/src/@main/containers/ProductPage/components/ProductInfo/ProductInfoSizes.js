@@ -2,13 +2,12 @@ import { ListItemText, Popover, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectCurrentSize } from "../../../../store/selectors/productSelector";
 import { setSize } from "../../../../store/slices/productSlice";
 import { ListItemButtonStyled, ListStyled, SizeList } from "./ProductInfo.styles";
 import img from "./sizeguide.jpg";
 
 function ProductInfoSizes({ sizes }) {
-	const currentSize = useSelector(selectCurrentSize);
+	const currentSize = useSelector(state => state.product.currentSize);
 	const dispatch = useDispatch();
 
 	const handleListSizeClick = value => {

@@ -7,7 +7,6 @@ import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { selectFilterCategories } from "../../../../store/selectors/filterSelector";
 import { setFilters } from "../../../../store/slices/filterSlice";
 import { FlexBox } from "./ProductFilters.styles";
 
@@ -17,7 +16,7 @@ function ProductFilterCategories() {
 	const { category } = useParams();
 
 	const { filteredCategories: paramsCategories } = useCategories(category);
-	const filterCategories = useSelector(selectFilterCategories);
+	const filterCategories = useSelector(state => state.filters.categories);
 
 	const dispatch = useDispatch();
 

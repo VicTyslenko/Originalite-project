@@ -1,12 +1,11 @@
 import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectProductList } from '../../store/selectors/productListSelectors';
 import ProductCard from '../ProductList/components/ProductCard';
 import { StyledGrid } from './SearchResultPage.styles';
 
 function SearchResultPage() {
-  const products =  useSelector(selectProductList)
+  const products =  useSelector(state => state.productList.data)
 const { searchId } = useParams()
 const filteredProducts = products.filter(product => { 
 	return product.name.toLowerCase().includes(searchId)

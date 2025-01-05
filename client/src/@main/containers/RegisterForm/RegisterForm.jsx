@@ -23,6 +23,7 @@ import { validationRegisterSchema } from "./validation";
 const RegisterForm = () => {
 	const dispatch = useDispatch();
 	const { registerError } = useFormLogin();
+
 	const [value, setValue] = useState("1");
 
 	const handleChange = (event, newValue) => {
@@ -64,6 +65,7 @@ const RegisterForm = () => {
 							validationSchema={validationRegisterSchema}
 							onSubmit={async (values, { resetForm }) => {
 								const data = await dispatch(registerFetchData(values));
+
 								if (!data.error) {
 									toast.success("Register success!");
 									resetForm();
@@ -146,8 +148,9 @@ const RegisterForm = () => {
 												helperText={props.touched.confirmPassword && props.errors.confirmPassword}
 											/>
 										</InputsWrappReg>
+
 										<div className="flex-error">
-											{registerError && <span className="message">{Object.values(error)}</span>}
+											{registerError && <span className="message">{Object.values(registerError)}</span>}
 										</div>
 										<ButtonWrappReg>
 											<StyledButtonReg type="submit">Register</StyledButtonReg>

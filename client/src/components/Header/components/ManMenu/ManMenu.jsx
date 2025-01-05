@@ -4,7 +4,6 @@ import { useCategories } from "hooks/use-categories";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectFilterCategories } from "../../../../@main/store/selectors/filterSelector";
 import { setFilters } from "../../../../@main/store/slices/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
 import { Categories, StyledLink } from "./StyledMenMenu";
@@ -14,7 +13,7 @@ function ManMenu({ active }) {
 
 	const { filteredCategories: manCategories } = useCategories("man");
 
-	const filterCategories = useSelector(selectFilterCategories);
+	const filterCategories = useSelector(state => state.filters.categories);
 
 	const handleSetFilter = useCallback(
 		value => {

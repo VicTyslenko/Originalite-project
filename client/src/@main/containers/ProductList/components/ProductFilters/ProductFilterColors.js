@@ -6,8 +6,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getColors } from "../../../../store/actions/colorsActions";
-import { selectColors } from "../../../../store/selectors/colorsSelector";
-import { selectFilterColors } from "../../../../store/selectors/filterSelector";
 import { setFilters } from "../../../../store/slices/filterSlice";
 import { ColorIcon, FlexBox, ListItemIconColor } from "./ProductFilters.styles";
 
@@ -15,8 +13,8 @@ function ProductFilterColors() {
 	const [open, setOpen] = useState(false);
 	const [openMobile, setOpenMobile] = useState(false);
 
-	const colorsList = useSelector(selectColors);
-	const filterColors = useSelector(selectFilterColors);
+	const colorsList = useSelector( state => state.colors.data);
+	const filterColors = useSelector(state => state.filters.colors);
 
 	const dispatch = useDispatch();
 

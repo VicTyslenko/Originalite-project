@@ -1,13 +1,11 @@
 import { ListItemText, Typography } from "@mui/material";
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectCurrentColor } from "../../../../store/selectors/productSelector";
 import { setColor } from "../../../../store/slices/productSlice";
 import { ColorIcon, ColorList, ListItemButtonStyled, ListItemIconColor, ListStyled } from "./ProductInfo.styles";
 
 function ProductInfoColors({ colors }) {
-	const currentColor = useSelector(selectCurrentColor);
+	const currentColor = useSelector(state => state.product.currentColor);
 	const dispatch = useDispatch();
 
 	const handleListColorClick = value => {

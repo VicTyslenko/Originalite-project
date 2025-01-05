@@ -8,6 +8,8 @@ const productAvailibilityChecker = require("../commonHelpers/productAvailibility
 const subtractProductsFromCart = require("../commonHelpers/subtractProductsFromCart");
 const _ = require("lodash");
 
+const Customer = require("../models/Customer");
+
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(1000000, 9999999);
 
@@ -49,64 +51,77 @@ exports.placeOrder = async (req, res, next) => {
 
     const productAvailibilityInfo = await productAvailibilityChecker(order.products);
 
-    if (productAvailibilityInfo.productsAvailibilityStatus) {
-      // res.json({
-      //   message: "Some of your products are unavailable for now",
-      //   productAvailibilityInfo,
-      // });
-      console.warn("Warning: Some products may be limited, but order will proceed.");
-    } else {
-      const subscriberMail = req.body.email;
-      const letterSubject = req.body.letterSubject;
-      const letterHtml = req.body.letterHtml;
+    ///////////////////////////temporary commented products availability checking
 
-      const { errors, isValid } = validateOrderForm(req.body);
+    // if (productAvailibilityInfo.productsAvailibilityStatus) {
+    //   // res.json({
+    //   //   message: "Some of your products are unavailable for now",
+    //   //   productAvailibilityInfo,
+    //   // });
+    //   console.warn("Warning: Some products may be limited, but order will proceed.");
+    // } else {
+    const subscriberMail = req.body.email;
+    const letterSubject = req.body.letterSubject;
+    const letterHtml = req.body.letterHtml;
 
-      // Check Validation
-      if (!isValid) {
-        return res.status(400).json(errors);
-      }
+    const { errors, isValid } = validateOrderForm(req.body);
 
-      // if (!letterSubject) {
-      //   return res.status(400).json({
-      //     message:
-      //       "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter."
-      //   });
-      // }
-
-      // if (!letterHtml) {
-      //   return res.status(400).json({
-      //     message:
-      //       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter."
-      //   });
-      // }
-
-      const newOrder = new Order(order);
-
-      if (order.customerId) {
-        newOrder.populate("customerId").execPopulate();
-      }
-
-      newOrder
-        .save()
-        .then(async (order) => {
-          const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
-
-          for (item of order.products) {
-            const id = item.product._id;
-            const product = await Product.findOne({ _id: id });
-            const productQuantity = product.quantity;
-            await Product.findOneAndUpdate({ _id: id }, { quantity: productQuantity - item.cartQuantity }, { new: true });
-          }
-
-          res.json({ order, mailResult });
-        })
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
+    // Check Validation
+    if (!isValid) {
+      return res.status(400).json(errors);
     }
+
+    // if (!letterSubject) {
+    //   return res.status(400).json({
+    //     message:
+    //       "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter."
+    //   });
+    // }
+
+    // if (!letterHtml) {
+    //   return res.status(400).json({
+    //     message:
+    //       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter."
+    //   });
+    // }
+
+    const newOrder = new Order(order);
+
+    if (order.customerId) {
+      newOrder.populate("customerId").execPopulate();
+    }
+
+    newOrder
+      .save()
+      .then(async (order) => {
+        if (req.body.address || req.body.telephone) {
+          const customer = await Customer.findById(order.customerId);
+
+          if (customer) {
+            customer.address = req.body.address || customer.address;
+            customer.telephone = req.body.telephone || customer.telephone;
+
+            await customer.save();
+          }
+        }
+
+        const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
+
+        for (item of order.products) {
+          const id = item.product._id;
+          const product = await Product.findOne({ _id: id });
+          const productQuantity = product.quantity;
+          await Product.findOneAndUpdate({ _id: id }, { quantity: productQuantity - item.cartQuantity }, { new: true });
+        }
+
+        res.json({ order, mailResult });
+      })
+      .catch((err) =>
+        res.status(400).json({
+          message: `Error happened on server: "${err}" `,
+        })
+      );
+    // }
   } catch (err) {
     res.status(400).json({
       message: `Error happened on server: "${err}" `,

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 
 import { clearDataAuth } from "../../../@main/store/slices/authSlice";
 import { clearDataRegister } from "../../../@main/store/slices/registrationSlice";
-import { useUserData } from "../../hooks/useUserData";
+import { useUserData } from "../../../hooks/use-user-data";
 import * as S from "./StyledUserProfile";
 
 function Profile() {

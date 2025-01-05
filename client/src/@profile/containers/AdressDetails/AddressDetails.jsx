@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addressFetchData } from "../../../@main/store/actions/addressActions";
-import { useUserData } from "../../hooks/useUserData";
+import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
 import { ContentForm, StyledLink, Title } from "../AdressDetails/StyledAddressDetails";
 
@@ -27,15 +27,18 @@ const AddressDetails = () => {
 		>
 			<Formik
 				initialValues={{
-					firstName: "",
-					lastName: "",
-					email: "",
-					mobile: "",
-					address: "",
+					firstName: user?.firstName || "",
+					lastName: user?.lastName || "",
+					email: user?.email || "",
+					telephone: user?.telephone || "",
+					address: user?.address || "",
 				}}
+				enableReinitialize
 				validationSchema={validationDeliverySchema}
-				onSubmit={async values => {
+				onSubmit={async (values, { resetForm }) => {
 					dispatch(addressFetchData({ ...values, customerId: user?.id, products }));
+
+					resetForm();
 					navigate("/payment");
 				}}
 			>
@@ -63,19 +66,19 @@ const AddressDetails = () => {
 								fullWidth
 								name="firstName"
 								label="First Name"
+								value={props.values.firstName}
 								placeholder="Your first name"
 								multiline
 								variant="standard"
 								onChange={props.handleChange}
 								error={props.touched.firstName && Boolean(props.errors.firstName)}
 								helperText={props.touched.firstName && props.errors.firstName}
-								sx={{ mb: "6px" }}
 							/>
 							<TextField
 								name="lastName"
 								type="string"
 								fullWidth
-								label="Last name "
+								label="Last name"
 								placeholder="Your second name"
 								multiline
 								variant="standard"
@@ -89,9 +92,9 @@ const AddressDetails = () => {
 							<TextField
 								type="number"
 								fullWidth
-								name="mobile"
+								name="telephone"
 								label="Mobile Phone"
-								placeholder="+38"
+								placeholder="+44"
 								multiline
 								variant="standard"
 								value={props.values.mobile}
@@ -117,10 +120,9 @@ const AddressDetails = () => {
 
 							<div>
 								<div className="button-wrapp">
-									{/* <StyledLink as="button" type="submit">
+									<StyledLink as="button" type="submit">
 										Save
-									</StyledLink> */}
-									<button type="submit">Save</button>
+									</StyledLink>
 								</div>
 							</div>
 						</form>

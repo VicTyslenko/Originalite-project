@@ -1,5 +1,4 @@
 import { Container, Typography } from '@mui/material';
-import { wishSelector } from '../../../@main/store/selectors/wishSelector';
 import { useEffect, useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Content, FlexWrapper, Description, StyledButton } from './StyledWishList';
@@ -9,7 +8,7 @@ import { deleteProductFromWishlist } from '../../../@main/store/actions/wishlist
 function Wishlist() {
 	const dispatch = useDispatch();
 	const [totalPrice, setTotalPrice] = useState(0);
-	const data = useSelector(wishSelector);
+	const data = useSelector(state => state.wishlist.data);
 	const MainContent = data.map(({ name, currentPrice, imageUrls, colors, sizes, _id: _id }) => (
 		<Content key={_id}>
 			<div className="wrapp">
