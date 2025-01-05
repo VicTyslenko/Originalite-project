@@ -12,6 +12,7 @@ const AddressDetails = () => {
 	const dispatch = useDispatch();
 
 	const user = useUserData();
+	console.log({ user: user });
 
 	const products = useSelector(state => state.cart.data);
 
@@ -27,12 +28,13 @@ const AddressDetails = () => {
 		>
 			<Formik
 				initialValues={{
-					firstName: "",
-					lastName: "",
-					email: "",
-					mobile: "",
-					address: "",
+					firstName: user?.firstName || "",
+					lastName: user?.lastName || "",
+					email: user?.email || "",
+					mobile: user?.mobile || "",
+					address: user?.address || "",
 				}}
+				enableReinitialize
 				validationSchema={validationDeliverySchema}
 				onSubmit={async (values, { resetForm }) => {
 					dispatch(addressFetchData({ ...values, customerId: user?.id, products }));
@@ -65,19 +67,19 @@ const AddressDetails = () => {
 								fullWidth
 								name="firstName"
 								label="First Name"
+								value={props.values.firstName}
 								placeholder="Your first name"
 								multiline
 								variant="standard"
 								onChange={props.handleChange}
 								error={props.touched.firstName && Boolean(props.errors.firstName)}
 								helperText={props.touched.firstName && props.errors.firstName}
-								sx={{ mb: "6px" }}
 							/>
 							<TextField
 								name="lastName"
 								type="string"
 								fullWidth
-								label="Last name "
+								label="Last name"
 								placeholder="Your second name"
 								multiline
 								variant="standard"

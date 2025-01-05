@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getProduct } from "../../store/actions/productActions";
-import { selectProduct } from "../../store/selectors/productSelector";
 import BackButton from "./components/BackButton";
 import ProductGallery from "./components/ProductGallery";
 import ProductInfo from "./components/ProductInfo";

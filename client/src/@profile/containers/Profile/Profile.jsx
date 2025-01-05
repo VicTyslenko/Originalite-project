@@ -17,6 +17,7 @@ function Profile() {
 	const dispatch = useDispatch();
 	const user = useUserData();
 
+
 	const clearData = () => {
 		dispatch(clearDataAuth());
 		dispatch(clearDataRegister());

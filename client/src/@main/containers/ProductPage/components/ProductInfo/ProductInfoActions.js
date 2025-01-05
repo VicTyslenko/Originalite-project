@@ -1,25 +1,21 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Button, IconButton, Tooltip } from "@mui/material";
-import React, { useCallback, useState } from "react";
+import { IconButton, Tooltip } from "@mui/material";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addProductToCart, deleteProductFromCart } from "../../../../store/actions/cartActions";
 import { addProductToWishlist, deleteProductFromWishlist } from "../../../../store/actions/wishlistActions";
-import { isAuthSelector } from "../../../../store/selectors/authSelector";
-import { selectIsCart } from "../../../../store/selectors/cartSelector";
-import { selectCurrentColor, selectCurrentSize } from "../../../../store/selectors/productSelector";
-import { selectIsWishlist } from "../../../../store/selectors/wishSelector";
 import { ActionsWrapper, StyledButton } from "./ProductInfo.styles";
 
 function ProductInfoActions({ id }) {
 	const dispatch = useDispatch();
-	const isCart = useSelector(state => selectIsCart(state, id));
+	const isCart = useSelector((state, id) => state.cart.data?.find(({ product }) => id === product?._id));
 
-	const isWishlist = useSelector(state => selectIsWishlist(state, id));
-	const isAuth = useSelector(isAuthSelector);
+	const isWishlist = useSelector((state, id) => state.wishlist.data?.find(el => id === el._id));
+	const isAuth = useSelector(state.auth.data);
 
-	const currentSize = useSelector(selectCurrentSize);
-	const currentColor = useSelector(selectCurrentColor);
+	const currentSize = useSelector(state => state.product.currentSize);
+	const currentColor = useSelector(state => state.product.currentColor);
 	const [openTooltip, setOpenTooltip] = useState(false);
 
 	const handleClickCart = useCallback(() => {
