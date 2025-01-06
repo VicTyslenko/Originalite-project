@@ -11,7 +11,9 @@ import ProductMore from "./components/ProductMore";
 
 function ProductPage() {
 	const product = useSelector(state => state.product.data);
+
 	const dispatch = useDispatch();
+
 	const { id } = useParams();
 
 	useEffect(() => {

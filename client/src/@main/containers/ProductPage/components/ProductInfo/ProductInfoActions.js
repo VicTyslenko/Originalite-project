@@ -6,36 +6,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart, deleteProductFromCart } from "../../../../store/actions/cartActions";
 import { addProductToWishlist, deleteProductFromWishlist } from "../../../../store/actions/wishlistActions";
 import { ActionsWrapper, StyledButton } from "./ProductInfo.styles";
+import { useProductInfo } from "./hooks/useProductInfo";
 
 function ProductInfoActions({ id }) {
-	const dispatch = useDispatch();
-	const isCart = useSelector((state, id) => state.cart.data?.find(({ product }) => id === product?._id));
-
-	const isWishlist = useSelector((state, id) => state.wishlist.data?.find(el => id === el._id));
-	const isAuth = useSelector(state => state.auth.data);
-
-	const currentSize = useSelector(state => state.product.currentSize);
-	const currentColor = useSelector(state => state.product.currentColor);
 	const [openTooltip, setOpenTooltip] = useState(false);
 
+	const dispatch = useDispatch();
+
+	const { itemInCart, isAuth, currentSize, currentColor, itemInWishlist } = useProductInfo();
+
 	const handleClickCart = useCallback(() => {
-		if (isCart) {
+		if (itemInCart) {
 			dispatch(deleteProductFromCart(id));
 		} else {
 			dispatch(addProductToCart(id));
 		}
-	}, [id, isCart, dispatch]);
+	}, [id, itemInCart, dispatch]);
 
 	const handleClickWishlist = useCallback(() => {
-		if (isWishlist) {
+		if (itemInWishlist) {
 			dispatch(deleteProductFromWishlist(id));
 		} else {
 			dispatch(addProductToWishlist(id));
 		}
-	}, [id, isWishlist, dispatch]);
+	}, [id, itemInWishlist, dispatch]);
 
 	const handleOpenTooltip = () => {
-		if ((!currentSize || !currentColor) && !isCart) {
+		if ((!currentSize || !currentColor) && !itemInCart) {
 			setOpenTooltip(true);
 		}
 	};
@@ -59,14 +56,14 @@ function ProductInfoActions({ id }) {
 						color="primary"
 						variant="contained"
 						onClick={handleClickCart}
-						disabled={(!currentSize || !currentColor) && !isCart}
+						disabled={(!currentSize || !currentColor) && !itemInCart}
 					>
-						{isCart ? "Delete" : "Add to cart"}
+						{itemInCart ? "Delete" : "Add to cart"}
 					</StyledButton>
 				</span>
 			</Tooltip>
 			{isAuth && (
-				<IconButton onClick={handleClickWishlist} sx={{ color: isWishlist ? "#E01515" : "#fff" }}>
+				<IconButton onClick={handleClickWishlist} sx={{ color: itemInWishlist ? "#E01515" : "#fff" }}>
 					<FavoriteBorderIcon />
 				</IconButton>
 			)}
