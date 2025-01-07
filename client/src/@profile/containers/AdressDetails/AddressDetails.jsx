@@ -1,5 +1,6 @@
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -40,6 +41,8 @@ const AddressDetails = () => {
 
 					resetForm();
 					navigate("/payment");
+
+					toast.success("Address saved!");
 				}}
 			>
 				{props => (
@@ -97,10 +100,10 @@ const AddressDetails = () => {
 								placeholder="+44"
 								multiline
 								variant="standard"
-								value={props.values.mobile}
+								value={props.values.telephone}
 								onChange={props.handleChange}
-								error={props.touched.mobile && Boolean(props.errors.mobile)}
-								helperText={props.touched.mobile && props.errors.mobile}
+								error={props.touched.telephone && Boolean(props.errors.telephone)}
+								helperText={props.touched.telephone && props.errors.telephone}
 								sx={{ mb: "6px" }}
 							/>
 							<TextField
