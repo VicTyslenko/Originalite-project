@@ -41,13 +41,13 @@ function Header() {
 		dispatch(getCategories());
 	}, [dispatch]);
 
-	useEffect(() => {
-		const onClick = e => rootEl.current.contains(e.target) || dispatch(closeModal());
+	// useEffect(() => {
+	// 	const onClick = e => rootEl.current.contains(e.target) || dispatch(closeModal());
 
-		document.addEventListener("click", onClick);
+	// 	document.addEventListener("click", onClick);
 
-		return () => document.removeEventListener("click", onClick);
-	}, []);
+	// 	return () => document.removeEventListener("click", onClick);
+	// }, []);
 
 	useEffect(() => {
 		if (isRegistration) {

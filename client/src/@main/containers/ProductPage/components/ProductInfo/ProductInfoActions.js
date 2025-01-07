@@ -1,7 +1,7 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { IconButton, Tooltip } from "@mui/material";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { addProductToCart, deleteProductFromCart } from "../../../../store/actions/cartActions";
 import { addProductToWishlist, deleteProductFromWishlist } from "../../../../store/actions/wishlistActions";

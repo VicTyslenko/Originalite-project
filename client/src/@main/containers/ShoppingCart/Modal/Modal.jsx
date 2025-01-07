@@ -27,7 +27,7 @@ const PaymentModal = ({ open, close, text, actions, customStyles, product }) => 
 
 	return (
 		<div>
-			<Modal open={open} onClose={close} className="test">
+			<Modal open={open} onClose={close}>
 				<Box sx={{ ...style, ...customStyles }}>
 					<Typography
 						id="modal-modal-description"

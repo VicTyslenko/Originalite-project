@@ -1,45 +1,29 @@
-import { Link, MenuItem, Select, TextField } from "@mui/material";
+import { deleteCart } from "@main/store/actions/cartActions";
+import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
+import { Formik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { useUserData } from "../../../../hooks/use-user-data";
-import { deleteCart } from "../../../store/actions/cartActions";
-import { clearCart } from "../../../store/slices/cartSlice";
 import PaymentModal from "../Modal/Modal";
 import SVG from "../SVG/SVG";
 import SVGMaestro from "../SVG/SVGMaestro";
 import SVGPayPall from "../SVG/SVGPayPall";
 import { CardsWrapper, PaymentWrapper, StyledButton, Title } from "./StyledPaymentPage";
+import { monthOptions, yearOptions } from "./data";
 
 const PaymentPage = () => {
-	const dispatch = useDispatch();
-	const user = useUserData();
-
-	const handleClearCart = () => {
-		if (user) {
-			dispatch(deleteCart(user));
-		} else {
-			dispatch(clearCart());
-		}
-	};
-	const [month, setMonth] = useState("");
-	const [year, setYear] = useState("");
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(!open);
-
-	const handleClose = () => {
-		navigate("/");
-		setOpen(!open);
-	};
-
 	const navigate = useNavigate();
-	const monthChange = event => {
-		setMonth(event.target.value);
-	};
-	const yearChange = event => {
-		setYear(event.target.value);
+
+	const [modal, setModal] = useState(false);
+
+	const dispatch = useDispatch();
+
+	const handleCloseModal = () => {
+		dispatch(deleteCart());
+		setModal(false);
+		navigate("/");
 	};
 
 	return (
@@ -58,80 +42,89 @@ const PaymentPage = () => {
 					<SVGPayPall />
 					<SVGMaestro />
 				</CardsWrapper>
-				<div className="flex-block">
-					<span className="info">Card number</span>
-					<TextField variant="standard" />
-				</div>
-				<div className="flex-block">
-					<span className="info">Card holder name</span>
-					<TextField variant="standard" />
-				</div>
 
-				<div className="flex-select">
-					<span className="info"> Card Expiry Date </span>
-					<Select value={month} onChange={monthChange}>
-						<MenuItem value={"01"}>01</MenuItem>
-						<MenuItem value={"02"}>02</MenuItem>
-						<MenuItem value={"03"}>03</MenuItem>
-						<MenuItem value={"04"}>04</MenuItem>
-						<MenuItem value={"05"}>05</MenuItem>
-						<MenuItem value={"06"}>06</MenuItem>
-						<MenuItem value={"07"}>07</MenuItem>
-						<MenuItem value={"08"}>08</MenuItem>
-						<MenuItem value={"09"}>09</MenuItem>
-						<MenuItem value={"10"}>10</MenuItem>
-						<MenuItem value={"11"}>11</MenuItem>
-						<MenuItem value={"12"}>12</MenuItem>
-					</Select>{" "}
-					/
-					<Select value={year} onChange={yearChange}>
-						<MenuItem value={"2023"}>2023</MenuItem>
-						<MenuItem value={"2024"}>2024</MenuItem>
-						<MenuItem value={"2025"}>2025</MenuItem>
-						<MenuItem value={"2026"}>2026</MenuItem>
-						<MenuItem value={"2027"}>2027</MenuItem>
-						<MenuItem value={"2028"}>2028</MenuItem>
-						<MenuItem value={"2029"}>2029</MenuItem>
-						<MenuItem value={"2030"}>2030</MenuItem>
-						<MenuItem value={"2031"}>2031</MenuItem>
-						<MenuItem value={"2032"}>2032</MenuItem>
-						<MenuItem value={"2033"}>2033</MenuItem>
-						<MenuItem value={"2034"}>2034</MenuItem>
-						<MenuItem value={"2035"}>2035</MenuItem>
-					</Select>
-				</div>
-
-				<div className="cvv">
-					<span className="info">CVC/CVV/CID </span>
-					<TextField
-						variant="standard"
-						sx={{
-							width: "50px",
-							paddingRight: "60px",
-						}}
-					/>
-
-					<Link
-						sx={{
-							textDecoration: "none",
-							color: "black",
-							fontWeight: "bold",
-						}}
-						href="https://help.gopay.com/en/knowledge-base/security/what-is-cvv-cvc-code-and-where-can-i-find-it-on-my-card"
-					>
-						What is cvv
-					</Link>
-				</div>
-				<StyledButton
-					onClick={() => {
-						handleOpen();
-						handleClearCart();
+				<Formik
+					initialValues={{
+						card: "",
+						cardName: "",
+						month: "1",
+						year: "2025",
+						cvv: "",
+					}}
+					onSubmit={(values, { resetForm }) => {
+						console.log(values);
+						resetForm();
 					}}
 				>
-					Pay
-				</StyledButton>
+					{props => (
+						<form onSubmit={props.handleSubmit}>
+							<div className="flex-block">
+								<span className="info">Card number</span>
+								<TextField variant="standard" value={props.values.card} onChange={props.handleChange} name="card" />
+							</div>
 
-				{open && <PaymentModal open={open} close={handleClose} text="Thank you for choosing our shop!" />}
+							<div className="flex-block">
+								<span className="info">Card holder name</span>
+								<TextField
+									variant="standard"
+									value={props.values.cardName}
+									onChange={props.handleChange}
+									name="cardName"
+								/>
+							</div>
+
+							<div className="flex-select">
+								<span className="info"> Card Expiry Date </span>
+								<Select value={props.values.month} name="month" onChange={props.handleChange}>
+									{monthOptions.map(month => (
+										<MenuItem key={month.value} value={month.value}>
+											{month.label}
+										</MenuItem>
+									))}
+								</Select>{" "}
+								/
+								<Select value={props.values.year} onChange={props.handleChange} name="year">
+									{yearOptions.map(year => (
+										<MenuItem key={year.value} value={year.value}>
+											{year.label}
+										</MenuItem>
+									))}
+								</Select>
+							</div>
+
+							<div className="cvv">
+								<span className="info">CVC/CVV/CID </span>
+								<TextField
+									variant="standard"
+									sx={{
+										width: "50px",
+										paddingRight: "60px",
+									}}
+									value={props.values.cvv}
+									name="cvv"
+									onChange={props.handleChange}
+								/>
+
+								<Tooltip
+									title="CVV (Card Verification Value) is a 3 or 4-digit security code on your credit or debit card used to verify your identity during online or phone transactions."
+									placement="top"
+								>
+									<span className="tooltip-cvv">cvv</span>
+								</Tooltip>
+							</div>
+							<StyledButton
+								onClick={() => {
+									setModal(true);
+								}}
+								type="submit"
+							>
+								Pay
+							</StyledButton>
+						</form>
+					)}
+				</Formik>
+
+				{modal && <PaymentModal open={modal} close={handleCloseModal} text="Thank you for choosing our shop!" />}
 			</PaymentWrapper>
 		</Container>
 	);

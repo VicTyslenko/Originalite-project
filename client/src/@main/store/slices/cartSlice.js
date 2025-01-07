@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
 			state.data = action.payload.products;
 		});
 
-		builder.addCase(deleteCart.fulfilled, (state, action) => {
+		builder.addCase(deleteCart.fulfilled, state => {
 			state.data = [];
 		});
 	},

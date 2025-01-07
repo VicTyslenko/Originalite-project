@@ -14,7 +14,7 @@ export const getCart = createAsyncThunk("cart/getCart", async (_, { getState }) 
 	const { data } = await fetchCart({
 		headers: {
 			Authorization: auth.data?.token,
-		},
+		},w
 	});
 	return data;
 });
