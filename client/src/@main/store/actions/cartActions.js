@@ -96,18 +96,22 @@ export const deleteProductFromCart = createAsyncThunk("cart/deleteProductFromCar
 	}
 });
 
-export const deleteCart = createAsyncThunk("cart/deleteCart", async (_, { getState }) => {
-	const { auth } = getState();
+export const deleteCart = createAsyncThunk("cart/deleteCart", async (_, { getState, rejectWithValue }) => {
+	const { auth, registration } = getState();
 
-	if (auth.data !== null) {
-		const { data } = await fetchDeleteCart(
-			{},
-			{
-				headers: {
-					Authorization: auth.data?.token,
-				},
+	const token = auth?.data?.token || registration?.data?.token;
+
+	if (!token) {
+		return rejectWithValue("Authorization token is missing");
+	}
+	try {
+		const { data } = await fetchDeleteCart({
+			headers: {
+				Authorization: token,
 			},
-		);
+		});
 		return data;
+	} catch (error) {
+		return rejectWithValue(error.response.data);
 	}
 });
