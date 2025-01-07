@@ -1,5 +1,6 @@
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
+import styled from "styled-components";
+
 export const PaymentWrapper = styled.div`
 	width: 600px;
 	background: #ebebeb;
@@ -28,6 +29,10 @@ export const PaymentWrapper = styled.div`
 		font-size: 12px;
 		gap: 15px;
 	}
+	& .tooltip-cvv {
+		font-weight: 600;
+		font-size: 13px;
+	}
 `;
 
 export const Title = styled.h1`
@@ -36,7 +41,7 @@ export const Title = styled.h1`
 	font-weight: bold;
 	font-size: 16px;
 	line-height: 16px;
-	font-family: 'Josefin Sans';
+	font-family: "Josefin Sans";
 	text-transform: uppercase;
 `;
 
@@ -44,11 +49,11 @@ export const StyledButton = styled(Button)`
 	&&& {
 		background-color: black;
 		color: white;
-		margin-top:50px;
+		margin-top: 50px;
 	}
 `;
 export const CardsWrapper = styled.div`
 	display: flex;
 	gap: 30px;
-	margin-bottom:20px ;
+	margin-bottom: 20px;
 `;

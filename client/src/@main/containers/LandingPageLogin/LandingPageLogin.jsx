@@ -1,23 +1,23 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { Container } from '@mui/system';
+import { Container } from "@mui/system";
+import { Form, Formik } from "formik";
+
 // import { validationSchema } from './validation';
-import { InputItem, InputsWrapp, ButtonBlock, StyledButton } from './StyledLandingPageLogin';
+import { ButtonBlock, InputItem, InputsWrapp, StyledButton } from "./StyledLandingPageLogin";
 
 function LandingLoginPage() {
 	return (
 		<Container
 			maxWidth="lg"
 			sx={{
-				display: 'flex',
-				justifyContent: 'center',
-				marginBottom: '50px',
+				display: "flex",
+				justifyContent: "center",
+				marginBottom: "50px",
 			}}
 		>
 			<Formik
 				initialValues={{
-					email: '',
-					password: '',
+					email: "",
+					password: "",
 				}}
 				validationSchema={validationSchema}
 			>
