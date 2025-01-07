@@ -18,7 +18,7 @@ export const StyledLink = styled(Link)`
 `;
 export const Title = styled.h1`
 	margin: 0 0 40px 0;
-	font-size: 12px;
+	font-size: 13px;
 	text-align: center;
 	text-transform: uppercase;
 `;

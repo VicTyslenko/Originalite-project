@@ -11,6 +11,7 @@ function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
 
 	const [totalPrice, setTotalPrice] = useState(0);
+
 	const dataProducts = useSelector(state => state.cart.data);
 
 	const priceItem = dataProducts.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
