@@ -12,6 +12,7 @@ import SVGMaestro from "../SVG/SVGMaestro";
 import SVGPayPall from "../SVG/SVGPayPall";
 import { CardsWrapper, PaymentWrapper, StyledButton, Title } from "./StyledPaymentPage";
 import { monthOptions, yearOptions } from "./data";
+import { validationSchema } from "./validation";
 
 const PaymentPage = () => {
 	const navigate = useNavigate();
@@ -51,6 +52,7 @@ const PaymentPage = () => {
 						year: "2025",
 						cvv: "",
 					}}
+					validationSchema={validationSchema}
 					onSubmit={(values, { resetForm }) => {
 						console.log(values);
 						resetForm();

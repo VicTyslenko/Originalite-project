@@ -4,7 +4,10 @@ const passport = require("passport");
 
 const { placeOrder, updateOrder, cancelOrder, deleteOrder, getOrders, getOrder } = require("../controllers/orders");
 
-router.post("/", passport.authenticate("jwt", { session: false }), placeOrder);
+// Commented passport token cheking, allowing placing an order as a guest
+// router.post("/", passport.authenticate("jwt", { session: false }), placeOrder);
+
+router.post("/", placeOrder);
 
 router.put("/:id", passport.authenticate("jwt", { session: false }), updateOrder);
 

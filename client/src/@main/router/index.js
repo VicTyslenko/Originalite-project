@@ -29,7 +29,6 @@ function MainRoutes() {
 			<Route path="/empty-cart" element={<EmptyCart />} />
 			<Route path="/contact" element={<ContactLandingPage />} />
 			<Route path="/history-brand" element={<HistoryBrandLandingPage />} />
-			<Route path="/payment" element={<PaymentLandingPage />} />
 			<Route path="/policy" element={<PolicyLandingPage />} />
 			<Route path="/questions" element={<QuestionsLandingPage />} />
 			<Route path="/work-us" element={<WorkUsLandingPage />} />

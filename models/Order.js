@@ -7,6 +7,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
+    guest: {
+      type: Boolean,
+      default: false,
+    },
     customerId: {
       type: Schema.Types.ObjectId,
       ref: "customers",
