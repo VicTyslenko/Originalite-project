@@ -12,19 +12,17 @@ import ProductFilters from "./components/ProductFilters";
 const perPage = 6;
 
 function ProductList() {
+	const dispatch = useDispatch();
+
 	const [startPage, setPage] = useState(1);
 	const { category } = useParams();
 
-	const { products, count, minPrice, maxPrice, colors, categories } = useSelector(state => ({
-		products: state.productList.data,
-		count: state.productList.count,
-		minPrice: state.filters.minPrice,
-		maxPrice: state.filters.maxPrice,
-		colors: state.filters.colors,
-		categories: state.filters.categories,
-	}));
-
-	const dispatch = useDispatch();
+	const products = useSelector(state => state.productList.data);
+	const count = useSelector(state => state.productList.count);
+	const minPrice = useSelector(state => state.filters.minPrice);
+	const maxPrice = useSelector(state => state.filters.maxPrice);
+	const colors = useSelector(state => state.filters.colors);
+	const categories = useSelector(state => state.filters.categories);
 
 	const handleChange = value => {
 		setPage(value);

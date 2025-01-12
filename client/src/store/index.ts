@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
-import addressSlice from "../@main/store/slices/addressSlice";
+import address from "../@main/store/slices/addressSlice";
 import auth from "../@main/store/slices/authSlice";
 import cart from "../@main/store/slices/cartSlice";
 import categories from "../@main/store/slices/categoriesSlice";
@@ -19,7 +19,7 @@ import wishlist from "../@main/store/slices/wishlistSlice";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["filters", "product"],
+  blacklist: ["filters", "product", "address"],
 };
 
 const rootReduser = combineReducers({
@@ -35,7 +35,7 @@ const rootReduser = combineReducers({
   categories,
   users,
   newProduct,
-  addressSlice,
+  address,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReduser);

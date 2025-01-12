@@ -13,7 +13,7 @@ const Customer = require("../models/Customer");
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(1000000, 9999999);
 
-exports.placeOrder = async (req, res, next) => {
+exports.placeOrder = async (req, res) => {
   try {
     const order = _.cloneDeep(req.body);
     order.orderNo = String(rand());
@@ -31,25 +31,37 @@ exports.placeOrder = async (req, res, next) => {
     //   order.paymentInfo = req.body.paymentInfo;
     // }
 
-    if (req.body.customerId) {
-      order.customerId = req.body.customerId;
+    const isGuest = !req.body.customerId;
 
+    if (!isGuest) {
+      order.customerId = req.body.customerId;
       cartProducts = await subtractProductsFromCart(order.customerId);
     }
+
+    order.products = isGuest ? req.body.products : cartProducts.length > 0 ? cartProducts : req.body.products;
+    order.guest = isGuest;
+
+    // if (cartProducts.length > 0) {
+    //   order.products = _.cloneDeep(cartProducts);
+    // } else {
+    //   order.products = req.body.products;
+    // }
+
+    // if (req.body.customerId) {
+    //   order.customerId = req.body.customerId;
+
+    //   cartProducts = await subtractProductsFromCart(order.customerId);
+    // }
+
+    // order.guest = !req.body.customerId;
 
     if (!req.body.products && cartProducts.length < 1) {
       res.status(400).json({ message: "The list of products is required, but absent!" });
     }
 
-    if (cartProducts.length > 0) {
-      order.products = _.cloneDeep(cartProducts);
-    } else {
-      order.products = req.body.products;
-    }
-
     order.totalSum = order.products.reduce((sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity, 0);
 
-    const productAvailibilityInfo = await productAvailibilityChecker(order.products);
+    // const productAvailibilityInfo = await productAvailibilityChecker(order.products);
 
     ///////////////////////////temporary commented products availability checking
 
