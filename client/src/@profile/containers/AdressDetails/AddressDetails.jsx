@@ -14,9 +14,26 @@ const AddressDetails = () => {
 
 	const user = useUserData();
 
-	const products = useSelector(state => state.cart.data);
+	const { products, serverError } = useSelector(state => ({
+		products: state.cart.data,
+		serverError: state.address.error,
+	}));
 
 	const navigate = useNavigate();
+
+	const handleFormSubmit = async (values, resetForm) => {
+		console.log({ values: values });
+
+		console.log("Sent to server:", { ...values, customerId: user?.id || null, products });
+
+		const data = await dispatch(addressFetchData({ ...values, customerId: user?.id || null, products }));
+
+		// if (data.error) return;
+
+		// toast.success("Address saved!");
+		// navigate("/payment");
+		// resetForm();
+	};
 
 	return (
 		<Container
@@ -36,14 +53,7 @@ const AddressDetails = () => {
 				}}
 				enableReinitialize
 				validationSchema={validationDeliverySchema}
-				onSubmit={async (values, { resetForm }) => {
-					dispatch(addressFetchData({ ...values, customerId: user?.id, products }));
-
-					resetForm();
-					navigate("/payment");
-
-					toast.success("Address saved!");
-				}}
+				onSubmit={(values, { resetForm }) => handleFormSubmit(values, resetForm)}
 			>
 				{props => (
 					<ContentForm>
@@ -120,7 +130,7 @@ const AddressDetails = () => {
 								helperText={props.touched.address && props.errors.address}
 								sx={{ mb: "6px" }}
 							/>
-
+							{serverError && <span className="server-error">{Object.values(serverError)}</span>}
 							<div>
 								<div className="button-wrapp">
 									<StyledLink as="button" type="submit">

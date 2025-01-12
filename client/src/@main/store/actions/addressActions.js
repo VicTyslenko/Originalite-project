@@ -6,17 +6,16 @@ export const addressFetchData = createAsyncThunk(
 	"address/actionFetchData",
 	async (params, { rejectWithValue, getState }) => {
 		const { auth, registration } = getState();
-		
+
 		const token = auth?.data?.token || registration?.data?.token;
 
-		if (!token) {
-			return rejectWithValue("Authorization token is missing");
-		}
 		try {
 			const { data } = await axiosInstance.post("/orders/", params, {
-				headers: {
-					Authorization: token,
-				},
+				headers: token
+					? {
+							Authorization: token,
+					  }
+					: {},
 			});
 
 			return data;

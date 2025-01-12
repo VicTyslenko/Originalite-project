@@ -1,14 +1,17 @@
 import { useSelector } from "react-redux";
 
 export const useProductInfo = () => {
-	const { cart, product, isAuth, currentSize, currentColor, wishList } = useSelector(state => ({
-		cart: state.cart.data,
-		product: state.product.data,
-		isAuth: state.auth.data,
-		currentColor: state.product.currentColor,
-		currentSize: state.product.currentSize,
-		wishList: state.wishlist.data,
-	}));
+	const cart = useSelector(state => state.cart.data);
+
+	const product = useSelector(state => state.product.data);
+
+	const isAuth = useSelector(state => state.auth.data);
+
+	const currentColor = useSelector(state => state.product.currentColor);
+
+	const currentSize = useSelector(state => state.product.currentSize);
+
+	const wishList = useSelector(state => state.wishlist.data);
 
 	const itemInCart = cart?.find(item => item.product._id === product._id);
 
