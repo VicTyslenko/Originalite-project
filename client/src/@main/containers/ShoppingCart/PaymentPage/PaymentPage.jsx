@@ -22,11 +22,13 @@ const PaymentPage = () => {
 	const dispatch = useDispatch();
 
 	const handleCloseModal = () => {
-		dispatch(deleteCart());
 		setModal(false);
-		navigate("/");
+		// navigate("/");
 	};
 
+	const handleFormSubmit = (values, reset) => {
+		dispatch(deleteCart());
+	};
 	return (
 		<Container
 			maxWidth="lg"
@@ -54,15 +56,21 @@ const PaymentPage = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(values, { resetForm }) => {
-						console.log(values);
-						resetForm();
+						// resetForm();
 					}}
 				>
 					{props => (
 						<form onSubmit={props.handleSubmit}>
 							<div className="flex-block">
 								<span className="info">Card number</span>
-								<TextField variant="standard" value={props.values.card} onChange={props.handleChange} name="card" />
+								<TextField
+									variant="standard"
+									value={props.values.card}
+									onChange={props.handleChange}
+									name="card"
+									error={props.touched.card && Boolean(props.errors.card)}
+									helperText={props.errors.card}
+								/>
 							</div>
 
 							<div className="flex-block">
@@ -72,6 +80,8 @@ const PaymentPage = () => {
 									value={props.values.cardName}
 									onChange={props.handleChange}
 									name="cardName"
+									error={props.touched.cardName && Boolean(props.errors.cardName)}
+									helperText={props.errors.cardName}
 								/>
 							</div>
 
@@ -105,6 +115,8 @@ const PaymentPage = () => {
 									value={props.values.cvv}
 									name="cvv"
 									onChange={props.handleChange}
+									error={props.touched.cvv && Boolean(props.errors.cvv)}
+									helperText={props.errors.cvv}
 								/>
 
 								<Tooltip
@@ -114,14 +126,7 @@ const PaymentPage = () => {
 									<span className="tooltip-cvv">cvv</span>
 								</Tooltip>
 							</div>
-							<StyledButton
-								onClick={() => {
-									setModal(true);
-								}}
-								type="submit"
-							>
-								Pay
-							</StyledButton>
+							<StyledButton type="submit">Pay</StyledButton>
 						</form>
 					)}
 				</Formik>

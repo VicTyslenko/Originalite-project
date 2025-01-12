@@ -14,25 +14,20 @@ const AddressDetails = () => {
 
 	const user = useUserData();
 
-	const { products, serverError } = useSelector(state => ({
-		products: state.cart.data,
-		serverError: state.address.error,
-	}));
+	const products = useSelector(state => state.cart.data);
 
+	const serverError = useSelector(state => state.address.error);
 	const navigate = useNavigate();
 
 	const handleFormSubmit = async (values, resetForm) => {
-		console.log({ values: values });
-
-		console.log("Sent to server:", { ...values, customerId: user?.id || null, products });
-
 		const data = await dispatch(addressFetchData({ ...values, customerId: user?.id || null, products }));
 
-		// if (data.error) return;
+		if (data.error) return;
 
-		// toast.success("Address saved!");
-		// navigate("/payment");
-		// resetForm();
+		toast.success(user ? "Address saved!" : "Order placed!");
+
+		navigate("/payment");
+		resetForm();
 	};
 
 	return (
