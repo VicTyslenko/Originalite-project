@@ -14,8 +14,6 @@ function ShoppingBag({ isShoppingBag }) {
 
 	const dataProducts = useSelector(state => state.cart.data);
 
-	console.log(dataProducts);
-
 	const priceItem = dataProducts.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
 
 	useEffect(() => {
