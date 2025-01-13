@@ -1,7 +1,9 @@
 import { deleteCart } from "@main/store/actions/cartActions";
+import { clearCart } from "@main/store/slices/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
+import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,11 +20,11 @@ const PaymentPage = () => {
 	const navigate = useNavigate();
 
 	const [modal, setModal] = useState(false);
+	const user = useUserData();
 
 	const dispatch = useDispatch();
 
 	const handleCloseModal = () => {
-		dispatch(deleteCart());
 		setModal(false);
 		navigate("/");
 	};
@@ -53,8 +55,14 @@ const PaymentPage = () => {
 						cvv: "",
 					}}
 					validationSchema={validationSchema}
-					onSubmit={(values, { resetForm }) => {
-						console.log(values);
+					onSubmit={(_, { resetForm }) => {
+						if (user) {
+							dispatch(deleteCart());
+						} else {
+							dispatch(clearCart());
+						}
+
+						setModal(true);
 						resetForm();
 					}}
 				>
@@ -62,7 +70,14 @@ const PaymentPage = () => {
 						<form onSubmit={props.handleSubmit}>
 							<div className="flex-block">
 								<span className="info">Card number</span>
-								<TextField variant="standard" value={props.values.card} onChange={props.handleChange} name="card" />
+								<TextField
+									variant="standard"
+									value={props.values.card}
+									onChange={props.handleChange}
+									name="card"
+									error={props.touched.card && Boolean(props.errors.card)}
+									helperText={props.errors.card}
+								/>
 							</div>
 
 							<div className="flex-block">
@@ -72,6 +87,8 @@ const PaymentPage = () => {
 									value={props.values.cardName}
 									onChange={props.handleChange}
 									name="cardName"
+									error={props.touched.cardName && Boolean(props.errors.cardName)}
+									helperText={props.errors.cardName}
 								/>
 							</div>
 
@@ -105,6 +122,8 @@ const PaymentPage = () => {
 									value={props.values.cvv}
 									name="cvv"
 									onChange={props.handleChange}
+									error={props.touched.cvv && Boolean(props.errors.cvv)}
+									helperText={props.errors.cvv}
 								/>
 
 								<Tooltip
@@ -114,19 +133,19 @@ const PaymentPage = () => {
 									<span className="tooltip-cvv">cvv</span>
 								</Tooltip>
 							</div>
-							<StyledButton
-								onClick={() => {
-									setModal(true);
-								}}
-								type="submit"
-							>
-								Pay
-							</StyledButton>
+							<StyledButton type="submit">Pay</StyledButton>
 						</form>
 					)}
 				</Formik>
 
-				{modal && <PaymentModal open={modal} close={handleCloseModal} text="Thank you for choosing our shop!" />}
+				{modal && (
+					<PaymentModal
+						open={modal}
+						close={handleCloseModal}
+						text="Thank you for choosing our shop!"
+						confirm={handleCloseModal}
+					/>
+				)}
 			</PaymentWrapper>
 		</Container>
 	);

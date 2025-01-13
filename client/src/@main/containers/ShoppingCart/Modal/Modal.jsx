@@ -1,8 +1,7 @@
-import { deleteProductFromCart } from "@main/store/actions/cartActions";
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-import { useDispatch } from "react-redux";
 
 import { ActionButtons } from "./components";
 
@@ -18,13 +17,7 @@ const style = {
 	p: 4,
 };
 
-const PaymentModal = ({ open, close, text, actions, customStyles, product }) => {
-	const dispatch = useDispatch();
-
-	const handleConfirm = id => {
-		dispatch(deleteProductFromCart(id));
-	};
-
+const PaymentModal = ({ open, close, text, actions, customStyles, confirm, confirmText, cancelText }) => {
 	return (
 		<div>
 			<Modal open={open} onClose={close}>
@@ -42,7 +35,18 @@ const PaymentModal = ({ open, close, text, actions, customStyles, product }) => 
 					>
 						{text}
 					</Typography>
-					{actions && <ActionButtons confirm={() => handleConfirm(product._id)} cancel={close} />}
+					{actions ? (
+						<ActionButtons confirm={confirm} cancel={close} confirmText={confirmText} cancelText={cancelText} />
+					) : (
+						<Button
+							sx={{
+								width: "100%",
+							}}
+							onClick={confirm}
+						>
+							Close
+						</Button>
+					)}
 				</Box>
 			</Modal>
 		</div>
