@@ -1,7 +1,9 @@
 import { deleteCart } from "@main/store/actions/cartActions";
+import { clearCart } from "@main/store/slices/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
+import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,17 +20,15 @@ const PaymentPage = () => {
 	const navigate = useNavigate();
 
 	const [modal, setModal] = useState(false);
+	const user = useUserData();
 
 	const dispatch = useDispatch();
 
 	const handleCloseModal = () => {
 		setModal(false);
-		// navigate("/");
+		navigate("/");
 	};
 
-	const handleFormSubmit = (values, reset) => {
-		dispatch(deleteCart());
-	};
 	return (
 		<Container
 			maxWidth="lg"
@@ -55,8 +55,15 @@ const PaymentPage = () => {
 						cvv: "",
 					}}
 					validationSchema={validationSchema}
-					onSubmit={(values, { resetForm }) => {
-						// resetForm();
+					onSubmit={(_, { resetForm }) => {
+						if (user) {
+							dispatch(deleteCart());
+						} else {
+							dispatch(clearCart());
+						}
+
+						setModal(true);
+						resetForm();
 					}}
 				>
 					{props => (
@@ -131,7 +138,14 @@ const PaymentPage = () => {
 					)}
 				</Formik>
 
-				{modal && <PaymentModal open={modal} close={handleCloseModal} text="Thank you for choosing our shop!" />}
+				{modal && (
+					<PaymentModal
+						open={modal}
+						close={handleCloseModal}
+						text="Thank you for choosing our shop!"
+						confirm={handleCloseModal}
+					/>
+				)}
 			</PaymentWrapper>
 		</Container>
 	);

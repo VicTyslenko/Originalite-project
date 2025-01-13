@@ -23,9 +23,7 @@ const AddressDetails = () => {
 		const data = await dispatch(addressFetchData({ ...values, customerId: user?.id || null, products }));
 
 		if (data.error) return;
-
-		toast.success(user ? "Address saved!" : "Order placed!");
-
+		toast.success("Address saved!");
 		navigate("/payment");
 		resetForm();
 	};

@@ -10,11 +10,12 @@ function Main() {
 	const dispatch = useDispatch();
 	const userData = useSelector(state => state.auth.data);
 
+
 	useEffect(() => {
 		if (userData) {
 			dispatch(getCart());
 		}
-	}, [userData, dispatch]);
+	}, []);
 
 	useEffect(() => {
 		if (userData) {
