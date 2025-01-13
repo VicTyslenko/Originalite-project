@@ -2,11 +2,11 @@ import { Button } from "@mui/material";
 
 import * as S from "./StyledActionButtons";
 
-export const ActionButtons = ({ confirm, cancel }) => {
+export const ActionButtons = ({ confirm, cancel, confirmText = "Ok", cancelText = "Cancel" }) => {
 	return (
 		<S.ButtonsWrapp>
-			<Button onClick={confirm}>Remove item</Button>
-			<Button onClick={cancel}>No, keep it</Button>
+			<Button onClick={confirm}>{confirmText}</Button>
+			<Button onClick={cancel}>{cancelText}</Button>
 		</S.ButtonsWrapp>
 	);
 };

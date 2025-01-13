@@ -1,3 +1,4 @@
+import { deleteProductFromCart } from "@main/store/actions/cartActions";
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
 import { useEffect, useState } from "react";
@@ -40,6 +41,10 @@ function ShoppingCart() {
 		dispatch(decrementItemInCart(id));
 	};
 
+	const handleRemoveItem = id => {
+		dispatch(deleteProductFromCart(id));
+	};
+
 	const productItem = cart?.map(({ product, color, size, cartQuantity }) => (
 		<ContentWrapp key={product._id}>
 			<Content>
@@ -78,7 +83,9 @@ function ShoppingCart() {
 					customStyles={{
 						width: "600px",
 					}}
-					product={product}
+					confirm={() => handleRemoveItem(product._id)}
+					confirmText="Remove item"
+					cancelText="No, keep it"
 				/>
 			)}
 		</ContentWrapp>

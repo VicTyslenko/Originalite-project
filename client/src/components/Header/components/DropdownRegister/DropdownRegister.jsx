@@ -1,3 +1,4 @@
+import { getCart } from "@main/store/actions/cartActions";
 import { clearErrorAuth } from "@main/store/slices/authSlice";
 import { closeModal } from "@main/store/slices/modalSlice";
 import { Button, Container } from "@mui/material";
@@ -21,7 +22,22 @@ import { validationSchema } from "./validation";
 
 function DropdownRegister({ active }) {
 	const dispatch = useDispatch();
-	let errorMessage = useSelector(state => state.auth.error);
+
+	const errorMessage = useSelector(state => state.auth.error);
+
+	const handleFormSubmit = async (values, resetForm) => {
+		const data = await dispatch(actionFetchAuth(values));
+
+		await dispatch(getCart());
+
+		if (!data.error) {
+			toast.success("Login successful!");
+
+			dispatch(closeModal());
+			dispatch(clearErrorAuth());
+			resetForm();
+		}
+	};
 
 	useEffect(() => {
 		dispatch(clearErrorAuth());
@@ -40,16 +56,7 @@ function DropdownRegister({ active }) {
 							password: "",
 						}}
 						validationSchema={validationSchema}
-						onSubmit={async (values, { resetForm }) => {
-							const data = await dispatch(actionFetchAuth(values));
-
-							if (!data.error) {
-								toast.success("Login successful!");
-								dispatch(closeModal());
-								dispatch(clearErrorAuth());
-								resetForm();
-							}
-						}}
+						onSubmit={async (values, { resetForm }) => handleFormSubmit(values, resetForm)}
 					>
 						{props => {
 							return (
