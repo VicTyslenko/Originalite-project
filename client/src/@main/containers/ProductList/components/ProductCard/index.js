@@ -1,8 +1,6 @@
 import { Card, CardActionArea, CardMedia, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-import PropTypes from "prop-types";
-
 import { StyledCardContent, StyledTitle } from "./ProductCard.styles";
 
 function ProductCard({ url, alt, title, price, id }) {
@@ -28,13 +26,5 @@ function ProductCard({ url, alt, title, price, id }) {
 		</Card>
 	);
 }
-
-ProductCard.propTypes = {
-	title: PropTypes.string.isRequired,
-	price: PropTypes.number.isRequired,
-	alt: PropTypes.string.isRequired,
-	url: PropTypes.string.isRequired,
-	id: PropTypes.string.isRequired,
-};
 
 export default ProductCard;

@@ -3,10 +3,10 @@ import { IconButton, Tooltip } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { addProductToCart, deleteProductFromCart } from "../../../../store/actions/cartActions";
-import { addProductToWishlist, deleteProductFromWishlist } from "../../../../store/actions/wishlistActions";
-import { ActionsWrapper, StyledButton } from "./ProductInfo.styles";
-import { useProductInfo } from "./hooks/useProductInfo";
+import { addProductToCart, deleteProductFromCart } from "../../../../../store/actions/cartActions";
+import { addProductToWishlist, deleteProductFromWishlist } from "../../../../../store/actions/wishlistActions";
+import { ActionsWrapper, StyledButton } from "../StyledProductInfo";
+import { useProductInfo } from "../hooks/useProductInfo";
 
 function ProductInfoActions({ id }) {
 	const [openTooltip, setOpenTooltip] = useState(false);
