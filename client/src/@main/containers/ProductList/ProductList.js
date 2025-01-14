@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { getProductList } from "../../store/actions/productListActions";
-import { StyledBox, StyledContainer, StyledTitle } from "./ProductList.styles";
+import { StyledBox, StyledContainer, StyledTitle } from "./StyledProductList";
 import EmptyProductPage from "./components/EmptyProductPage/EmptyProductPage";
 import ProductCard from "./components/ProductCard";
 import ProductFilters from "./components/ProductFilters";
@@ -24,11 +24,9 @@ function ProductList() {
 	const colors = useSelector(state => state.filters.colors);
 	const categories = useSelector(state => state.filters.categories);
 
-	const handleChange = value => {
-		setPage(value);
+	const handlePageChange = (_, page) => {
+		setPage(page);
 	};
-
-	const isNotData = products.length === 0;
 
 	useEffect(() => {
 		dispatch(
@@ -49,7 +47,7 @@ function ProductList() {
 		<>
 			<StyledContainer maxWidth="lg">
 				<ProductFilters />
-				{!isNotData && (
+				{products.length !== 0 && (
 					<Box sx={{ pb: "30px" }}>
 						<StyledTitle variant="title" component="div" sx={{ textTransform: "capitalize" }}>
 							{categories}
@@ -61,11 +59,11 @@ function ProductList() {
 								))}
 						</StyledBox>
 						<Stack spacing={2}>
-							<Pagination count={Math.ceil(count / perPage)} page={startPage} onChange={handleChange} />
+							<Pagination count={Math.ceil(count / perPage)} page={startPage} onChange={handlePageChange} />
 						</Stack>
 					</Box>
 				)}
-				{isNotData && <EmptyProductPage />}
+				{products.length === 0 && <EmptyProductPage />}
 			</StyledContainer>
 		</>
 	);

@@ -13,9 +13,9 @@ export const useProductInfo = () => {
 
 	const wishList = useSelector(state => state.wishlist.data);
 
-	const itemInCart = cart?.find(item => item.product._id === product._id);
+	const itemInCart = cart?.find(item => item.product._id === product?._id);
 
-	const itemInWishlist = wishList?.find(item => item._id === product._id);
+	const itemInWishlist = wishList?.find(item => item._id === product?._id);
 
-	return { itemInCart, isAuth, currentSize, currentColor, itemInWishlist };
+	return { itemInCart, isAuth, currentSize, currentColor, itemInWishlist, wishList };
 };

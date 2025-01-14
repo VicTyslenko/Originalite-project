@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingBag";
-import { ShoppingBagItem } from "./extensions/shopping-bag-item";
+import { ShoppingBagItem } from "./extensions/ShoppingBagItem";
 
 function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
