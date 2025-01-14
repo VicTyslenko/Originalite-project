@@ -1,15 +1,33 @@
-import { Container, Typography } from '@mui/material';
-import { useEffect, useState, Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Content, FlexWrapper, Description, StyledButton } from './StyledWishList';
-import CloseIcon from '@mui/icons-material/Close';
-import { addProductToCart } from '../../../@main/store/actions/cartActions';
-import { deleteProductFromWishlist } from '../../../@main/store/actions/wishlistActions';
+import CloseIcon from "@mui/icons-material/Close";
+import { Container, Typography } from "@mui/material";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { addProductToCart } from "../../../@main/store/actions/cartActions";
+import { deleteProductFromCart } from "../../../@main/store/actions/cartActions";
+import { deleteProductFromWishlist } from "../../../@main/store/actions/wishlistActions";
+import { Content, Description, FlexWrapper, StyledButton } from "./StyledWishList";
+
 function Wishlist() {
 	const dispatch = useDispatch();
+
 	const [totalPrice, setTotalPrice] = useState(0);
-	const data = useSelector(state => state.wishlist.data);
-	const MainContent = data.map(({ name, currentPrice, imageUrls, colors, sizes, _id: _id }) => (
+
+	const wishList = useSelector(state => state.wishlist.data);
+
+	const cart = useSelector(state => state.cart.data);
+
+	const itemInCart = id => cart.some(cartItem => cartItem.product._id === id);
+
+	const handleClick = id => {
+		if (itemInCart(id)) {
+			dispatch(deleteProductFromCart(id));
+		} else {
+			dispatch(addProductToCart(id));
+		}
+	};
+
+	const MainContent = wishList.map(({ name, currentPrice, imageUrls, colors, sizes, _id: _id }) => (
 		<Content key={_id}>
 			<div className="wrapp">
 				<FlexWrapper>
@@ -29,43 +47,34 @@ function Wishlist() {
 							dispatch(deleteProductFromWishlist(_id));
 						}}
 						sx={{
-							cursor: 'pointer',
+							cursor: "pointer",
 						}}
 					/>
-					<StyledButton
-						onClick={() => {
-							dispatch(addProductToCart(_id));
-						}}
-					>
-						Add to cart
-					</StyledButton>
+					<StyledButton onClick={() => handleClick(_id)}>{itemInCart(_id) ? "Delete" : "Add to cart"}</StyledButton>
 				</div>
 			</div>
 		</Content>
 	));
-	const allPrices = data.map((product) => product.currentPrice);
+	const allPrices = wishList.map(product => product.currentPrice);
 
 	useEffect(() => {
 		setTotalPrice(allPrices.reduce((a, b) => a + b, 0));
-	}, [data]);
+	}, [wishList]);
 	return (
 		<Container
 			maxWidth="lg"
 			sx={{
-				marginTop: '50px',
-				marginBottom: '50px',
+				marginTop: "50px",
+				marginBottom: "50px",
 			}}
 		>
-			{data.length > 0 ? (
+			{wishList.length > 0 ? (
 				<Fragment>
 					{MainContent}
 					<h2 className="total-price">Total price : {totalPrice}</h2>
 				</Fragment>
 			) : (
-				<Typography
-					variant="h4"
-					sx={{ mb: '141px', color: 'black', display: 'flex', justifyContent: 'center' }}
-				>
+				<Typography variant="h4" sx={{ mb: "141px", color: "black", display: "flex", justifyContent: "center" }}>
 					Your wishlist is empty
 				</Typography>
 			)}

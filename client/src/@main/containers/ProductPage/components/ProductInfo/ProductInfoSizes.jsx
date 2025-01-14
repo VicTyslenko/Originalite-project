@@ -1,9 +1,9 @@
 import { ListItemText, Popover, Typography } from "@mui/material";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setSize } from "../../../../store/slices/productSlice";
-import { ListItemButtonStyled, ListStyled, SizeList } from "./ProductInfo.styles";
+import { ListItemButtonStyled, ListStyled, SizeList } from "./StyledProductInfo";
 import img from "./sizeguide.jpg";
 
 function ProductInfoSizes({ sizes }) {

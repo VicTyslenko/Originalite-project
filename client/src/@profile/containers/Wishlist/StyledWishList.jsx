@@ -25,6 +25,7 @@ export const FlexWrapper = styled.div`
 	& .image {
 		height: 20rem;
 		width: 16rem;
+		object-fit: contain;
 	}
 `;
 export const Description = styled.div`

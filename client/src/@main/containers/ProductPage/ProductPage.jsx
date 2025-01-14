@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { getProduct } from "../../store/actions/productActions";
 import BackButton from "./components/BackButton";
 import ProductGallery from "./components/ProductGallery";
-import ProductInfo from "./components/ProductInfo";
+import ProductInfo from "./components/ProductInfo/ProductInfo";
 import ProductMore from "./components/ProductMore";
 
 function ProductPage() {

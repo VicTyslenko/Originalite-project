@@ -1,8 +1,8 @@
 import { ListItemText, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setColor } from "../../../../store/slices/productSlice";
-import { ColorIcon, ColorList, ListItemButtonStyled, ListItemIconColor, ListStyled } from "./ProductInfo.styles";
+import { setColor } from "../../../../../store/slices/productSlice";
+import { ColorIcon, ColorList, ListItemButtonStyled, ListItemIconColor, ListStyled } from "../StyledProductInfo";
 
 function ProductInfoColors({ colors }) {
 	const currentColor = useSelector(state => state.product.currentColor);
