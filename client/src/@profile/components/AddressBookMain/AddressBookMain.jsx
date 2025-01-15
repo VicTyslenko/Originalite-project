@@ -1,20 +1,37 @@
-import MainWrapp from './StyledAddressBookMain';
-import { StyledButton } from './StyledAddressBookMain';
+import { useUserData } from "hooks/use-user-data";
+import { DefaultTypography } from "shared/components/typography/default-typography";
+
+import * as S from "./StyledAddressBookMain";
+import { MainWrapp, StyledButton } from "./StyledAddressBookMain";
 
 function AddressBookMain() {
+	const user = useUserData();
+
+	const details = () => (
+		<S.Details>
+			Email:
+			<DefaultTypography as="h3"> {user.email || ""}</DefaultTypography>
+			Address:
+			<DefaultTypography as="h3">{user.address || ""}</DefaultTypography>
+			Telephone:
+			<DefaultTypography as="h3">{user.telephone || ""}</DefaultTypography>
+		</S.Details>
+	);
+
 	return (
 		<MainWrapp>
-			<div className="delivery">
-				<h3>
-					<p className="address">address book</p>
-					<p>delivery address</p>
-				</h3>
+			<S.DeliveryWrapp>
+				{details()}
+				<DefaultTypography>Delivery address</DefaultTypography>
 				<StyledButton>Add new address</StyledButton>
-			</div>
-			<div className="billing">
-				<p>billing address</p>
+			</S.DeliveryWrapp>
+
+			<S.BillingWrapp>
+				{details()}
+				<DefaultTypography>Billing address</DefaultTypography>
+
 				<StyledButton>Add new address</StyledButton>
-			</div>
+			</S.BillingWrapp>
 		</MainWrapp>
 	);
 }

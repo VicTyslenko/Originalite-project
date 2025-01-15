@@ -1,17 +1,17 @@
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
+import styled from "styled-components";
 
 export const StyledButton = styled(Button)`
 	&&& {
 		background-color: black;
-		font-family: 'Open Sans', sans-serif;
+		font-family: "Open Sans", sans-serif;
 		font-style: normal;
-		color:white ;
-		 font-weight: 400;
-
+		color: white;
+		font-weight: 400;
 	}
 `;
-const MainWrapp = styled.div`
+
+export const MainWrapp = styled.div`
 	display: grid;
 	margin-top: 70px;
 	grid-template-columns: 1fr 1fr;
@@ -23,10 +23,7 @@ const MainWrapp = styled.div`
 		text-transform: uppercase;
 	}
 	& h3 {
-		display: flex;
-		flex-direction: column;
-		gap: 30px;
-		margin-top: 12rem;
+		margin: 10px 0;
 	}
 	& div {
 		display: flex;
@@ -34,14 +31,15 @@ const MainWrapp = styled.div`
 		justify-content: flex-end;
 		height: 352px;
 	}
-
-	& .billing {
-		border-left: 1px solid #c4c4c4;
-		padding-left: 70px;
-	}
-	& .billing p {
-		margin-top: 15rem;
-	}
 `;
 
-export default MainWrapp;
+export const DeliveryWrapp = styled.div``;
+
+export const BillingWrapp = styled.div`
+	border-left: 1px solid #c4c4c4;
+	padding-left: 70px;
+`;
+
+export const Details = styled.div`
+	margin-bottom: 20px;
+`;
