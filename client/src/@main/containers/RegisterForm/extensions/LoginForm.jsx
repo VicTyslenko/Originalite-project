@@ -30,6 +30,7 @@ export const LoginForm = () => {
 				initialValues={{
 					loginOrEmail: "",
 					password: "",
+					keepSignedIn: false,
 				}}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { resetForm }) => {
@@ -80,6 +81,9 @@ export const LoginForm = () => {
 											color: "white",
 										},
 									}}
+									name="keepSignedIn"
+									value={props.values.keepSignedIn}
+									onChange={props.handleChange}
 								/>
 								<p className="box-text">Keep me signed in</p>
 							</CheckBoxWrapp>

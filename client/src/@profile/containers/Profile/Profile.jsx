@@ -1,4 +1,5 @@
 import { clearCart } from "@main/store/slices/cartSlice";
+import { clearTempAuth } from "@main/store/slices/tempAuthSlice";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -6,21 +7,35 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Container, Grid, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useUserData } from "hooks/use-user-data";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import { clearDataAuth } from "../../../@main/store/slices/authSlice";
-import { clearDataRegister } from "../../../@main/store/slices/registrationSlice";
-import { useUserData } from "../../../hooks/use-user-data";
+import { clearDataAuth, clearUserData } from "../../../@main/store/slices/authSlice";
 import * as S from "./StyledUserProfile";
 
 function Profile() {
 	const dispatch = useDispatch();
+
 	const user = useUserData();
+
+	const navigate = useNavigate();
 
 	const clearData = () => {
 		dispatch(clearDataAuth());
-		dispatch(clearDataRegister());
+
+		dispatch(clearTempAuth());
 		dispatch(clearCart());
+		dispatch(clearUserData());
+	};
+
+	const handleLogout = () => {
+		clearData();
+
+		localStorage.removeItem("persist:auth");
+		sessionStorage.removeItem("persist:tempAuth");
+
+		navigate("/");
 	};
 
 	return (
@@ -91,7 +106,7 @@ function Profile() {
 					</Grid>
 				)}
 				<Grid item xs={6}>
-					<S.StyledLink to="/" onClick={() => clearData()}>
+					<S.StyledButton onClick={() => handleLogout()}>
 						<S.FlexWrapp>
 							<ExitToAppIcon fontSize="large" />
 							<div className="content">
@@ -100,7 +115,7 @@ function Profile() {
 								<p className="description">Sign out</p>
 							</div>
 						</S.FlexWrapp>
-					</S.StyledLink>
+					</S.StyledButton>
 				</Grid>
 			</Grid>
 		</Container>

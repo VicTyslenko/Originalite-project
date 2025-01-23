@@ -97,9 +97,9 @@ export const deleteProductFromCart = createAsyncThunk("cart/deleteProductFromCar
 });
 
 export const deleteCart = createAsyncThunk("cart/deleteCart", async (_, { getState, rejectWithValue }) => {
-	const { auth, registration } = getState();
+	const { auth, tempAuth } = getState();
 
-	const token = auth?.data?.token || registration?.data?.token;
+	const token = auth?.data?.data.token || tempAuth?.data?.tempData.token;
 
 	if (!token) {
 		return rejectWithValue("Authorization token is missing");

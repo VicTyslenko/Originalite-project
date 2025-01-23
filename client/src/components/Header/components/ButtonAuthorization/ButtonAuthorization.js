@@ -5,10 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const ButtonAuthorization = ({ setDataMenu }) => {
 	const isAuth = useSelector(state => state.auth.data);
-	const isRegistration = useSelector(state => Boolean(state.registration.data));
+
+	const isTempAuth = useSelector(state => state.tempAuth.tempData);
 
 	const dispatch = useDispatch();
-	if (isAuth || isRegistration) {
+
+	if (isAuth || isTempAuth) {
 		return (
 			<ButtonGroup>
 				<PermIdentityOutlinedIcon sx={{ mr: 0.8 }} fontSize="medium" />

@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/lib/storage/session";
 
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
@@ -14,18 +15,35 @@ import modal from "../@main/store/slices/modalSlice";
 import productList from "../@main/store/slices/productListSlice";
 import product from "../@main/store/slices/productSlice";
 import registration from "../@main/store/slices/registrationSlice";
+import tempAuth from "../@main/store/slices/tempAuthSlice";
 import wishlist from "../@main/store/slices/wishlistSlice";
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["filters", "product", "address"],
+  blacklist: ["filters", "product", "address", "tempAuth"],
 };
+
+const persistConfigAuth = {
+  key: "auth",
+  storage,
+  whitelist: ["data"],
+};
+
+const persistConfigTempAuth = {
+  key: "tempAuth",
+  storage: sessionStorage,
+};
+
+const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
+
+const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
 
 const rootReduser = combineReducers({
   productList,
   product,
-  auth,
+  auth: persistedAuthReducer,
+  tempAuth: persistedTempAuthReducer,
   registration,
   cart,
   modal,
