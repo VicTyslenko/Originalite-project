@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import AnimateHeight from 'react-animate-height';
-import { TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { TextField } from "@mui/material";
+import AnimateHeight from "react-animate-height";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const WrappAnimate = styled(AnimateHeight)`
 	position: absolute;
@@ -32,7 +32,7 @@ export const Header = styled.div`
 	margin: 10px 0;
 
 	&:after {
-		content: '';
+		content: "";
 		position: absolute;
 		top: 50%;
 		left: 0;
@@ -70,7 +70,7 @@ export const InputItem = styled(TextField)`
 export const ButtonBlock = styled.div`
 	display: flex;
 	justify-content: center;
-	margin-top: 56px;
+	margin-top: 20px;
 `;
 
 export const FormPages = styled.div`
@@ -88,14 +88,19 @@ export const LinkItem = styled(Link)`
 	padding-top: 4px;
 	padding-left: 6px;
 	text-decoration: none;
-	font-family: 'Josefin Sans';
+	font-family: "Josefin Sans";
 	font-weight: 400;
 	font-size: 16px;
 	color: #00a1ef;
 	cursor: pointer;
 	line-height: 1;
+`;
 
-	/* &:hover {
-		border-bottom: 1px solid #00a1ef;
-	} */
+export const CheckBoxWrapp = styled.div`
+	display: flex;
+	align-items: center;
+
+	& .default-typography {
+		margin: 0;
+	}
 `;

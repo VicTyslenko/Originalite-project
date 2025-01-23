@@ -164,7 +164,22 @@ exports.getCustomers = async (req, res) => {
 
 // Controller for getting current customer
 exports.getCustomer = (req, res) => {
-  res.json(req.user);
+  if (req.user) {
+    res.status(200).json({
+      success: true,
+      user: {
+        id: req.user.id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        email: req.user.email,
+        isAdmin: req.user.isAdmin,
+        address: req.user.address,
+        telephone: req.user.telephone,
+      },
+    });
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
 };
 
 // Controller for editing customer personal info

@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { actionFetchAuth } from "../actions/authActions";
+import { actionFetchAuth, actionFetchUserData } from "../actions/authActions";
 
 const initialState = {
 	data: null,
 	status: "loading",
 	error: null,
+	userData: null,
 };
 
 const authReducer = createSlice({
@@ -19,7 +20,11 @@ const authReducer = createSlice({
 		clearErrorAuth(state) {
 			state.error = null;
 		},
+		clearUserData(state) {
+			state.userData = null;
+		},
 	},
+
 	extraReducers: builder => {
 		builder.addCase(actionFetchAuth.pending, state => {
 			state.status = "loading";
@@ -33,8 +38,11 @@ const authReducer = createSlice({
 			state.status = "error";
 			state.error = payload;
 		});
+		builder.addCase(actionFetchUserData.fulfilled, (state, action) => {
+			state.userData = action.payload;
+		});
 	},
 });
 
-export const { clearDataAuth, clearErrorAuth } = authReducer.actions;
+export const { clearDataAuth, clearErrorAuth, clearUserData } = authReducer.actions;
 export default authReducer.reducer;
