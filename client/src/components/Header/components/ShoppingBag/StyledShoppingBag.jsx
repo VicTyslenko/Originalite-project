@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -14,23 +15,24 @@ export const WrappContainer = styled.div`
 	padding-top: 16px;
 `;
 
-export const ButtonShoppingBag = styled(Link)`
-	font-size: 15px;
-	font-style: normal;
-	padding: 14px 30px;
-	color: #fafafa;
-	background: #160e05;
-	border: none;
-	border-radius: 16px;
-	outline: none;
-	cursor: pointer;
-	transition: 0.5s;
-	letter-spacing: 0.8px;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-family: "Josefin Sans";
+export const ButtonShoppingBag = styled(Button)`
+	&&& {
+		max-width: 130px;
+		font-size: 15px;
+		font-style: normal;
+		color: #fafafa;
+		background: #160e05;
+		border-radius: 16px;
+		outline: none;
+		cursor: pointer;
+		transition: 0.5s;
+		letter-spacing: 0.8px;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-family: "Josefin Sans";
+	}
 
-	&:hover {
+	&&&:hover {
 		background: #434342;
 	}
 `;

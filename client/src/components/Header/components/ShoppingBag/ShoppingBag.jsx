@@ -2,6 +2,7 @@ import { closeModal } from "@main/store/slices/modalSlice";
 import { Container, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingBag";
@@ -9,6 +10,8 @@ import { ShoppingBagItem } from "./extensions/ShoppingBagItem";
 
 function ShoppingBag({ isShoppingBag }) {
 	const dispatch = useDispatch();
+
+	const navigate = useNavigate();
 
 	const [totalPrice, setTotalPrice] = useState(0);
 
@@ -48,7 +51,13 @@ function ShoppingBag({ isShoppingBag }) {
 									<S.TotalPrice>
 										<span>Total : {totalPrice} $</span>
 									</S.TotalPrice>
-									<S.ButtonShoppingBag onClick={() => dispatch(closeModal())} to="/shopping-cart">
+									<S.ButtonShoppingBag
+										onClick={e => {
+											e.target.blur();
+											dispatch(closeModal());
+											navigate("/shopping-cart");
+										}}
+									>
 										Basket
 									</S.ButtonShoppingBag>
 								</S.FooterContent>

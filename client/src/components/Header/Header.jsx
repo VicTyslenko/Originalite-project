@@ -118,6 +118,7 @@ function Header() {
 						<ButtonGroup
 							data-menu="shoppingBag"
 							onClick={e => {
+								e.target.blur();
 								dispatch(openModal());
 								setDataMenu(e.target.dataset.menu);
 							}}

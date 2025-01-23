@@ -16,7 +16,7 @@ function HomeLandingPage() {
 
 	return (
 		<>
-			<Slider />
+			{/* <Slider /> */}
 			<NewInSection />
 			<Categories />
 		</>

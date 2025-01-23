@@ -2,15 +2,20 @@ import { getCart } from "@main/store/actions/cartActions";
 import { clearErrorAuth } from "@main/store/slices/authSlice";
 import { closeModal } from "@main/store/slices/modalSlice";
 import { Button, Container } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import { Formik } from "formik";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { DefaultTypography } from "shared/components/typography/default-typography";
 
+import { actionFetchTempAuth } from "../../../../@main/store/actions/authActions";
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
 import {
 	BoxWrapp,
 	ButtonBlock,
+	CheckBoxWrapp,
 	FormPages,
 	Header,
 	InputItem,
@@ -25,16 +30,19 @@ function DropdownRegister({ active }) {
 
 	const errorMessage = useSelector(state => state.auth.error);
 
-	const handleFormSubmit = async (values, resetForm) => {
-		const data = await dispatch(actionFetchAuth(values));
+	const navigate = useNavigate();
 
-		await dispatch(getCart());
+	const handleFormSubmit = async (values, resetForm) => {
+		const data = values.keepSignedIn
+			? await dispatch(actionFetchAuth(values))
+			: await dispatch(actionFetchTempAuth(values));
 
 		if (!data.error) {
 			toast.success("Login successful!");
-
 			dispatch(closeModal());
+
 			dispatch(clearErrorAuth());
+			navigate("/");
 			resetForm();
 		}
 	};
@@ -54,6 +62,7 @@ function DropdownRegister({ active }) {
 						initialValues={{
 							loginOrEmail: "",
 							password: "",
+							keepSignedIn: false,
 						}}
 						validationSchema={validationSchema}
 						onSubmit={async (values, { resetForm }) => handleFormSubmit(values, resetForm)}
@@ -82,6 +91,10 @@ function DropdownRegister({ active }) {
 											helperText={props.touched.password && props.errors.password}
 										/>
 									</InputsWrapp>
+									<CheckBoxWrapp>
+										<Checkbox value={props.values.keepSignedIn} onChange={props.handleChange} name="keepSignedIn" />
+										<DefaultTypography>Keep me signed in</DefaultTypography>
+									</CheckBoxWrapp>
 
 									{errorMessage && !Object.keys(props.errors).length && (
 										<span className="error-message">{Object.values(errorMessage)}</span>

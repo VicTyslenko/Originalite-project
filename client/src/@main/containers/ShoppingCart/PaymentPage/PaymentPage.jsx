@@ -56,6 +56,8 @@ const PaymentPage = () => {
 					}}
 					validationSchema={validationSchema}
 					onSubmit={(_, { resetForm }) => {
+						console.log({ user: user });
+
 						if (user) {
 							dispatch(deleteCart());
 						} else {
@@ -144,6 +146,9 @@ const PaymentPage = () => {
 						close={handleCloseModal}
 						text="Thank you for choosing our shop!"
 						confirm={handleCloseModal}
+						customStyles={{
+							minWidth: "520px",
+						}}
 					/>
 				)}
 			</PaymentWrapper>
