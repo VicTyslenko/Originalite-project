@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import axiosInstance from "../../../services/api/axios";
 
-export const addressFetchData = createAsyncThunk(
-	"address/actionFetchData",
+export const ordersFetchData = createAsyncThunk(
+	"orders/actionFetchData",
 	async (params, { rejectWithValue, getState }) => {
-		const { auth, registration } = getState();
+		const { auth, tempAuth } = getState();
 
-		const token = auth?.data?.token || registration?.data?.token;
+		const token = auth?.data?.token || tempAuth.tempData?.token;
 
 		try {
 			const { data } = await axiosInstance.post("/orders/", params, {

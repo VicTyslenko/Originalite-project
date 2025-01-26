@@ -26,6 +26,7 @@ const PaymentPage = () => {
 
 	const handleCloseModal = () => {
 		setModal(false);
+
 		navigate("/");
 	};
 
@@ -55,9 +56,7 @@ const PaymentPage = () => {
 						cvv: "",
 					}}
 					validationSchema={validationSchema}
-					onSubmit={(_, { resetForm }) => {
-						console.log({ user: user });
-
+					onSubmit={async (_, { resetForm }) => {
 						if (user) {
 							dispatch(deleteCart());
 						} else {

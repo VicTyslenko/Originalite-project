@@ -5,13 +5,13 @@ import sessionStorage from "redux-persist/lib/storage/session";
 
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
-import address from "../@main/store/slices/addressSlice";
 import auth from "../@main/store/slices/authSlice";
 import cart from "../@main/store/slices/cartSlice";
 import categories from "../@main/store/slices/categoriesSlice";
 import colors from "../@main/store/slices/colorsSlice";
 import filters from "../@main/store/slices/filterSlice";
 import modal from "../@main/store/slices/modalSlice";
+import orders from "../@main/store/slices/ordersSlice";
 import productList from "../@main/store/slices/productListSlice";
 import product from "../@main/store/slices/productSlice";
 import registration from "../@main/store/slices/registrationSlice";
@@ -53,7 +53,7 @@ const rootReduser = combineReducers({
   categories,
   users,
   newProduct,
-  address,
+  orders,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReduser);
