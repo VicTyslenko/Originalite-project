@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { addressFetchData } from "../../../@main/store/actions/addressActions";
+import { ordersFetchData } from "../../../@main/store/actions/ordersActions";
 import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
 import { ContentForm, StyledLink, Title } from "../AdressDetails/StyledAddressDetails";
@@ -16,11 +16,11 @@ const AddressDetails = () => {
 
 	const products = useSelector(state => state.cart.data);
 
-	const serverError = useSelector(state => state.address.error);
+	const serverError = useSelector(state => state.orders.error);
 	const navigate = useNavigate();
 
 	const handleFormSubmit = async (values, resetForm) => {
-		const data = await dispatch(addressFetchData({ ...values, customerId: user?.id || null, products }));
+		const data = await dispatch(ordersFetchData({ ...values, customerId: user?.id || null, products }));
 
 		if (data.error) return;
 		toast.success("Address saved!");

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { addressFetchData } from "../actions/addressActions";
+import { ordersFetchData } from "../actions/ordersActions";
 
 const initialState = {
 	data: null,
@@ -8,25 +8,25 @@ const initialState = {
 	error: null,
 };
 
-const addressReducer = createSlice({
-	name: "address",
+const ordersReducer = createSlice({
+	name: "order",
 	initialState,
 	reducers: {},
 	extraReducers: builder => {
-		builder.addCase(addressFetchData.pending, state => {
+		builder.addCase(ordersFetchData.pending, state => {
 			state.status = "loading";
 			state.data = null;
 		});
-		builder.addCase(addressFetchData.fulfilled, (state, { payload }) => {
+		builder.addCase(ordersFetchData.fulfilled, (state, { payload }) => {
 			state.status = "leaded";
 			state.data = payload;
 			state.error = null;
 		});
-		builder.addCase(addressFetchData.rejected, (state, { payload }) => {
+		builder.addCase(ordersFetchData.rejected, (state, { payload }) => {
 			state.status = "error";
 			state.error = payload;
 		});
 	},
 });
 
-export default addressReducer.reducer;
+export default ordersReducer.reducer;
