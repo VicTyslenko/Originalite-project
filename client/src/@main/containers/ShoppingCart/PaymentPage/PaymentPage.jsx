@@ -1,11 +1,12 @@
 import { deleteCart } from "@main/store/actions/cartActions";
+import { ordersFetchData } from "@main/store/actions/ordersActions";
 import { clearCart } from "@main/store/slices/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
 import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import PaymentModal from "../Modal/Modal";
@@ -21,8 +22,29 @@ const PaymentPage = () => {
 
 	const [modal, setModal] = useState(false);
 	const user = useUserData();
+	const products = useSelector(state => state.cart.data);
 
 	const dispatch = useDispatch();
+
+	const handleSubmit = async (values, resetForm) => {
+		if (user) {
+			dispatch(deleteCart());
+		} else {
+			dispatch(clearCart());
+		}
+		const data = await dispatch(
+			ordersFetchData({
+				paymentInfo: values,
+				products,
+				email: user?.email,
+				telephone: user?.telephone,
+				paymentStatus: "paid",
+			}),
+		);
+
+		setModal(true);
+		resetForm();
+	};
 
 	const handleCloseModal = () => {
 		setModal(false);
@@ -56,16 +78,7 @@ const PaymentPage = () => {
 						cvv: "",
 					}}
 					validationSchema={validationSchema}
-					onSubmit={async (_, { resetForm }) => {
-						if (user) {
-							dispatch(deleteCart());
-						} else {
-							dispatch(clearCart());
-						}
-
-						setModal(true);
-						resetForm();
-					}}
+					onSubmit={(values, { resetForm }) => handleSubmit(values, resetForm)}
 				>
 					{props => (
 						<form onSubmit={props.handleSubmit}>

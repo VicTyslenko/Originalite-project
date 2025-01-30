@@ -26,9 +26,14 @@ const OrderSchema = new Schema(
     address: {
       type: Schema.Types.Mixed,
     },
-    paymentStatus: String,
+
+    paymentStatus: {
+      type: String,
+      default: "pending",
+    },
     paymentInfo: {
       type: Schema.Types.Mixed,
+      default: {},
     },
     totalSum: {
       type: Number,

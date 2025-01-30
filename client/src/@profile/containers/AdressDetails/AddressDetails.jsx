@@ -13,7 +13,6 @@ const AddressDetails = () => {
 	const dispatch = useDispatch();
 
 	const user = useUserData();
-
 	const products = useSelector(state => state.cart.data);
 
 	const serverError = useSelector(state => state.orders.error);
