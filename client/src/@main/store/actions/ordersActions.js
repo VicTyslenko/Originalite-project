@@ -11,16 +11,34 @@ export const ordersFetchData = createAsyncThunk(
 
 		try {
 			const { data } = await axiosInstance.post("/orders/", params, {
-				headers: token
-					? {
-							Authorization: token,
-					  }
-					: {},
+				headers: {
+					Authorization: token,
+				},
 			});
 
 			return data;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
+		}
+	},
+);
+
+export const updateOrder = createAsyncThunk(
+	"orders/actionFetchData",
+	async ({ orderId, params }, { getState, rejectWithValue }) => {
+		const { auth, tempAuth } = getState();
+
+		const token = auth?.data?.token || tempAuth.tempData?.token;
+
+		try {
+			const { data } = await axiosInstance.put(`/orders/${orderId}`, params, {
+				headers: {
+					Authorization: token,
+				},
+			});
+			return data;
+		} catch (error) {
+			return rejectWithValue(error.response.data);
 		}
 	},
 );

@@ -8,6 +8,7 @@ import { getWishlist } from "./store/actions/wishlistActions";
 
 function Main() {
 	const dispatch = useDispatch();
+
 	const user = useUserData();
 
 	useEffect(() => {

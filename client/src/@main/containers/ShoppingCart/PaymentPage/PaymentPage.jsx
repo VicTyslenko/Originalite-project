@@ -1,13 +1,16 @@
-import { deleteCart } from "@main/store/actions/cartActions";
+
+import { updateOrder } from "@main/store/actions/ordersActions";
 import { clearCart } from "@main/store/slices/cartSlice";
+// import { removeOrderId } from "@main/store/slices/ordersSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
 import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import { deleteCart } from "../../../store/actions/cartActions";
 import PaymentModal from "../Modal/Modal";
 import SVG from "../SVG/SVG";
 import SVGMaestro from "../SVG/SVGMaestro";
@@ -22,11 +25,35 @@ const PaymentPage = () => {
 	const [modal, setModal] = useState(false);
 	const user = useUserData();
 
+	const orderId = useSelector(state => state.orders.orderId);
+
 	const dispatch = useDispatch();
+
+	const handleSubmit = async (_, resetForm) => {
+		if (user) {
+			dispatch(deleteCart());
+		} else {
+			dispatch(clearCart());
+		}
+		const data = await dispatch(
+			updateOrder({
+				orderId,
+				params: {
+					email: user?.email,
+					letterSubject: "Order Payment Confirmation",
+					letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
+					paymentStatus: "paid",
+				},
+			}),
+		);
+		// if (!data.error) dispatch(removeOrderId());
+		console.log("data", data);
+		setModal(true);
+		resetForm();
+	};
 
 	const handleCloseModal = () => {
 		setModal(false);
-
 		navigate("/");
 	};
 
@@ -56,16 +83,7 @@ const PaymentPage = () => {
 						cvv: "",
 					}}
 					validationSchema={validationSchema}
-					onSubmit={async (_, { resetForm }) => {
-						if (user) {
-							dispatch(deleteCart());
-						} else {
-							dispatch(clearCart());
-						}
-
-						setModal(true);
-						resetForm();
-					}}
+					onSubmit={(values, { resetForm }) => handleSubmit(values, resetForm)}
 				>
 					{props => (
 						<form onSubmit={props.handleSubmit}>
