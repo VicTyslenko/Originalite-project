@@ -10,14 +10,16 @@ import {
 
 export const getCart = createAsyncThunk("cart/getCart", async (_, { getState }) => {
 	const { auth, tempAuth } = getState();
-	const token = auth.data?.token || tempAuth.tempData?.token;
+	const token = auth.data?.token || tempAuth.tempData?.token || null;
 
-	const { data } = await fetchCart({
-		headers: {
-			Authorization: token,
-		},
-	});
-	return data;
+	if (token) {
+		const { data } = await fetchCart({
+			headers: {
+				Authorization: token,
+			},
+		});
+		return data;
+	}
 });
 
 export const addProductToCart = createAsyncThunk("cart/addProductToCart", async (id, { getState }) => {

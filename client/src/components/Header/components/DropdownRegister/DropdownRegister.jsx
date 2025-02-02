@@ -28,7 +28,7 @@ import { validationSchema } from "./validation";
 function DropdownRegister({ active }) {
 	const dispatch = useDispatch();
 
-	const errorMessage = useSelector(state => state.auth.error);
+	const errorMessage = useSelector(state => state.auth.error) || useSelector(state => state.tempAuth.errorMessage);
 
 	const navigate = useNavigate();
 

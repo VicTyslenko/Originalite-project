@@ -23,7 +23,7 @@ const ordersReducer = createSlice({
 			state.data = null;
 		});
 		builder.addCase(ordersFetchData.fulfilled, (state, { payload }) => {
-			state.status = "leaded";
+			state.status = "loaded";
 			state.data = payload;
 			state.error = null;
 			state.orderId = payload.orderId;

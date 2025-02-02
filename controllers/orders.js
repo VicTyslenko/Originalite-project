@@ -139,8 +139,6 @@ exports.placeOrder = async (req, res) => {
             customer.telephone = req.body.telephone || customer.telephone;
 
             await customer.save();
-            // return orderId to save it on frontend to update the same order in the future
-            res.status(201).json({ message: "Order created successfully", orderId: newOrder._id });
           }
         }
 
@@ -153,7 +151,8 @@ exports.placeOrder = async (req, res) => {
           await Product.findOneAndUpdate({ _id: id }, { quantity: productQuantity - item.cartQuantity }, { new: true });
         }
 
-        res.json({ order, mailResult });
+        // return orderId to save it on frontend to update the same order in the future
+        return res.status(201).json({ message: "Order created successfully", order, orderId: newOrder._id, mailResult });
       })
       .catch((err) =>
         res.status(400).json({

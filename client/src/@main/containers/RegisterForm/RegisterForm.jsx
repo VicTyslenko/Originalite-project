@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { registerFetchData } from "../../store/actions/registrationActions";
 import {
@@ -22,11 +23,13 @@ import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
 	const dispatch = useDispatch();
-	const { registerError } = useFormLogin();
+	const { errorMessage } = useFormLogin();
+
+	const navigate = useNavigate();
 
 	const [value, setValue] = useState("1");
 
-	const handleChange = (event, newValue) => {
+	const handleChange = (_, newValue) => {
 		setValue(newValue);
 	};
 
@@ -68,6 +71,7 @@ const RegisterForm = () => {
 
 								if (!data.error) {
 									toast.success("Register success!");
+									navigate("/");
 									resetForm();
 								}
 							}}
@@ -150,7 +154,7 @@ const RegisterForm = () => {
 										</InputsWrappReg>
 
 										<div className="flex-error">
-											{registerError && <span className="message">{Object.values(registerError)}</span>}
+											{errorMessage && <span className="message">{Object.values(errorMessage)}</span>}
 										</div>
 										<ButtonWrappReg>
 											<StyledButtonReg type="submit">Register</StyledButtonReg>

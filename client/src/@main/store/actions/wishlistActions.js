@@ -9,13 +9,14 @@ import {
 export const getWishlist = createAsyncThunk("wishlist/getWishlist", async (_, { getState }) => {
 	const { auth, tempAuth } = getState();
 	const token = auth.data?.token || tempAuth.tempData?.token;
-
-	const { data } = await fetchWishlist({
-		headers: {
-			Authorization: token,
-		},
-	});
-	return data;
+	if (token) {
+		const { data } = await fetchWishlist({
+			headers: {
+				Authorization: token,
+			},
+		});
+		return data;
+	}
 });
 
 export const addProductToWishlist = createAsyncThunk("wishlist/addProductToWishlist", async (id, { getState }) => {
