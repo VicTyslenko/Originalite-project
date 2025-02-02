@@ -17,12 +17,16 @@ const AddressDetails = () => {
 	const products = useSelector(state => state.cart.data);
 
 	const serverError = useSelector(state => state.orders.error);
+
 	const navigate = useNavigate();
 
 	const handleFormSubmit = async (values, resetForm) => {
 		const data = await dispatch(ordersFetchData({ ...values, customerId: user?.id || null, products }));
 
+		console.log("data", data.payload.orderId);
+
 		if (data.error) return;
+
 		toast.success("Address saved!");
 		navigate("/payment");
 		resetForm();
