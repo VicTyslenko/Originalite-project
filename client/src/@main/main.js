@@ -1,6 +1,6 @@
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import MainRoutes from "./router";
 import { getCart } from "./store/actions/cartActions";

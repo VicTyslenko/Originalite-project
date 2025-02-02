@@ -1,4 +1,5 @@
 import { actionFetchAuth } from "@main/store/actions/authActions";
+import { actionFetchTempAuth } from "@main/store/actions/authActions";
 import { Checkbox } from "@mui/material";
 import { validationSchema } from "components/Header/components/DropdownRegister/validation";
 import { Form, Formik } from "formik";
@@ -34,7 +35,9 @@ export const LoginForm = () => {
 				}}
 				validationSchema={validationSchema}
 				onSubmit={async (values, { resetForm }) => {
-					const data = await dispatch(actionFetchAuth(values));
+					const data = values.keepSignedIn
+						? await dispatch(actionFetchAuth(values))
+						: dispatch(actionFetchTempAuth(values));
 
 					if (!data.error) {
 						navigate("/");

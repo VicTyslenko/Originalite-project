@@ -8,13 +8,7 @@ export const useUserData = () => {
 
 	const isAuth = useSelector(state => state.auth.data);
 
-	const user = isAuth
-		? jwt_decode(isAuth.token)
-		: register
-		? jwt_decode(register.token)
-		: tempAuth
-		? jwt_decode(tempAuth.token)
-		: null;
+	const user = isAuth ? jwt_decode(register.token) : tempAuth ? jwt_decode(tempAuth.token) : null;
 
 	return user;
 };

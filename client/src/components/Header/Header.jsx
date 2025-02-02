@@ -5,7 +5,7 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Container } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import {
 	BoxTechnical,
@@ -25,10 +25,6 @@ import ShoppingBag from "./components/ShoppingBag";
 import WomanMenu from "./components/WomenMenu";
 
 function Header() {
-	const isRegistration = useSelector(state => Boolean(state.registration.data));
-
-	const navigate = useNavigate();
-
 	const dispatch = useDispatch();
 
 	const rootEl = useRef(null);
@@ -48,14 +44,6 @@ function Header() {
 
 		return () => document.removeEventListener("click", onClick);
 	}, []);
-
-	useEffect(() => {
-		if (isRegistration) {
-			navigate("/");
-		}
-
-		window.scrollTo(0, 0);
-	}, [isRegistration]);
 
 	return (
 		<ContainerWrapper ref={rootEl}>

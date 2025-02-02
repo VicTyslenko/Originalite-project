@@ -75,7 +75,7 @@ exports.createCustomer = (req, res, next) => {
               jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
                 res.json({
                   ...customer,
-                  // success: true,
+                  success: true,
                   token: "Bearer " + token,
                 });
               });

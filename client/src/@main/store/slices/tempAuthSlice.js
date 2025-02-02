@@ -4,6 +4,7 @@ import { actionFetchTempAuth } from "../actions/authActions";
 
 const initialState = {
 	tempData: null,
+	errorMessage: null,
 };
 
 const tempAuthSlice = createSlice({
@@ -17,9 +18,18 @@ const tempAuthSlice = createSlice({
 			state.tempData = null;
 		},
 	},
+
 	extraReducers: builder => {
+		builder.addCase(actionFetchTempAuth.pending, state => {
+			state.tempData = null;
+		});
+
 		builder.addCase(actionFetchTempAuth.fulfilled, (state, action) => {
 			state.tempData = action.payload;
+		});
+		builder.addCase(actionFetchTempAuth.rejected, (state, action) => {
+			console.log("error message", action.payload);
+			state.errorMessage = action.payload;
 		});
 	},
 });

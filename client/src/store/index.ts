@@ -33,6 +33,7 @@ const persistConfigAuth = {
 const persistConfigTempAuth = {
   key: "tempAuth",
   storage: sessionStorage,
+  whitelist: ["tempData"],
 };
 
 const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
