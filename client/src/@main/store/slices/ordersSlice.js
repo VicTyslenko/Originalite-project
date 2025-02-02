@@ -6,12 +6,17 @@ const initialState = {
 	data: null,
 	status: "loading",
 	error: null,
+	orderId: null,
 };
 
 const ordersReducer = createSlice({
-	name: "order",
+	name: "orders",
 	initialState,
-	reducers: {},
+	reducers: {
+		removeOrderId(state) {
+			state.orderId = null;
+		},
+	},
 	extraReducers: builder => {
 		builder.addCase(ordersFetchData.pending, state => {
 			state.status = "loading";
@@ -21,6 +26,7 @@ const ordersReducer = createSlice({
 			state.status = "leaded";
 			state.data = payload;
 			state.error = null;
+			state.orderId = payload.orderId;
 		});
 		builder.addCase(ordersFetchData.rejected, (state, { payload }) => {
 			state.status = "error";
@@ -28,5 +34,5 @@ const ordersReducer = createSlice({
 		});
 	},
 });
-
+export const { removeOrderId } = ordersReducer.actions;
 export default ordersReducer.reducer;

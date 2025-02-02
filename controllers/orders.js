@@ -97,6 +97,31 @@ exports.placeOrder = async (req, res) => {
     //   });
     // }
 
+    // checking if the order details are the same and the status is 'pending', just update the order
+    const { customerId } = req.body;
+
+    if (!customerId) {
+      return res.status(400).json({ message: "Customer ID is required." });
+    }
+
+    const existingOrder = await Order.findOne({
+      customerId,
+      paymentStatus: "pending",
+    });
+
+    if (existingOrder) {
+      existingOrder.address = req.body.address;
+      existingOrder.products = req.body.products;
+
+      await existingOrder.save();
+
+      return res.status(200).json({
+        message: "Existing order updated successfully.",
+        order: existingOrder,
+        orderId: existingOrder._id,
+      });
+    }
+
     const newOrder = new Order(order);
 
     if (order.customerId) {
@@ -114,6 +139,8 @@ exports.placeOrder = async (req, res) => {
             customer.telephone = req.body.telephone || customer.telephone;
 
             await customer.save();
+            // return orderId to save it on frontend to update the same order in the future
+            res.status(201).json({ message: "Order created successfully", orderId: newOrder._id });
           }
         }
 
@@ -162,6 +189,9 @@ exports.updateOrder = (req, res, next) => {
 
       if (req.body.customerId) {
         order.customerId = req.body.customerId;
+      }
+      if (req.body.paymentStatus) {
+        order.paymentStatus = req.body.paymentStatus;
       }
 
       if (req.body.products) {
