@@ -22,7 +22,7 @@ const registrationReducer = createSlice({
 			state.data = null;
 		});
 		builder.addCase(registerFetchData.fulfilled, (state, { payload }) => {
-			state.status = "leaded";
+			state.status = "loaded";
 			state.data = payload;
 		});
 		builder.addCase(registerFetchData.rejected, (state, { payload }) => {
