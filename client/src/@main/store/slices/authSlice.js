@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { actionFetchAuth, actionFetchUserData } from "../actions/authActions";
+import { updateCustomer } from "../actions/customersActions";
 import { registerFetchData } from "../actions/registrationActions";
 
 const initialState = {
@@ -54,6 +55,10 @@ const authReducer = createSlice({
 
 		builder.addCase(actionFetchUserData.fulfilled, (state, action) => {
 			state.userData = action.payload;
+		});
+		builder.addCase(updateCustomer.fulfilled, (state, action) => {
+			console.log("payload", action.payload);
+			state.data = action.payload;
 		});
 	},
 });

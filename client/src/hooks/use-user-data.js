@@ -2,13 +2,18 @@ import jwt_decode from "jwt-decode";
 import { useSelector } from "react-redux";
 
 export const useUserData = () => {
-	const register = useSelector(state => state.registration.data);
-
 	const tempAuth = useSelector(state => state.tempAuth.tempData);
 
 	const isAuth = useSelector(state => state.auth.data);
 
-	const user = isAuth ? jwt_decode(register.token) : tempAuth ? jwt_decode(tempAuth.token) : null;
+	const token = isAuth?.token || tempAuth?.token;
+
+	if (!token) {
+		console.log("Token is not valid");
+		return null;
+	}
+
+	const user = jwt_decode(token);
 
 	return user;
 };

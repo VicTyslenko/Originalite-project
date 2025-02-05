@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ordersFetchData } from "../actions/ordersActions";
 
 const initialState = {
+	orderId: null,
 	data: null,
 	status: "loading",
 	error: null,
-	orderId: null,
 };
 
 const ordersReducer = createSlice({

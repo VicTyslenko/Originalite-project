@@ -184,72 +184,146 @@ exports.getCustomer = (req, res) => {
 
 // Controller for editing customer personal info
 exports.editCustomerInfo = (req, res) => {
-  // Clone query object, because validator module mutates req.body, adding other fields to object
-  const initialQuery = _.cloneDeep(req.body);
+  let updatedFields = {}; // Object to store fields that need updating
 
-  // Check Validation
   const { errors, isValid } = validateRegistrationForm(req.body);
 
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
-  Customer.findOne({ _id: req.user.id })
+  // Find the current customer
+  Customer.findOne({ _id: req.params.id })
     .then((customer) => {
       if (!customer) {
-        errors.id = "Customer not found";
-        return res.status(404).json(errors);
+        return res.status(404).json({ message: `Customer with id ${req.params.id} not found` });
       }
 
-      const currentEmail = customer.email;
-      const currentLogin = customer.login;
-      let newEmail;
-      let newLogin;
+      // Clone query object, because validator module mutates req.body, adding other fields to object
+      const requestBody = _.cloneDeep(req.body);
 
-      if (req.body.email) {
-        newEmail = req.body.email;
+      // Extract current values from the customer record
+      const { email: currentEmail } = customer;
+      const { firstName, lastName, email, mobile, birthday, gender } = requestBody;
 
-        if (currentEmail !== newEmail) {
-          Customer.findOne({ email: newEmail }).then((customer) => {
-            if (customer) {
-              errors.email = `Email ${newEmail} is already exists`;
-              res.status(400).json(errors);
-              return;
-            }
-          });
-        }
+      // Adding only changed values to updatedFields
+      if (firstName) updatedFields.firstName = firstName;
+      if (lastName) updatedFields.lastName = lastName;
+      if (mobile) updatedFields.mobile = mobile;
+      if (birthday) updatedFields.birthday = birthday;
+      if (gender) updatedFields.gender = gender;
+
+      // **Checking if email is being changed and ensure uniqueness**
+      if (email && email !== currentEmail) {
+        return Customer.findOne({ email }).then((existingUser) => {
+          if (existingUser) {
+            return res.status(400).json({ message: `Email ${email} is already in use.` });
+          }
+
+          updatedFields.email = email;
+
+          // Updating user
+          return Customer.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true })
+            .then((updatedUser) => res.status(200).json(updatedUser))
+            .catch((error) => {
+              console.error(error);
+              return res.status(500).json({ message: "Server error" });
+            });
+        });
       }
 
-      if (req.body.login) {
-        newLogin = req.body.login;
-
-        if (currentLogin !== newLogin) {
-          Customer.findOne({ login: newLogin }).then((customer) => {
-            if (customer) {
-              errors.login = `Login ${newLogin} is already exists`;
-              res.status(400).json(errors);
-              return;
-            }
-          });
-        }
-      }
-
-      // Create query object for сustomer for saving him to DB
-      const updatedCustomer = queryCreator(initialQuery);
-
-      Customer.findOneAndUpdate({ _id: req.user.id }, { $set: updatedCustomer }, { new: true })
-        .then((customer) => res.json(customer))
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
-          })
-        );
+      // If email is NOT changing, update the user directly
+      return Customer.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true })
+        .then((updatedUser) => res.status(200).json(updatedUser))
+        .catch((error) => {
+          console.error(error);
+          return res.status(500).json({ message: "Server error" });
+        });
     })
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server:"${err}" `,
-      })
-    );
+    .catch((error) => {
+      console.error(error);
+      return res.status(500).json({ message: "Server error" });
+    });
+
+  // const initialQuery = _.cloneDeep(req.body);
+
+  // // Check Validation
+  // const { errors, isValid } = validateRegistrationForm(req.body);
+
+  // if (!isValid) {
+  //   return res.status(400).json(errors);
+  // }
+
+  // Customer.findOne({ _id: req.user.id })
+  //   .then((customer) => {
+  //     if (!customer) {
+  //       errors.id = "Customer not found";
+  //       return res.status(404).json(errors);
+  //     }
+
+  //     const { email: currentEmail, login: currentLogin, birthday: currentBirthday } = customer;
+
+  //     let newEmail;
+  //     let newLogin;
+
+  //     if (req.body.email) {
+  //       newEmail = req.body.email;
+
+  //       if (currentEmail !== newEmail) {
+  //         Customer.findOne({ email: newEmail }).then((customer) => {
+  //           if (customer) {
+  //             errors.email = `Email ${newEmail} is already exists`;
+  //             res.status(400).json(errors);
+  //             return;
+  //           }
+  //         });
+  //       }
+  //     }
+
+  //     if (req.body.birthday) {
+  //       newBirthday = req.body.birthday;
+
+  //       if (currentBirthday !== newBirthday) {
+  //         Customer.findOne({ birthday: newBirthday }).then((customer) => {
+  //           if (customer) {
+  //             errors.birthday = `Birthday ${newBirthday} is already exists`;
+  //             res.status(400).json(errors);
+  //             return;
+  //           }
+  //         });
+  //       }
+  //     }
+
+  //     if (req.body.login) {
+  //       newLogin = req.body.login;
+
+  //       if (currentLogin !== newLogin) {
+  //         Customer.findOne({ login: newLogin }).then((customer) => {
+  //           if (customer) {
+  //             errors.login = `Login ${newLogin} is already exists`;
+  //             res.status(400).json(errors);
+  //             return;
+  //           }
+  //         });
+  //       }
+  //     }
+
+  //     // Create query object for сustomer for saving him to DB
+  //     const updatedCustomer = queryCreator(initialQuery);
+
+  //     Customer.findOneAndUpdate({ _id: req.user.id }, { $set: updatedCustomer }, { new: true })
+  //       .then((customer) => res.json(customer))
+  //       .catch((err) =>
+  //         res.status(400).json({
+  //           message: `Error happened on server: "${err}" `,
+  //         })
+  //       );
+  //   })
+  //   .catch((err) =>
+  //     res.status(400).json({
+  //       message: `Error happened on server:"${err}" `,
+  //     })
+  //   );
 };
 
 // Controller for editing customer password

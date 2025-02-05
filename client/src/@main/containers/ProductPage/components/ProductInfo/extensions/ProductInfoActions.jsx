@@ -13,7 +13,7 @@ function ProductInfoActions({ id }) {
 
 	const dispatch = useDispatch();
 
-	const { itemInCart, isAuth, currentSize, currentColor, itemInWishlist } = useProductInfo();
+	const { itemInCart, user, currentSize, currentColor, itemInWishlist } = useProductInfo();
 
 	const handleClickCart = useCallback(() => {
 		if (itemInCart) {
@@ -62,7 +62,7 @@ function ProductInfoActions({ id }) {
 					</StyledButton>
 				</span>
 			</Tooltip>
-			{isAuth && (
+			{user && (
 				<IconButton onClick={handleClickWishlist} sx={{ color: itemInWishlist ? "#E01515" : "#fff" }}>
 					<FavoriteBorderIcon />
 				</IconButton>

@@ -22,7 +22,7 @@ const AddressDetails = () => {
 
 	const handleFormSubmit = async (values, resetForm) => {
 		const data = await dispatch(ordersFetchData({ ...values, customerId: user?.id || null, products }));
-
+		console.log("data", data);
 		if (data.error) return;
 
 		toast.success("Address saved!");
