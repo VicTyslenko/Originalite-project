@@ -136,6 +136,7 @@ exports.loginCustomer = async (req, res, next) => {
           // Sign Token
           jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
             res.json({
+              ...customer,
               success: true,
               token: "Bearer " + token,
             });
@@ -183,147 +184,80 @@ exports.getCustomer = (req, res) => {
 };
 
 // Controller for editing customer personal info
-exports.editCustomerInfo = (req, res) => {
-  let updatedFields = {}; // Object to store fields that need updating
+exports.editCustomerInfo = async (req, res) => {
+  try {
+    const { errors, isValid } = validateRegistrationForm(req.body);
 
-  const { errors, isValid } = validateRegistrationForm(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
+    // Find the current customer
+    const customer = await Customer.findById(req.params.id);
+    if (!customer) {
+      return res.status(404).json({ message: `Customer with id ${req.params.id} not found` });
+    }
 
-  // Find the current customer
-  Customer.findOne({ _id: req.params.id })
-    .then((customer) => {
-      if (!customer) {
-        return res.status(404).json({ message: `Customer with id ${req.params.id} not found` });
+    // Clone request body to prevent mutations
+    const requestBody = _.cloneDeep(req.body);
+
+    // Extract current values from the customer record
+    const { email: currentEmail } = customer;
+    const { firstName, lastName, email, telephone, birthday, gender } = requestBody;
+
+    // Object to store only changed values
+    let updatedFields = {};
+
+    if (firstName) updatedFields.firstName = firstName;
+    if (lastName) updatedFields.lastName = lastName;
+    if (telephone) updatedFields.telephone = telephone;
+    if (birthday) updatedFields.birthday = birthday;
+    if (gender) updatedFields.gender = gender;
+
+    // **Check if email is changing and ensure uniqueness**
+    if (email && email !== currentEmail) {
+      const existingUser = await Customer.findOne({ email });
+
+      if (existingUser) {
+        errors.email = `Email ${email} is already in use.`;
+        return res.status(400).json(errors);
+      }
+      updatedFields.email = email;
+    }
+
+    // Update user in the database
+    const updatedUser = await Customer.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true });
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    // ✅ Generate a new JWT with updated user info
+    const payload = {
+      id: updatedUser.id,
+      firstName: updatedUser.firstName,
+      lastName: updatedUser.lastName,
+      isAdmin: updatedUser.isAdmin,
+      email: updatedUser.email,
+      address: updatedUser.address,
+      telephone: updatedUser.telephone,
+    };
+
+    jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, newToken) => {
+      if (err) {
+        return res.status(500).json({ message: "Error generating token" });
       }
 
-      // Clone query object, because validator module mutates req.body, adding other fields to object
-      const requestBody = _.cloneDeep(req.body);
-
-      // Extract current values from the customer record
-      const { email: currentEmail } = customer;
-      const { firstName, lastName, email, mobile, birthday, gender } = requestBody;
-
-      // Adding only changed values to updatedFields
-      if (firstName) updatedFields.firstName = firstName;
-      if (lastName) updatedFields.lastName = lastName;
-      if (mobile) updatedFields.mobile = mobile;
-      if (birthday) updatedFields.birthday = birthday;
-      if (gender) updatedFields.gender = gender;
-
-      // **Checking if email is being changed and ensure uniqueness**
-      if (email && email !== currentEmail) {
-        return Customer.findOne({ email }).then((existingUser) => {
-          if (existingUser) {
-            return res.status(400).json({ message: `Email ${email} is already in use.` });
-          }
-
-          updatedFields.email = email;
-
-          // Updating user
-          return Customer.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true })
-            .then((updatedUser) => res.status(200).json(updatedUser))
-            .catch((error) => {
-              console.error(error);
-              return res.status(500).json({ message: "Server error" });
-            });
-        });
-      }
-
-      // If email is NOT changing, update the user directly
-      return Customer.findByIdAndUpdate(req.params.id, { $set: updatedFields }, { new: true })
-        .then((updatedUser) => res.status(200).json(updatedUser))
-        .catch((error) => {
-          console.error(error);
-          return res.status(500).json({ message: "Server error" });
-        });
-    })
-    .catch((error) => {
-      console.error(error);
-      return res.status(500).json({ message: "Server error" });
+      res.json({
+        success: true,
+        user: updatedUser, // ✅ Updated user data
+        token: "Bearer " + newToken, // ✅ New token with updated user info
+      });
     });
-
-  // const initialQuery = _.cloneDeep(req.body);
-
-  // // Check Validation
-  // const { errors, isValid } = validateRegistrationForm(req.body);
-
-  // if (!isValid) {
-  //   return res.status(400).json(errors);
-  // }
-
-  // Customer.findOne({ _id: req.user.id })
-  //   .then((customer) => {
-  //     if (!customer) {
-  //       errors.id = "Customer not found";
-  //       return res.status(404).json(errors);
-  //     }
-
-  //     const { email: currentEmail, login: currentLogin, birthday: currentBirthday } = customer;
-
-  //     let newEmail;
-  //     let newLogin;
-
-  //     if (req.body.email) {
-  //       newEmail = req.body.email;
-
-  //       if (currentEmail !== newEmail) {
-  //         Customer.findOne({ email: newEmail }).then((customer) => {
-  //           if (customer) {
-  //             errors.email = `Email ${newEmail} is already exists`;
-  //             res.status(400).json(errors);
-  //             return;
-  //           }
-  //         });
-  //       }
-  //     }
-
-  //     if (req.body.birthday) {
-  //       newBirthday = req.body.birthday;
-
-  //       if (currentBirthday !== newBirthday) {
-  //         Customer.findOne({ birthday: newBirthday }).then((customer) => {
-  //           if (customer) {
-  //             errors.birthday = `Birthday ${newBirthday} is already exists`;
-  //             res.status(400).json(errors);
-  //             return;
-  //           }
-  //         });
-  //       }
-  //     }
-
-  //     if (req.body.login) {
-  //       newLogin = req.body.login;
-
-  //       if (currentLogin !== newLogin) {
-  //         Customer.findOne({ login: newLogin }).then((customer) => {
-  //           if (customer) {
-  //             errors.login = `Login ${newLogin} is already exists`;
-  //             res.status(400).json(errors);
-  //             return;
-  //           }
-  //         });
-  //       }
-  //     }
-
-  //     // Create query object for сustomer for saving him to DB
-  //     const updatedCustomer = queryCreator(initialQuery);
-
-  //     Customer.findOneAndUpdate({ _id: req.user.id }, { $set: updatedCustomer }, { new: true })
-  //       .then((customer) => res.json(customer))
-  //       .catch((err) =>
-  //         res.status(400).json({
-  //           message: `Error happened on server: "${err}" `,
-  //         })
-  //       );
-  //   })
-  //   .catch((err) =>
-  //     res.status(400).json({
-  //       message: `Error happened on server:"${err}" `,
-  //     })
-  //   );
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
 };
 
 // Controller for editing customer password

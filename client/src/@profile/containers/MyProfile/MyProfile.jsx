@@ -1,12 +1,13 @@
-import { actionFetchUserData } from "@main/store/actions/authActions";
 import { updateCustomer } from "@main/store/actions/customersActions";
+import { getCustomer } from "@main/store/actions/customersActions";
 import { Button, Container, FormControl, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { Formik } from "formik";
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useUserData } from "../../../hooks/use-user-data";
 import { ContainerWrapp, ContentForm, Form, Title } from "./StyledMyProfile";
+import * as S from "./StyledMyProfile";
 import validationSchema from "./validation";
 
 function MyProfile() {
@@ -14,11 +15,14 @@ function MyProfile() {
 
 	const user = useUserData();
 
-	const handleSubmit = async (values, resetForm) => {
-		if (user) {
-			const response = await dispatch(updateCustomer({ _id: user.id, params: values }));
+	const errorMessage = useSelector(state => state.auth.error);
 
-			console.log("response", response.payload);
+	const handleSubmit = async (values, resetForm) => {
+		const updateResponse = await dispatch(updateCustomer({ _id: user.id, params: values }));
+
+		if (!updateResponse.error) {
+			toast.success("Account update success!");
+			resetForm();
 		}
 	};
 
@@ -30,13 +34,14 @@ function MyProfile() {
 				<ContentForm>
 					<Formik
 						initialValues={{
-							firstName: user.firstName || "",
-							lastName: user.lastName || "",
-							email: user.email || "",
-							mobile: user.telephone || "",
-							birthday: user.birthday || "",
-							gender: user.gender || "male",
+							firstName: user?.firstName || "",
+							lastName: user?.lastName || "",
+							email: user?.email || "",
+							telephone: user?.telephone || "",
+							birthday: user?.birthday || "",
+							gender: user?.gender || "male",
 						}}
+						enableReinitialize
 						onSubmit={(values, { resetForm }) => handleSubmit(values, resetForm)}
 						validationSchema={validationSchema}
 					>
@@ -47,6 +52,8 @@ function MyProfile() {
 									name="email"
 									placeholder="Email"
 									value={props.values.email}
+									helperText={props.touched.email && props.errors.email}
+									error={props.touched.email && props.errors.email}
 									onChange={props.handleChange}
 									variant="standard"
 									sx={{ mb: "6px" }}
@@ -72,12 +79,12 @@ function MyProfile() {
 
 								<TextField
 									fullWidth
-									name="mobile"
+									name="telephone"
 									onChange={props.handleChange}
-									value={props.values.mobile}
+									value={props.values.telephone}
 									placeholder="Mobile"
-									// helperText={props.touched.mobile}
-									// error={props.touched.mobile && Boolean(props.errors.mobile)}
+									helperText={props.touched.telephone && props.errors.telephone}
+									error={props.touched.telephone && Boolean(props.errors.telephone)}
 									variant="standard"
 									sx={{ mb: "6px" }}
 								/>
@@ -107,6 +114,11 @@ function MyProfile() {
 									error={props.errors.birthday}
 									sx={{ mb: "6px" }}
 								/>
+
+								{/* {errorMessage && !Object.keys(props?.errors).length && (
+									<span className="error-message">{Object.values(errorMessage)}</span>
+								)} */}
+
 								<Button
 									type="submit"
 									variant="contained"
@@ -119,6 +131,7 @@ function MyProfile() {
 							</Form>
 						)}
 					</Formik>
+					{errorMessage && <S.ErrorMessage>{Object.values(errorMessage)}</S.ErrorMessage>}
 				</ContentForm>
 			</ContainerWrapp>
 		</Container>

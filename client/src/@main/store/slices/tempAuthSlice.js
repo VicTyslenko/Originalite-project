@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { actionFetchTempAuth } from "../actions/authActions";
+import { updateCustomer } from "../actions/customersActions";
 
 const initialState = {
 	tempData: null,
@@ -25,11 +26,17 @@ const tempAuthSlice = createSlice({
 		});
 
 		builder.addCase(actionFetchTempAuth.fulfilled, (state, action) => {
+			console.log("action payload", action.payload);
 			state.tempData = action.payload;
 		});
 		builder.addCase(actionFetchTempAuth.rejected, (state, action) => {
 			console.log("error message", action.payload);
 			state.errorMessage = action.payload;
+		});
+
+		builder.addCase(updateCustomer.fulfilled, (state, action) => {
+			console.log("updated user payload", action.payload);
+			state.tempData = action.payload;
 		});
 	},
 });

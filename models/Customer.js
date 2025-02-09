@@ -32,7 +32,7 @@ const CustomerSchema = new Schema(
     telephone: {
       type: String,
     },
-    birthdate: {
+    birthday: {
       type: String,
     },
     gender: {

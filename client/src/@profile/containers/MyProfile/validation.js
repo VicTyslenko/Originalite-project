@@ -14,8 +14,14 @@ const validationSchema = Yup.object().shape({
 		.required("Last name is required"),
 
 	email: Yup.string().email("Invalid email format").required("Email is required"),
-
-	mobile: Yup.number().required("Phone number is required").min(5, "number is too short"),
+	telephone: Yup.string()
+		.required("Phone number is required")
+		.test("starts-with-plus", "Phone number must start with '+'", value => {
+			return value?.startsWith("+");
+		})
+		.min(7, "Phone number is too short (minimum 7 characters).")
+		.max(15, "Phone number is too long (maximum 15 characters).")
+		.matches(/^\+\d+$/, "Phone number must contain only numbers after '+'"),
 
 	birthday: Yup.date().max(new Date(), "Birthday cannot be in the future"),
 });

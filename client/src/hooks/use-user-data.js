@@ -9,7 +9,6 @@ export const useUserData = () => {
 	const token = isAuth?.token || tempAuth?.token;
 
 	if (!token) {
-		console.log("Token is not valid");
 		return null;
 	}
 
