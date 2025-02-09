@@ -8,7 +8,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Container, Grid, Typography } from "@mui/material";
 import { useUserData } from "hooks/use-user-data";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { clearDataAuth, clearUserData } from "../../../@main/store/slices/authSlice";

@@ -5,7 +5,7 @@ export const useProductInfo = () => {
 
 	const product = useSelector(state => state.product.data);
 
-	const isAuth = useSelector(state => state.auth.data);
+	const user = useSelector(state => state.auth.data || state.tempAuth.tempData);
 
 	const currentColor = useSelector(state => state.product.currentColor);
 
@@ -17,5 +17,5 @@ export const useProductInfo = () => {
 
 	const itemInWishlist = wishList?.find(item => item._id === product?._id);
 
-	return { itemInCart, isAuth, currentSize, currentColor, itemInWishlist, wishList };
+	return { itemInCart, user, currentSize, currentColor, itemInWishlist, wishList };
 };

@@ -27,7 +27,7 @@ const persistConfig = {
 const persistConfigAuth = {
   key: "auth",
   storage,
-  whitelist: ["data"],
+  whitelist: ["data", "userData"],
 };
 
 const persistConfigTempAuth = {

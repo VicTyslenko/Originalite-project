@@ -1,16 +1,15 @@
 import { toggleModal } from "@main/store/slices/modalSlice";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { ButtonGroup, ItemButton, LinkItem } from "components/Header/StyledHeader";
+import { useUserData } from "hooks/use-user-data";
 import { useDispatch, useSelector } from "react-redux";
 
 export const ButtonAuthorization = ({ setDataMenu }) => {
-	const isAuth = useSelector(state => state.auth.data);
-
-	const isTempAuth = useSelector(state => state.tempAuth.tempData);
+	const user = useUserData();
 
 	const dispatch = useDispatch();
 
-	if (isAuth || isTempAuth) {
+	if (user) {
 		return (
 			<ButtonGroup>
 				<PermIdentityOutlinedIcon sx={{ mr: 0.8 }} fontSize="medium" />
