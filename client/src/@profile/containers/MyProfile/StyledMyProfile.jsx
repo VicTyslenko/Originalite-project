@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { style } from "@mui/system";
+import styled from "styled-components";
 
 export const ContainerWrapp = styled.div`
 	display: flex;
@@ -12,7 +13,7 @@ export const ContainerWrapp = styled.div`
 
 export const Title = styled.h3`
 	margin: 0;
-	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 	font-weight: 700;
 	font-size: 22px;
 	line-height: 33px;
@@ -22,7 +23,7 @@ export const Title = styled.h3`
 `;
 
 export const Type = styled.h1`
-	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+	font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 	font-weight: 700;
 	font-size: 12px;
 `;
@@ -45,4 +46,9 @@ export const Form = styled.form`
 	grid-template-columns: 1fr 1fr;
 	gap: 60px;
 	margin-bottom: 40px;
+`;
+
+export const ErrorMessage = styled.span`
+	color: red;
+	font-size: 12px;
 `;

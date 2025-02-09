@@ -83,7 +83,10 @@ function ShoppingCart() {
 					customStyles={{
 						width: "600px",
 					}}
-					confirm={() => handleRemoveItem(product._id)}
+					confirm={() => {
+						setOpen(false);
+						handleRemoveItem(product._id);
+					}}
 					confirmText="Remove item"
 					cancelText="No, keep it"
 				/>

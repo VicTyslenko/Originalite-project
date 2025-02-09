@@ -12,8 +12,10 @@ function Main() {
 	const user = useUserData();
 
 	useEffect(() => {
-		dispatch(getCart());
-	}, []);
+		if (user) {
+			dispatch(getCart());
+		}
+	}, [user]);
 
 	useEffect(() => {
 		if (user) {

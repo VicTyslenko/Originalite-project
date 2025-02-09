@@ -25,7 +25,7 @@ router.get("/me", passport.authenticate("jwt", { session: false }), getCustomer)
 // @route   PUT /customers
 // @desc    Return current customer
 // @access  Private
-router.put("/", passport.authenticate("jwt", { session: false }), editCustomerInfo);
+router.put("/:id", passport.authenticate("jwt", { session: false }), editCustomerInfo);
 
 // @route   POST /customers/profile/update-password
 // @desc    Return current customer and success or error message

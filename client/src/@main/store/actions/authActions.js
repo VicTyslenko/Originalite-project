@@ -21,17 +21,3 @@ export const actionFetchTempAuth = createAsyncThunk("auth/actionFetchTempData", 
 		return rejectWithValue(err.response.data);
 	}
 });
-
-export const actionFetchUserData = createAsyncThunk("auth/actionFetchUserData", async (token, { rejectWithValue }) => {
-	try {
-		const { data } = await axiosInstance.get("/customers/me", {
-			headers: {
-				Authorization: token,
-			},
-		});
-
-		return data;
-	} catch (error) {
-		return rejectWithValue(error.response.data);
-	}
-});

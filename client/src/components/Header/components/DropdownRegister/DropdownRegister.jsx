@@ -28,7 +28,7 @@ import { validationSchema } from "./validation";
 function DropdownRegister({ active }) {
 	const dispatch = useDispatch();
 
-	const errorMessage = useSelector(state => state.auth.error) || useSelector(state => state.tempAuth.errorMessage);
+	// const errorMessage = useSelector(state => state.auth.error) || useSelector(state => state.tempAuth.errorMessage);
 
 	const navigate = useNavigate();
 
@@ -36,7 +36,6 @@ function DropdownRegister({ active }) {
 		const data = values.keepSignedIn
 			? await dispatch(actionFetchAuth(values))
 			: await dispatch(actionFetchTempAuth(values));
-
 		if (!data.error) {
 			toast.success("Login successful!");
 			dispatch(closeModal());
@@ -96,9 +95,9 @@ function DropdownRegister({ active }) {
 										<DefaultTypography>Keep me signed in</DefaultTypography>
 									</CheckBoxWrapp>
 
-									{errorMessage && !Object.keys(props.errors).length && (
+									{/* {errorMessage && !Object.keys(props?.errors).length && (
 										<span className="error-message">{Object.values(errorMessage)}</span>
-									)}
+									)} */}
 
 									<ButtonBlock>
 										<Button variant="contained" color="success" type="submit">
