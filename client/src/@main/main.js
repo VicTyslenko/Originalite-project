@@ -24,6 +24,7 @@ function Main() {
 	}, [user]);
 
 	return <MainRoutes />;
+	
 }
 
 export default Main;
