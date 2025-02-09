@@ -11,17 +11,17 @@ function Main() {
 
 	const user = useUserData();
 
-	// useEffect(() => {
-	// 	if (user) {
-	// 		dispatch(getCart());
-	// 	}
-	// }, [user]);
+	useEffect(() => {
+		if (user) {
+			dispatch(getCart());
+		}
+	}, [user]);
 
-	// useEffect(() => {
-	// 	if (user) {
-	// 		dispatch(getWishlist());
-	// 	}
-	// }, [user]);
+	useEffect(() => {
+		if (user) {
+			dispatch(getWishlist());
+		}
+	}, [user]);
 
 	return <MainRoutes />;
 	
