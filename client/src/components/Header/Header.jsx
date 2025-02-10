@@ -119,9 +119,9 @@ function Header() {
 					<DropdownRegister active={modal && dataMenu === "menuRegistration" ? "auto" : 0} />
 				</ContentWrapper>
 
-				{/* <ManMenu active={modal && dataMenu === "menuMen" ? "auto" : 0} />
+				<ManMenu active={modal && dataMenu === "menuMen" ? "auto" : 0} />
 				<WomanMenu active={modal && dataMenu === "menuWomen" ? "auto" : 0} />
-				<Accessory active={modal && dataMenu === "menuAccessory" ? "auto" : 0} /> */}
+				<Accessory active={modal && dataMenu === "menuAccessory" ? "auto" : 0} />
 				<Search active={modal && dataMenu === "menuSearch" ? "auto" : 0} />
 				<ShoppingBag isShoppingBag={modal && dataMenu === "shoppingBag"} />
 			</Container>
