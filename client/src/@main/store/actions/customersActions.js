@@ -7,7 +7,7 @@ export const updateCustomer = createAsyncThunk(
 	async ({ _id, params }, { getState, rejectWithValue }) => {
 		const { auth, tempAuth } = getState();
 
-		const token = auth.data?.token || tempAuth?.token;
+		const token = auth.data?.token || tempAuth?.tempData.token;
 
 		try {
 			const { data } = await axiosInstance.put(`/customers/${_id}`, params, {
@@ -26,7 +26,7 @@ export const updateCustomer = createAsyncThunk(
 export const getCustomer = createAsyncThunk("auth/actionFetchUserData", async (_, { getState, rejectWithValue }) => {
 	const { auth, tempAuth } = getState();
 
-	const token = auth.data.token || tempAuth.data.token;
+	const token = auth.data?.token || tempAuth?.tempData.token;
 
 	try {
 		if (token) {

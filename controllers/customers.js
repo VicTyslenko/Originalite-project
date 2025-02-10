@@ -176,6 +176,7 @@ exports.getCustomer = (req, res) => {
         isAdmin: req.user.isAdmin,
         address: req.user.address,
         telephone: req.user.telephone,
+        gender: req.user.gender,
       },
     });
   } else {
@@ -241,6 +242,7 @@ exports.editCustomerInfo = async (req, res) => {
       email: updatedUser.email,
       address: updatedUser.address,
       telephone: updatedUser.telephone,
+      gender: updatedUser.gender,
     };
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, newToken) => {
