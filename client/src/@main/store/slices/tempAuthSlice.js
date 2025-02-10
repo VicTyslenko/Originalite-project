@@ -5,7 +5,7 @@ import { updateCustomer } from "../actions/customersActions";
 
 const initialState = {
 	tempData: null,
-	errorMessage: null,
+	error: null,
 };
 
 const tempAuthSlice = createSlice({
@@ -26,17 +26,18 @@ const tempAuthSlice = createSlice({
 		});
 
 		builder.addCase(actionFetchTempAuth.fulfilled, (state, action) => {
-			console.log("action payload", action.payload);
+			console.log("payload", action.payload);
 			state.tempData = action.payload;
 		});
 		builder.addCase(actionFetchTempAuth.rejected, (state, action) => {
-			console.log("error message", action.payload);
-			state.errorMessage = action.payload;
+			state.error = action.payload;
 		});
 
 		builder.addCase(updateCustomer.fulfilled, (state, action) => {
-			console.log("updated user payload", action.payload);
 			state.tempData = action.payload;
+		});
+		builder.addCase(updateCustomer.rejected, (state, action) => {
+			state.error = action.payload;
 		});
 	},
 });

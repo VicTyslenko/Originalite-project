@@ -10,7 +10,7 @@ import {
 
 export const getCart = createAsyncThunk("cart/getCart", async (_, { getState }) => {
 	const { auth, tempAuth } = getState();
-	const token = auth.data?.token || tempAuth.tempData?.token || null;
+	const token = auth.data?.token || tempAuth.tempData?.token;
 
 	if (token) {
 		const { data } = await fetchCart({
