@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { actionFetchAuth } from "../actions/authActions";
-import { getCustomer } from "../actions/customersActions";
 import { updateCustomer } from "../actions/customersActions";
 import { registerFetchData } from "../actions/registrationActions";
 
@@ -47,7 +46,6 @@ const authReducer = createSlice({
 		});
 		builder.addCase(actionFetchAuth.fulfilled, (state, action) => {
 			state.status = "loaded";
-			console.log("payload", action.payload);
 			state.data = action.payload;
 		});
 		builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
