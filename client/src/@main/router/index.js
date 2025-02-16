@@ -1,10 +1,10 @@
+import AddressDetails from "@profile/containers/AdressDetails/AddressDetails";
 import { Route, Routes } from "react-router-dom";
 
 import ContactLandingPage from "../containers/ContactLandingPage";
 import HistoryBrandLandingPage from "../containers/HistoryBrandLandingPage";
 import HomeLandingPage from "../containers/HomeLandingPage";
 import LandingPageLogin from "../containers/LandingPageLogin/LandingPageLogin";
-import PaymentLandingPage from "../containers/PaymentLandingPage";
 import PolicyLandingPage from "../containers/PolicyLandingPage";
 import ProductList from "../containers/ProductList/ProductList";
 import ProductPage from "../containers/ProductPage/ProductPage";
@@ -33,6 +33,7 @@ function MainRoutes() {
 			<Route path="/questions" element={<QuestionsLandingPage />} />
 			<Route path="/work-us" element={<WorkUsLandingPage />} />
 			<Route path="/search/:searchId" element={<SearchResultPage />} />
+			<Route path="/address-details" element={<AddressDetails />} />
 		</Routes>
 	);
 }

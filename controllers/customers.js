@@ -135,6 +135,9 @@ exports.loginCustomer = async (req, res, next) => {
 
           // Sign Token
           jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
+            if (err) {
+              return res.status(500).json({ message: "Token generation failed" });
+            }
             res.json({
               ...customer,
               success: true,
