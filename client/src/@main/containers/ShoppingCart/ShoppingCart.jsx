@@ -115,7 +115,7 @@ function ShoppingCart() {
 							Total price: <span className="total-price">{totalPrice} $ </span>{" "}
 						</p>
 						<div className="button-wrapp">
-							<StyledLink to={"/account/profile/address-details"}>Checkout</StyledLink>
+							<StyledLink to={"/address-details"}>Checkout</StyledLink>
 						</div>
 					</RightSideWrapp>
 				</ShoppingCartWrapp>
