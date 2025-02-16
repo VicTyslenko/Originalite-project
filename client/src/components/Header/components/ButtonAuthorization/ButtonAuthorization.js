@@ -2,7 +2,7 @@ import { toggleModal } from "@main/store/slices/modalSlice";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { ButtonGroup, ItemButton, LinkItem } from "components/Header/StyledHeader";
 import { useUserData } from "hooks/use-user-data";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const ButtonAuthorization = ({ setDataMenu }) => {
 	const user = useUserData();

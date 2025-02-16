@@ -46,7 +46,7 @@ function Profile() {
 
 			<Grid container spacing={2}>
 				<Grid item xs={6}>
-					<S.StyledLink to="myAccount">
+					<S.StyledLink to="/account/my-account?tab=my-profile">
 						<S.FlexWrapp>
 							<PersonOutlineIcon fontSize="large" />
 							<div className="content">
@@ -57,7 +57,7 @@ function Profile() {
 					</S.StyledLink>
 				</Grid>
 				<Grid item xs={6}>
-					<S.StyledLink to="tab-purchase">
+					<S.StyledLink to="/account/my-account?tab=purchase-history">
 						<S.FlexWrapp>
 							<ShoppingBasketOutlinedIcon fontSize="large" />
 							<div className="content">
@@ -68,7 +68,7 @@ function Profile() {
 					</S.StyledLink>
 				</Grid>
 				<Grid item xs={6}>
-					<S.StyledLink to="tab-wish">
+					<S.StyledLink to="/account/my-account?tab=wishlist">
 						<S.FlexWrapp>
 							<FavoriteBorderIcon fontSize="large" />
 							<div className="content">
@@ -80,7 +80,7 @@ function Profile() {
 					</S.StyledLink>
 				</Grid>
 				<Grid item xs={6}>
-					<S.StyledLink to="tab-address">
+					<S.StyledLink to="/account/my-account?tab=address-book">
 						<S.FlexWrapp>
 							<ArticleOutlinedIcon fontSize="large" />
 							<div className="content">
