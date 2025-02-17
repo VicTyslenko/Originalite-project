@@ -27,7 +27,7 @@ export const StyledWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	top: 10%;
-	left: 67%;
+	top: 40%;
+	left: 70%;
 	color: #fff;
 `;

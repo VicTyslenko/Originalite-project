@@ -11,13 +11,7 @@ import {
 } from "./Categories.styles.js";
 import { itemData } from "./data.js";
 
-// function srcset(image) {
-// 	return {
-// 		src: `${image}`,
-// 		// srcSet: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format&dpr=2 2x`,
-// 	};
-// }
-
+console.log("item data", itemData);
 function Categories() {
 	return (
 		<ContainerWrapper>

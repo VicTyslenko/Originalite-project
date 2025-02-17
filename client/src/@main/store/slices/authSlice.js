@@ -55,6 +55,7 @@ const authReducer = createSlice({
 
 		builder.addCase(updateCustomer.fulfilled, (state, action) => {
 			state.data = action.payload;
+			console.log("data response", action.payload);
 			state.error = null;
 		});
 
