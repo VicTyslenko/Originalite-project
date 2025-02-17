@@ -111,7 +111,7 @@ function MyProfile() {
 									placeholder="dd/mm/yyyy"
 									variant="standard"
 									helperText={props.touched.birthday && props.errors.birthday}
-									error={props.errors.birthday}
+									error={props.errors.birthday && Boolean(props.errors.birthday)}
 									sx={{ mb: "6px" }}
 								/>
 
