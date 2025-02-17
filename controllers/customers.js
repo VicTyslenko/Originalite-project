@@ -246,6 +246,7 @@ exports.editCustomerInfo = async (req, res) => {
       address: updatedUser.address,
       telephone: updatedUser.telephone,
       gender: updatedUser.gender,
+      birthday: updatedUser.birthday,
     };
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, newToken) => {
