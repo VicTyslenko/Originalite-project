@@ -8,16 +8,16 @@ import GlobalStyle from "./globalStyles";
 import reportWebVitals from "./reportWebVitals";
 import { persistor, store } from "./store";
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-	<BrowserRouter>
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<GlobalStyle />
-				<App />
-			</PersistGate>
-		</Provider>
-	</BrowserRouter>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <GlobalStyle />
+        <App />
+      </PersistGate>
+    </Provider>
+  </BrowserRouter>,
 );
 
 reportWebVitals();

@@ -134,7 +134,7 @@ exports.loginCustomer = async (req, res, next) => {
           }; // Create JWT Payload
 
           // Sign Token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
+          jwt.sign(payload, keys.secretOrKey, { expiresIn: 6000 }, (err, token) => {
             if (err) {
               return res.status(500).json({ message: "Token generation failed" });
             }

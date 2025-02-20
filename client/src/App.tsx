@@ -8,14 +8,14 @@ import AppRoutes from "./routes";
 import theme from "./theme";
 
 function App() {
-	return (
-		<ThemeProvider theme={theme}>
-			<Header />
-			<AppRoutes />
-			<Footer />
-			<Toaster position="top-center" reverseOrder={true} />
-		</ThemeProvider>
-	);
+  return (
+    <ThemeProvider theme={theme}>
+      <Header />
+      <AppRoutes />
+      <Footer />
+      <Toaster position="top-center" reverseOrder={true} />
+    </ThemeProvider>
+  );
 }
 
 export default App;
