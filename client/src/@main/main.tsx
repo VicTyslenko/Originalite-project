@@ -1,4 +1,3 @@
-import AddressDetails from "@profile/containers/AdressDetails/AddressDetails";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -16,13 +15,13 @@ function Main() {
     if (user) {
       dispatch(getCart());
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user) {
       dispatch(getWishlist());
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   return <MainRoutes />;
 }
