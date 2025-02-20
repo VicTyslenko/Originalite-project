@@ -11,7 +11,6 @@ import {
 } from "./Categories.styles.js";
 import { itemData } from "./data.js";
 
-console.log("item data", itemData);
 function Categories() {
 	return (
 		<ContainerWrapper>
