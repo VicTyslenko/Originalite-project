@@ -5,7 +5,7 @@ import sessionStorage from "redux-persist/lib/storage/session";
 
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
-import auth from "../@main/store/slices/authSlice";
+import auth from "../@main/store/slices/auth/authSlice";
 import cart from "../@main/store/slices/cartSlice";
 import categories from "../@main/store/slices/categoriesSlice";
 import colors from "../@main/store/slices/colorsSlice";
@@ -72,5 +72,9 @@ function setupStore() {
 }
 
 export const store = setupStore();
+
 export const persistor = persistStore(store);
+
 export type RootDispatch = typeof store.dispatch;
+
+export type RootState = ReturnType<typeof store.getState>;

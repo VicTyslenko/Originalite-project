@@ -1,5 +1,4 @@
-import { getCart } from "@main/store/actions/cartActions";
-import { clearErrorAuth } from "@main/store/slices/authSlice";
+import { clearErrorAuth } from "@main/store/slices/auth/authSlice";
 import { closeModal } from "@main/store/slices/modalSlice";
 import { Button, Container } from "@mui/material";
 import { Checkbox } from "@mui/material";

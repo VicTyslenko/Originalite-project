@@ -1,4 +1,4 @@
-import { Props } from "./models";
+import { type Props } from "./models";
 
 export const DefaultTypography = ({ as, children, ...props }: Props) => {
   const Component = as ?? "p";

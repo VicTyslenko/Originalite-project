@@ -11,7 +11,7 @@ import { useUserData } from "hooks/use-user-data";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { clearDataAuth, clearUserData } from "../../../@main/store/slices/authSlice";
+import { clearDataAuth } from "../../../@main/store/slices/auth/authSlice";
 import * as S from "./StyledUserProfile";
 
 function Profile() {
@@ -26,7 +26,6 @@ function Profile() {
 
 		dispatch(clearTempAuth());
 		dispatch(clearCart());
-		dispatch(clearUserData());
 	};
 
 	const handleLogout = () => {

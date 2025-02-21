@@ -1,7 +1,8 @@
 import { Container, Grid } from "@mui/material";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { getProduct } from "../../store/actions/productActions";
 import BackButton from "./components/BackButton";
@@ -10,7 +11,7 @@ import ProductInfo from "./components/ProductInfo/ProductInfo";
 import ProductMore from "./components/ProductMore";
 
 function ProductPage() {
-	const product = useSelector(state => state.product.data);
+	const product = useStoreSelector(state => state.product.data);
 
 	const dispatch = useDispatch();
 
