@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getColors } from "../actions/colorsActions";
+import { getColors } from "../../actions/colorsActions";
 
 const initialState = {
 	data: [],

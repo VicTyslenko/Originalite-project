@@ -6,7 +6,7 @@ import debounce from "lodash.debounce";
 import React, { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setFilters } from "../../../../store/slices/filterSlice";
+import { setFilters } from "../../../../store/slices/filter/filterSlice";
 import { MobileFilterPriceBox, StyledFilterPriceBox } from "./ProductFilters.styles";
 
 const MIN_PRICE = 0;

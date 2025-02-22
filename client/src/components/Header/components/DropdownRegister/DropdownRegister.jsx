@@ -1,5 +1,5 @@
 import { clearErrorAuth } from "@main/store/slices/auth/authSlice";
-import { closeModal } from "@main/store/slices/modalSlice";
+import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Button, Container } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import { Formik } from "formik";

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { addProductToWishlist, deleteProductFromWishlist, getWishlist } from "../actions/wishlistActions";
+import { addProductToWishlist, deleteProductFromWishlist, getWishlist } from "../../actions/wishlistActions";
 
 const initialState = {
 	data: [],

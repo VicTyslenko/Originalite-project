@@ -1,10 +1,10 @@
-import { closeModal } from "@main/store/slices/modalSlice";
+import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Container } from "@mui/material";
 import { useCategories } from "hooks/use-categories";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setFilters } from "../../../../@main/store/slices/filterSlice";
+import { setFilters } from "../../../../@main/store/slices/filter/filterSlice";
 import { AnimateMenu, ContentWrap } from "../../StyledHeader";
 import { Categories, StyledLink } from "./StyledWomenMenu";
 

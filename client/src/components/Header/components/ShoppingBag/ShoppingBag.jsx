@@ -1,4 +1,4 @@
-import { closeModal } from "@main/store/slices/modalSlice";
+import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Container, Drawer } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

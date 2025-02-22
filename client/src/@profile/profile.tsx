@@ -1,7 +1,7 @@
 import ProfileRoutes from "./router";
 
 function Profile() {
-	return <ProfileRoutes />;
+  return <ProfileRoutes />;
 }
 
 export default Profile;

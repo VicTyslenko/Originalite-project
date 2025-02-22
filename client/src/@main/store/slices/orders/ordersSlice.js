@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ordersFetchData } from "../actions/ordersActions";
+import { ordersFetchData } from "../../actions/ordersActions";
 
 const initialState = {
 	orderId: null,

@@ -1,6 +1,5 @@
 import { updateOrder } from "@main/store/actions/ordersActions";
-import { clearCart } from "@main/store/slices/cartSlice";
-import { removeOrderId } from "@main/store/slices/ordersSlice";
+import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";

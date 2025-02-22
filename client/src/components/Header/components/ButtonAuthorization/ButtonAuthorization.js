@@ -1,4 +1,4 @@
-import { toggleModal } from "@main/store/slices/modalSlice";
+import { toggleModal } from "@main/store/slices/modal/modalSlice";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { ButtonGroup, ItemButton, LinkItem } from "components/Header/StyledHeader";
 import { useUserData } from "hooks/use-user-data";

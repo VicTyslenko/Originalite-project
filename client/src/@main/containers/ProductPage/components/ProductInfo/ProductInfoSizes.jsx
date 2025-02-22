@@ -1,8 +1,8 @@
+import { setSize } from "@main/store/slices/product/productSlice";
 import { ListItemText, Popover, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSize } from "../../../../store/slices/productSlice";
 import { ListItemButtonStyled, ListStyled, SizeList } from "./StyledProductInfo";
 import img from "./sizeguide.jpg";
 

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { registerFetchData } from "../actions/registrationActions";
+import { registerFetchData } from "../../actions/registrationActions";
 
 const initialState = {
 	data: null,

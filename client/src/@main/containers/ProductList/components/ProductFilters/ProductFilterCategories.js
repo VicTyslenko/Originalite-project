@@ -7,7 +7,7 @@ import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { setFilters } from "../../../../store/slices/filterSlice";
+import { setFilters } from "../../../../store/slices/filter/filterSlice";
 import { FlexBox } from "./ProductFilters.styles";
 
 function ProductFilterCategories() {

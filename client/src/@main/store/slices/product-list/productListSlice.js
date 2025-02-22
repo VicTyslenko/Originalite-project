@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getProductList } from "../actions/productListActions";
+import { getProductList } from "../../actions/productListActions";
 
 const initialState = {
 	data: [],

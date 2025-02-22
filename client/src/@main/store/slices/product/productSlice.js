@@ -1,6 +1,5 @@
+import { getProduct } from "@main/store/actions/productActions";
 import { createSlice } from "@reduxjs/toolkit";
-
-import { getProduct } from "../actions/productActions";
 
 const initialState = {
 	data: null,

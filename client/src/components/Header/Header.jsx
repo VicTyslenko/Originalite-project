@@ -1,5 +1,5 @@
 import { getCategories } from "@main/store/actions/categoriesActions";
-import { closeModal, openModal, toggleModal } from "@main/store/slices/modalSlice";
+import { closeModal, openModal, toggleModal } from "@main/store/slices/modal/modalSlice";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Container } from "@mui/material";
