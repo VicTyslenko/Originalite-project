@@ -3,10 +3,11 @@ import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { deleteCart } from "../../../store/actions/cartActions";
 import PaymentModal from "../Modal/Modal";
@@ -23,9 +24,9 @@ const PaymentPage = () => {
 	const [modal, setModal] = useState(false);
 	const user = useUserData();
 
-	const orderId = useSelector(state => state.orders.orderId);
+	const order = useStoreSelector(state => state.orders.data);
 
-	const dispatch = useDispatch();
+	const dispatch = useStoreDispatch();
 
 	const handleSubmit = async (_, resetForm) => {
 		if (user) {
@@ -33,11 +34,12 @@ const PaymentPage = () => {
 		} else {
 			dispatch(clearCart());
 		}
+
 		const data = await dispatch(
 			updateOrder({
-				orderId,
+				orderId: order?.orderId || null,
 				params: {
-					email: user?.email,
+					email: user?.email || "",
 					letterSubject: "Order Payment Confirmation",
 					letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
 					paymentStatus: "paid",

@@ -1,4 +1,4 @@
-export type UserData = {
+export interface UserData {
   address?: string;
   birthday?: string;
   customerNo?: string;
@@ -11,7 +11,8 @@ export type UserData = {
   telephone?: string;
   isAdmin: boolean;
   _id: string;
-};
+  date?: string | Date;
+}
 
 export interface UserModels {
   success: boolean;

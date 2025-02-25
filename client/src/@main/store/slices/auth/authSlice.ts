@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { StatementSync } from "node:sqlite";
 import type { UserModels } from "shared/models/user.models";
 
 import { actionFetchAuth } from "../../actions/authActions";
@@ -20,8 +21,11 @@ const authReducer = createSlice({
   reducers: {
     clearDataAuth(state) {
       state.data = null;
+      state.error = null;
     },
-    clearErrorAuth(state) {
+
+    signOut(state) {
+      state.data = null;
       state.error = null;
     },
   },
@@ -47,7 +51,6 @@ const authReducer = createSlice({
     });
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
-      console.log("user payload", action.payload);
       state.data = action.payload;
     });
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
@@ -57,7 +60,6 @@ const authReducer = createSlice({
 
     builder.addCase(updateCustomer.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.data = action.payload;
-      console.log("updated customer payload", action.payload);
       state.error = null;
     });
 

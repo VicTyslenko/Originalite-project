@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
 import {
   getCart as fetchCart,
   decreaseQuantity as fetchDecreaseQuantity,

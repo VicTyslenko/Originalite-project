@@ -1,5 +1,3 @@
-import { clearCart } from "@main/store/slices/cart/cartSlice";
-import { clearTempAuth } from "@main/store/slices/temp-auth/tempAuthSlice";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -8,31 +6,20 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Container, Grid, Typography } from "@mui/material";
 import { useUserData } from "hooks/use-user-data";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLogout } from "shared/hooks/hooks";
 
-import { clearDataAuth } from "../../../@main/store/slices/auth/authSlice";
 import * as S from "./StyledUserProfile";
 
 function Profile() {
-  const dispatch = useDispatch();
-
-  const user = useUserData();
-  console.log("user", user);
   const navigate = useNavigate();
 
-  const clearData = () => {
-    dispatch(clearDataAuth());
-    dispatch(clearTempAuth());
-    dispatch(clearCart());
-  };
+  const user = useUserData();
+
+  const { singOut } = useLogout();
 
   const handleLogout = () => {
-    clearData();
-
-    localStorage.removeItem("persist:auth");
-    sessionStorage.removeItem("persist:tempAuth");
-
+    singOut();
     navigate("/");
   };
 

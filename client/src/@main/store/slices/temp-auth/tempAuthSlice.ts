@@ -14,9 +14,6 @@ const tempAuthSlice = createSlice({
   name: "tempAuth",
   initialState,
   reducers: {
-    setTempAuth(state, action) {
-      state.tempData = action.payload;
-    },
     clearTempAuth(state) {
       state.tempData = null;
     },

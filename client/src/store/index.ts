@@ -36,16 +36,23 @@ const persistConfigTempAuth = {
   whitelist: ["tempData"],
 };
 
+const persistConfigRegistration = {
+  key: "registration ",
+  storage,
+  whitelist: ["data"],
+};
 const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
 
 const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
+
+const persistedRgistrationReducer = persistReducer(persistConfigRegistration, registration);
 
 const rootReduser = combineReducers({
   productList,
   product,
   auth: persistedAuthReducer,
   tempAuth: persistedTempAuthReducer,
-  registration,
+  registration: persistedRgistrationReducer,
   cart,
   modal,
   wishlist,
