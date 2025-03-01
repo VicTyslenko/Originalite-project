@@ -1,7 +1,13 @@
 import { getCategories } from "@main/store/actions/categoriesActions";
-import { createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+import type { CategoriesProps } from "./models";
+
+type InitialProps = {
+  data: CategoriesProps[];
+};
+
+const initialState: InitialProps = {
   data: [],
 };
 
@@ -10,7 +16,7 @@ export const categoriesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addCase(getCategories.fulfilled, (state, action) => {
+    builder.addCase(getCategories.fulfilled, (state, action: PayloadAction<CategoriesProps[]>) => {
       state.data = action.payload;
     });
   },

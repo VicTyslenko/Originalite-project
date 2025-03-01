@@ -7,3 +7,7 @@ export type CartProps = {
   _id: string;
   products: ProductModels[];
 };
+
+export type DeleteCartProps = {
+  message: string;
+};

@@ -21,7 +21,6 @@ function ProductInfoActions({ id }) {
 		} else {
 			dispatch(addProductToCart(id));
 		}
-		console.log("id", id);
 	}, [id, itemInCart, dispatch]);
 
 	const handleClickWishlist = useCallback(() => {

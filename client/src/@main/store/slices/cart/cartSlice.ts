@@ -5,9 +5,12 @@ import {
   deleteProductFromCart,
   getCart,
 } from "@main/store/actions/cart/cartActions";
-import { createSlice } from "@reduxjs/toolkit";
+import type { CartProps } from "@main/store/actions/cart/models";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+import type { InitialProps } from "./models";
+
+const initialState: InitialProps = {
   data: [],
 };
 
@@ -21,23 +24,23 @@ export const cartSlice = createSlice({
   },
 
   extraReducers: builder => {
-    builder.addCase(getCart.fulfilled, (state, action) => {
+    builder.addCase(getCart.fulfilled, (state, action: PayloadAction<CartProps | undefined>) => {
       state.data = action.payload?.products || [];
     });
 
-    builder.addCase(addProductToCart.fulfilled, (state, action) => {
+    builder.addCase(addProductToCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       const { products } = action.payload;
 
       state.data = [...products];
     });
 
-    builder.addCase(deleteProductFromCart.fulfilled, (state, action) => {
+    builder.addCase(deleteProductFromCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       const { products } = action.payload;
 
       state.data = [...products];
     });
 
-    builder.addCase(decrementItemInCart.fulfilled, (state, action) => {
+    builder.addCase(decrementItemInCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       state.data = action.payload.products;
     });
 

@@ -1,9 +1,12 @@
+import type { CartProps } from "@main/store/actions/cart/models";
+import { type AxiosResponse } from "axios";
+
 import axiosInstance from "./axios";
 import { type ApiProps } from "./models";
 import type { ProductParams } from "./models";
 
-export function getCart({ config }: ApiProps) {
-  return axiosInstance.get("cart", config);
+export function getCart({ config }: ApiProps): Promise<AxiosResponse<CartProps>> {
+  return axiosInstance.get<CartProps>("cart", config);
 }
 export function deleteCart({ config }: ApiProps) {
   return axiosInstance.delete(`cart`, config);
