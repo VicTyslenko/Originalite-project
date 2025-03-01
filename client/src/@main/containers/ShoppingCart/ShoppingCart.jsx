@@ -1,11 +1,11 @@
-import { deleteProductFromCart } from "@main/store/actions/cartActions";
+import { deleteProductFromCart } from "@main/store/actions/cart/cartActions";
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { addProductToCart, decrementItemInCart } from "../../store/actions/cartActions";
+import { addProductToCart, decrementItemInCart } from "../../store/actions/cart/cartActions";
 import EmptyCart from "../ShoppingCart/EmptyCart/EmptyCart";
 import PaymentModal from "./Modal/Modal";
 import {

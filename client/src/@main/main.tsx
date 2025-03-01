@@ -3,7 +3,7 @@ import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
 
 import MainRoutes from "./router";
-import { getCart } from "./store/actions/cartActions";
+import { getCart } from "./store/actions/cart/cartActions";
 import { getWishlist } from "./store/actions/wishlistActions";
 
 function Main() {

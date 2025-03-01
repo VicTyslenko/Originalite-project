@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import { StatementSync } from "node:sqlite";
 import type { UserModels } from "shared/models/user.models";
 
 import { actionFetchAuth } from "../../actions/authActions";
@@ -20,11 +19,6 @@ const authReducer = createSlice({
   initialState,
   reducers: {
     clearDataAuth(state) {
-      state.data = null;
-      state.error = null;
-    },
-
-    signOut(state) {
       state.data = null;
       state.error = null;
     },
@@ -69,5 +63,6 @@ const authReducer = createSlice({
   },
 });
 
-export const { clearDataAuth, clearErrorAuth } = authReducer.actions;
+export const { clearDataAuth } = authReducer.actions;
+
 export default authReducer.reducer;

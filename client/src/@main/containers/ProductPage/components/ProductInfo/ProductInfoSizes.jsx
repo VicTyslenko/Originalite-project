@@ -1,14 +1,15 @@
 import { setSize } from "@main/store/slices/product/productSlice";
 import { ListItemText, Popover, Typography } from "@mui/material";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { ListItemButtonStyled, ListStyled, SizeList } from "./StyledProductInfo";
 import img from "./sizeguide.jpg";
 
 function ProductInfoSizes({ sizes }) {
-	const currentSize = useSelector(state => state.product.currentSize);
-	const dispatch = useDispatch();
+	const currentSize = useStoreSelector(state => state.product.currentSize);
+	const dispatch = useStoreDispatch();
 
 	const handleListSizeClick = value => {
 		dispatch(setSize(value));

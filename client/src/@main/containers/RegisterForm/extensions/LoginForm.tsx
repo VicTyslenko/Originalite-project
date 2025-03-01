@@ -38,7 +38,6 @@ export const LoginForm = () => {
           const data = values.keepSignedIn
             ? await dispatch(actionFetchAuth(values))
             : await dispatch(actionFetchTempAuth(values));
-          console.log("response data", data);
 
           if (data.meta.requestStatus === "fulfilled") {
             navigate("/");

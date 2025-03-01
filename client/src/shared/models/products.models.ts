@@ -24,5 +24,5 @@ export interface ProductModels {
   color: string;
   product: ProductData;
   size: string;
-  __id: string;
+  _id: string;
 }

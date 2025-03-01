@@ -3,5 +3,11 @@ import { type AxiosRequestConfig } from "axios";
 export interface ApiProps {
   config: AxiosRequestConfig;
   id?: string;
-  data?: Record<string, any>;
 }
+
+export type ProductParams = ApiProps & {
+  data: {
+    size: string | null;
+    color: string | null;
+  };
+};

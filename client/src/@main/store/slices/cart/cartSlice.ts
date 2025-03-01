@@ -4,7 +4,7 @@ import {
   deleteCart,
   deleteProductFromCart,
   getCart,
-} from "@main/store/actions/cartActions";
+} from "@main/store/actions/cart/cartActions";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {

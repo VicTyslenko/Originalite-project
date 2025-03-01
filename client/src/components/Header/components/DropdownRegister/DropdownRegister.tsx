@@ -1,14 +1,14 @@
-import { clearErrorAuth } from "@main/store/slices/auth/authSlice";
+import type { InitialProps } from "@main/containers/RegisterForm/extensions/models";
+import { useFormLogin } from "@main/containers/RegisterForm/hooks";
 import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Button, Container } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import { Formik } from "formik";
-import { useEffect } from "react";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
+import type { Height } from "react-animate-height";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { DefaultTypography } from "shared/components/typography/default-typography";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { actionFetchTempAuth } from "../../../../@main/store/actions/authActions";
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
@@ -25,35 +25,25 @@ import {
 } from "./StyledDropdownRegister";
 import { validationSchema } from "./validation";
 
-type Props = {
-  active: boolean | number | string;
-};
+function DropdownRegister({ active }: { active: Height }) {
+  const dispatch = useStoreDispatch();
 
-function DropdownRegister({ active }: Props) {
-  const dispatch = useDispatch();
-
-  const errorMessage = useStoreSelector(state => state.auth.error || state.tempAuth.error);
-  console.log("error message", errorMessage);
+  const { errorMessage } = useFormLogin();
 
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (values, resetForm) => {
+  const handleFormSubmit = async (values: InitialProps, resetForm: () => void) => {
     const data = values.keepSignedIn
       ? await dispatch(actionFetchAuth(values))
       : await dispatch(actionFetchTempAuth(values));
-    if (!data.error) {
+
+    if (data.meta.requestStatus === "fulfilled") {
       toast.success("Login successful!");
       dispatch(closeModal());
-
-      dispatch(clearErrorAuth());
       navigate("/");
       resetForm();
     }
   };
-
-  // useEffect(() => {
-  //   dispatch(clearErrorAuth());
-  // }, [active, dispatch]);
 
   return (
     <WrappAnimate id="example-panel" duration={500} height={active}>

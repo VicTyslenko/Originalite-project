@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
-import { deleteCart } from "../../../store/actions/cartActions";
+import { deleteCart } from "../../../store/actions/cart/cartActions";
 import PaymentModal from "../Modal/Modal";
 import SVG from "../SVG/SVG";
 import SVGMaestro from "../SVG/SVGMaestro";
