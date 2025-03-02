@@ -1,4 +1,5 @@
 import { Container, Grid } from "@mui/material";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -13,7 +14,7 @@ import ProductMore from "./components/ProductMore";
 function ProductPage() {
 	const product = useStoreSelector(state => state.product.data);
 
-	const dispatch = useDispatch();
+	const dispatch = useStoreDispatch();
 
 	const { id } = useParams();
 

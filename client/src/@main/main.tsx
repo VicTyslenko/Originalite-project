@@ -1,13 +1,13 @@
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 
 import MainRoutes from "./router";
-import { getCart } from "./store/actions/cartActions";
+import { getCart } from "./store/actions/cart/cartActions";
 import { getWishlist } from "./store/actions/wishlistActions";
 
 function Main() {
-  const dispatch = useDispatch();
+  const dispatch = useStoreDispatch();
 
   const user = useUserData();
 

@@ -20,8 +20,6 @@ const authReducer = createSlice({
   reducers: {
     clearDataAuth(state) {
       state.data = null;
-    },
-    clearErrorAuth(state) {
       state.error = null;
     },
   },
@@ -45,7 +43,7 @@ const authReducer = createSlice({
       state.status = "loading";
       state.data = null;
     });
-    builder.addCase(actionFetchAuth.fulfilled, (state, action) => {
+    builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
       state.data = action.payload;
     });
@@ -56,7 +54,6 @@ const authReducer = createSlice({
 
     builder.addCase(updateCustomer.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.data = action.payload;
-      console.log("updated customer payload", action.payload);
       state.error = null;
     });
 
@@ -66,5 +63,6 @@ const authReducer = createSlice({
   },
 });
 
-export const { clearDataAuth, clearErrorAuth } = authReducer.actions;
+export const { clearDataAuth } = authReducer.actions;
+
 export default authReducer.reducer;

@@ -1,9 +1,7 @@
-const Cart = require("../models/Cart");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const sendMail = require("../commonHelpers/mailSender");
 const validateOrderForm = require("../validation/validationHelper");
-const queryCreator = require("../commonHelpers/queryCreator");
 const productAvailibilityChecker = require("../commonHelpers/productAvailibilityChecker");
 const subtractProductsFromCart = require("../commonHelpers/subtractProductsFromCart");
 const _ = require("lodash");
@@ -121,7 +119,7 @@ exports.placeOrder = async (req, res) => {
         orderId: existingOrder._id,
       });
     }
-
+    /// Placing a new order ///
     const newOrder = new Order(order);
 
     if (order.customerId) {

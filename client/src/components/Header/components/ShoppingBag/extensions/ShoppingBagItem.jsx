@@ -1,4 +1,4 @@
-import { deleteProductFromCart } from "@main/store/actions/cartActions";
+import { deleteProductFromCart } from "@main/store/actions/cart/cartActions";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";

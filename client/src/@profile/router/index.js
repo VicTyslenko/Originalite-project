@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 
 import MyAccount from "../MyAccount/MyAccount";
 import AddressBook from "../containers/AddressBook/";
-import AddressDetails from "../containers/AdressDetails/AddressDetails";
 import MyProfile from "../containers/MyProfile/";
 import Profile from "../containers/Profile/";
 import PurchaseHistory from "../containers/PurchaseHistory/";

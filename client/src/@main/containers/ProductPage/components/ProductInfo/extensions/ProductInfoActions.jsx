@@ -1,9 +1,9 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { IconButton, Tooltip } from "@mui/material";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { addProductToCart, deleteProductFromCart } from "../../../../../store/actions/cartActions";
+import { addProductToCart, deleteProductFromCart } from "../../../../../store/actions/cart/cartActions";
 import { addProductToWishlist, deleteProductFromWishlist } from "../../../../../store/actions/wishlistActions";
 import { ActionsWrapper, StyledButton } from "../StyledProductInfo";
 import { useProductInfo } from "../hooks/useProductInfo";
@@ -11,7 +11,7 @@ import { useProductInfo } from "../hooks/useProductInfo";
 function ProductInfoActions({ id }) {
 	const [openTooltip, setOpenTooltip] = useState(false);
 
-	const dispatch = useDispatch();
+	const dispatch = useStoreDispatch();
 
 	const { itemInCart, user, currentSize, currentColor, itemInWishlist } = useProductInfo();
 
