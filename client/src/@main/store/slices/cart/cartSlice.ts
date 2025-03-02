@@ -5,8 +5,8 @@ import {
   deleteProductFromCart,
   getCart,
 } from "@main/store/actions/cart/cartActions";
-import type { CartProps } from "@main/store/actions/cart/models";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { CartProps } from "shared/models/cart.models";
 
 import type { InitialProps } from "./models";
 

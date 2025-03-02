@@ -8,7 +8,7 @@ import {
   deleteProductFromCart as fetchProductFromCart,
   addProductToCart as fetchProductToCart,
 } from "../../../../services/api/cartApi";
-import type { CartProps, DeleteCartProps } from "./models";
+import type { CartProps } from "shared/models/cart.models";
 
 // CartProps types defined for returned data from server, void as a second arg(we don't pass any arguments in this function)
 
@@ -131,6 +131,9 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
     }
   },
 );
+type DeleteCartProps = {
+  message: string;
+};
 
 export const deleteCart = createAsyncThunk<DeleteCartProps, void, { state: RootState }>(
   "cart/deleteCart",

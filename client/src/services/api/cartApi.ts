@@ -1,4 +1,4 @@
-import type { CartProps } from "@main/store/actions/cart/models";
+import type { CartProps } from "shared/models/cart.models";
 import { type AxiosResponse } from "axios";
 
 import axiosInstance from "./axios";

@@ -1,13 +1,14 @@
 import axiosInstance from "./axios";
+import type { ApiProps } from "./models";
 
-export function getWishlist(config) {
-	return axiosInstance.get("wishlist", config);
+export function getWishlist({ config }: ApiProps) {
+  return axiosInstance.get("wishlist", config);
 }
 
-export function addProductToWishlist(id, config) {
-	return axiosInstance.put(`wishlist/${id}`, null, config);
+export function addProductToWishlist({ id, config }: ApiProps) {
+  return axiosInstance.put(`wishlist/${id}`, {}, config);
 }
 
-export function deleteProductFromWishlist(id, config) {
-	return axiosInstance.delete(`wishlist/${id}`, config);
+export function deleteProductFromWishlist({ id, config }: ApiProps) {
+  return axiosInstance.delete(`wishlist/${id}`, config);
 }

@@ -3,30 +3,31 @@ import { createSlice } from "@reduxjs/toolkit";
 import { addProductToWishlist, deleteProductFromWishlist, getWishlist } from "../../actions/wishlistActions";
 
 const initialState = {
-	data: [],
+  data: [],
 };
 
 export const wishlistSlice = createSlice({
-	name: "wishlist",
-	initialState,
-	reducers: {},
-	extraReducers: builder => {
-		builder.addCase(getWishlist.fulfilled, (state, action) => {
-			state.data = action.payload?.products || [];
-		});
+  name: "wishlist",
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getWishlist.fulfilled, (state, action) => {
+      state.data = action.payload?.products || [];
+    });
 
-		builder.addCase(addProductToWishlist.fulfilled, (state, action) => {
-			const { products } = action.payload;
+    builder.addCase(addProductToWishlist.fulfilled, (state, action) => {
+      if (action.payload) {
+        const { products } = action.payload;
+        state.data = [...products];
+      }
+    });
 
-			state.data = [...products];
-		});
+    builder.addCase(deleteProductFromWishlist.fulfilled, (state, action) => {
+      const { products } = action.payload;
 
-		builder.addCase(deleteProductFromWishlist.fulfilled, (state, action) => {
-			const { products } = action.payload;
-
-			state.data = [...products];
-		});
-	},
+      state.data = [...products];
+    });
+  },
 });
 
 export default wishlistSlice.reducer;

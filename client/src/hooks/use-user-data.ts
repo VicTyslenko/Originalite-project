@@ -16,7 +16,6 @@ export const useUserData = () => {
   }
 
   const user = jwt_decode<UserProps>(token);
-  
 
   return user;
 };

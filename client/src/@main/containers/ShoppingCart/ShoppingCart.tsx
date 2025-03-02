@@ -8,7 +8,7 @@ import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { addProductToCart, decrementItemInCart } from "../../store/actions/cart/cartActions";
 import EmptyCart from "./EmptyCart/EmptyCart";
-import PaymentModal from "./Modal/Modal";
+import PaymentModal from "./Modal/PaymentModal";
 import {
   Content,
   ContentWrapp,

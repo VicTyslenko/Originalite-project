@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import type { RootState } from "store";
 
 import axiosInstance from "../../../services/api/axios";
-import { type OrderProps } from "../models";
+import type { OrderModel } from "../slices/orders/models";
+import type { OrdersParamsProps, UpdateOrderProps } from "./models";
 
-
-export const ordersFetchData = createAsyncThunk(
+export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, { state: RootState }>(
   "orders/actionFetchData",
   async (params, { rejectWithValue, getState }) => {
     const { auth, tempAuth } = getState();
@@ -25,7 +26,7 @@ export const ordersFetchData = createAsyncThunk(
   },
 );
 
-export const updateOrder = createAsyncThunk(
+export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { state: RootState }>(
   "orders/actionFetchData",
   async ({ orderId, params }, { getState, rejectWithValue }) => {
     const { auth, tempAuth } = getState();

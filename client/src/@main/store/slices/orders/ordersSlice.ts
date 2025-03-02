@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-import { ordersFetchData } from "../../actions/ordersActions";
+import { ordersFetchData } from "../../orders/ordersActions";
 import { type InitialOrderState } from "./models";
 
 const initialState: InitialOrderState = {
@@ -26,6 +26,8 @@ const ordersReducer = createSlice({
     builder.addCase(ordersFetchData.fulfilled, (state, { payload }) => {
       state.status = "loaded";
       state.data = payload;
+
+
       state.error = null;
 
       console.log("new order", payload);
