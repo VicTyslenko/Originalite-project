@@ -1,5 +1,5 @@
-export type InitialProps = {
+export interface RegisterProps {
   loginOrEmail: string;
   password: string;
   keepSignedIn: boolean;
-};
+}

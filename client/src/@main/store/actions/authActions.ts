@@ -1,10 +1,11 @@
-import { type InitialProps } from "@main/containers/RegisterForm/extensions/models";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { UserModels } from "shared/models/user.models";
-
+import type { RegisterProps } from "shared/models/auth.models";
 import axiosInstance from "../../../services/api/axios";
 
-export const actionFetchAuth = createAsyncThunk<UserModels, InitialProps, { rejectValue: { message: string } }>(
+type AuthProps = Pick<RegisterProps, "loginOrEmail" | "password">;
+
+export const actionFetchAuth = createAsyncThunk<UserModels, AuthProps, { rejectValue: { message: string } }>(
   "auth/actionFetchData",
   async (params, { rejectWithValue }) => {
     try {
@@ -17,7 +18,7 @@ export const actionFetchAuth = createAsyncThunk<UserModels, InitialProps, { reje
   },
 );
 // login user and save to session storage
-export const actionFetchTempAuth = createAsyncThunk<UserModels, InitialProps, { rejectValue: { message: string } }>(
+export const actionFetchTempAuth = createAsyncThunk<UserModels, AuthProps, { rejectValue: { message: string } }>(
   "auth/actionFetchTempData",
   async (params, { rejectWithValue }) => {
     try {

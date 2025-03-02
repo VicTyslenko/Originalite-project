@@ -6,6 +6,7 @@ import { Form, Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import type { RegisterProps } from "shared/models/auth.models";
 
 import {
   ButtonWrapp,
@@ -17,7 +18,6 @@ import {
   StyledButton,
 } from "../StyledRegisterForm";
 import { useFormLogin } from "../hooks";
-import { type InitialProps } from "./models";
 
 export const LoginForm = () => {
   const dispatch = useStoreDispatch();
@@ -27,7 +27,7 @@ export const LoginForm = () => {
 
   return (
     <>
-      <Formik<InitialProps>
+      <Formik<RegisterProps>
         initialValues={{
           loginOrEmail: "",
           password: "",

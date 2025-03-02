@@ -34,10 +34,11 @@ function Header() {
 
   const [dataMenu, setDataMenu] = useState<string>("");
 
-  const handleDataSetEvent = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDataSetEvent = (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
     dispatch(toggleModal());
 
     const target = event.target as HTMLButtonElement;
+
     setDataMenu(target.dataset.menu || "");
   };
 
@@ -96,7 +97,7 @@ function Header() {
               <ItemButton>Search</ItemButton>
             </ButtonGroup>
 
-            <ButtonAuthorization setDataMenu={setDataMenu} />
+            <ButtonAuthorization handleDataSetEvent={handleDataSetEvent} />
 
             <ButtonGroup
               data-menu="shoppingBag"

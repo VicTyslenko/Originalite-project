@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import { type RootState } from "store";
 
 import {
@@ -151,7 +150,6 @@ export const deleteCart = createAsyncThunk<DeleteCartProps, void, { state: RootS
           },
         },
       });
-      console.log("delete cart");
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

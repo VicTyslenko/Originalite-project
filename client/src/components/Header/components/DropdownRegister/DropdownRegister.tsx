@@ -1,4 +1,3 @@
-import type { InitialProps } from "@main/containers/RegisterForm/extensions/models";
 import { useFormLogin } from "@main/containers/RegisterForm/hooks";
 import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Button, Container } from "@mui/material";
@@ -9,6 +8,7 @@ import type { Height } from "react-animate-height";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { DefaultTypography } from "shared/components/typography/default-typography";
+import type { RegisterProps } from "shared/models/auth.models";
 
 import { actionFetchTempAuth } from "../../../../@main/store/actions/authActions";
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
@@ -32,7 +32,7 @@ function DropdownRegister({ active }: { active: Height }) {
 
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (values: InitialProps, resetForm: () => void) => {
+  const handleFormSubmit = async (values: RegisterProps, resetForm: () => void) => {
     const data = values.keepSignedIn
       ? await dispatch(actionFetchAuth(values))
       : await dispatch(actionFetchTempAuth(values));
