@@ -106,7 +106,7 @@ exports.loginCustomer = async (req, res, next) => {
 
   const loginOrEmail = req.body.loginOrEmail;
   const password = req.body.password;
-  const configs = await getConfigs();
+  // const configs = await getConfigs();
 
   // Find customer by email
   Customer.findOne({

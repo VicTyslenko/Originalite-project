@@ -1,3 +1,4 @@
+import cart from "@main/store/slices/cart/cartSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -6,17 +7,16 @@ import sessionStorage from "redux-persist/lib/storage/session";
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
 import auth from "../@main/store/slices/auth/authSlice";
-import cart from "../@main/store/slices/cartSlice";
-import categories from "../@main/store/slices/categoriesSlice";
-import colors from "../@main/store/slices/colorsSlice";
-import filters from "../@main/store/slices/filterSlice";
-import modal from "../@main/store/slices/modalSlice";
-import orders from "../@main/store/slices/ordersSlice";
-import productList from "../@main/store/slices/productListSlice";
-import product from "../@main/store/slices/productSlice";
-import registration from "../@main/store/slices/registrationSlice";
-import tempAuth from "../@main/store/slices/tempAuthSlice";
-import wishlist from "../@main/store/slices/wishlistSlice";
+import categories from "../@main/store/slices/categories/categoriesSlice";
+import colors from "../@main/store/slices/color/colorsSlice";
+import filters from "../@main/store/slices/filter/filterSlice";
+import modal from "../@main/store/slices/modal/modalSlice";
+import orders from "../@main/store/slices/orders/ordersSlice";
+import productList from "../@main/store/slices/product-list/productListSlice";
+import product from "../@main/store/slices/product/productSlice";
+import registration from "../@main/store/slices/registration/registrationSlice";
+import tempAuth from "../@main/store/slices/temp-auth/tempAuthSlice";
+import wishlist from "../@main/store/slices/wishlist/wishlistSlice";
 
 const persistConfig = {
   key: "root",
@@ -36,16 +36,23 @@ const persistConfigTempAuth = {
   whitelist: ["tempData"],
 };
 
+const persistConfigRegistration = {
+  key: "registration ",
+  storage,
+  whitelist: ["data"],
+};
 const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
 
 const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
+
+const persistedRgistrationReducer = persistReducer(persistConfigRegistration, registration);
 
 const rootReduser = combineReducers({
   productList,
   product,
   auth: persistedAuthReducer,
   tempAuth: persistedTempAuthReducer,
-  registration,
+  registration: persistedRgistrationReducer,
   cart,
   modal,
   wishlist,

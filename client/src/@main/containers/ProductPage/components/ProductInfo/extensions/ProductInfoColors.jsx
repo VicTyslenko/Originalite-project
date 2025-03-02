@@ -1,7 +1,7 @@
 import { ListItemText, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setColor } from "../../../../../store/slices/productSlice";
+import { setColor } from "@main/store/slices/product/productSlice";
 import { ColorIcon, ColorList, ListItemButtonStyled, ListItemIconColor, ListStyled } from "../StyledProductInfo";
 
 function ProductInfoColors({ colors }) {

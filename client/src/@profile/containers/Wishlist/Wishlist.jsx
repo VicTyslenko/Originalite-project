@@ -3,8 +3,8 @@ import { Container, Typography } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addProductToCart } from "../../../@main/store/actions/cartActions";
-import { deleteProductFromCart } from "../../../@main/store/actions/cartActions";
+import { addProductToCart } from "../../../@main/store/actions/cart/cartActions";
+import { deleteProductFromCart } from "../../../@main/store/actions/cart/cartActions";
 import { deleteProductFromWishlist } from "../../../@main/store/actions/wishlistActions";
 import { Content, Description, FlexWrapper, StyledButton } from "./StyledWishList";
 

@@ -1,7 +1,7 @@
 import * as S from "./styles";
 
-import { setFilters } from "@main/store/slices/filterSlice";
-import { closeModal } from "@main/store/slices/modalSlice";
+import { setFilters } from "@main/store/slices/filter/filterSlice";
+import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { useDispatch } from "react-redux";
 
 export const SearchResults = ({ items, clearInput, setSearchItems }) => {
