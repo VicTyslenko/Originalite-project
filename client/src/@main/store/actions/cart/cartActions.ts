@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import type { CartProps } from "shared/models/cart.models";
 import { type RootState } from "store";
 
 import {
@@ -8,7 +9,6 @@ import {
   deleteProductFromCart as fetchProductFromCart,
   addProductToCart as fetchProductToCart,
 } from "../../../../services/api/cartApi";
-import type { CartProps } from "shared/models/cart.models";
 
 // CartProps types defined for returned data from server, void as a second arg(we don't pass any arguments in this function)
 
@@ -122,7 +122,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
           },
         },
       });
-
+    
       return data;
     } else {
       const products = cart.data.filter(({ product }) => product._id !== id);

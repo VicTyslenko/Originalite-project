@@ -1,7 +1,6 @@
 import { Container, Grid } from "@mui/material";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 

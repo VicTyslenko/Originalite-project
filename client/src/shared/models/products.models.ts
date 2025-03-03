@@ -1,3 +1,8 @@
+type Colors = {
+  color: string;
+  hash: string;
+};
+
 export interface ProductData {
   _id?: string;
   itemNo: string;
@@ -9,7 +14,7 @@ export interface ProductData {
   categories: string;
   imageUrls: string[];
   quantity: number;
-  colors?: string[];
+  colors?: Colors[];
   sizes?: string[];
   productDetails?: string;
   productDelivery?: string;
