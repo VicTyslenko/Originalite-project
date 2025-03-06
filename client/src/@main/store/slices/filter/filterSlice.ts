@@ -3,8 +3,8 @@ import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { FiltersProps } from "./models";
 
 const initialState: FiltersProps = {
-  minPrice: null,
-  maxPrice: null,
+  minPrice: 0,
+  maxPrice: 0,
   colors: [],
   categories: null,
 };

@@ -27,7 +27,6 @@ const ordersReducer = createSlice({
       state.status = "loaded";
       state.data = payload;
 
-
       state.error = null;
 
       console.log("new order", payload);
@@ -35,6 +34,7 @@ const ordersReducer = createSlice({
 
     builder.addCase(ordersFetchData.rejected, (state, { payload }) => {
       state.status = "error";
+
       state.error = payload as AxiosError;
     });
   },

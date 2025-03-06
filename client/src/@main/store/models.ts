@@ -7,3 +7,13 @@ export type OrderProps = {
     paymentStatus: string;
   };
 };
+
+export type ProductListParamsProps = {
+  startPage: number;
+  perPage: number;
+  minPrice?: number;
+  maxPrice?: number;
+  colors?: string[];
+  male: string | undefined;
+  categories: string | null;
+};

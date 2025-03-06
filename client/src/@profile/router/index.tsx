@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 
 import MyAccount from "../MyAccount/MyAccount";
-import AddressBook from "../containers/AddressBook/";
-import MyProfile from "../containers/MyProfile/";
-import Profile from "../containers/Profile/";
-import PurchaseHistory from "../containers/PurchaseHistory/";
-import Wishlist from "../containers/Wishlist/";
+import AddressBook from "../containers/AddressBook";
+import MyProfile from "../containers/MyProfile";
+import Profile from "../containers/Profile";
+import PurchaseHistory from "../containers/PurchaseHistory";
+import Wishlist from "../containers/Wishlist";
 
 function ProfileRoutes() {
 	return (

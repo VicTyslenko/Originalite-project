@@ -10,11 +10,11 @@ function AddressBook() {
 	const details = () => (
 		<Details>
 			Email:
-			<DefaultTypography as="h3"> {user.email || ""}</DefaultTypography>
+			<DefaultTypography as="h3"> {user?.email || ""}</DefaultTypography>
 			Address:
-			<DefaultTypography as="h3">{user.address || ""}</DefaultTypography>
+			<DefaultTypography as="h3">{user?.address || ""}</DefaultTypography>
 			Telephone:
-			<DefaultTypography as="h3">{user.telephone || ""}</DefaultTypography>
+			<DefaultTypography as="h3">{user?.telephone || ""}</DefaultTypography>
 		</Details>
 	);
 	return (

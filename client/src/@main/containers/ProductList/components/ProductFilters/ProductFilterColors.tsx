@@ -1,11 +1,11 @@
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import { Collapse, List, ListItemButton, ListItemText, Typography } from "@mui/material";
-import { type Theme } from "@mui/material";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import React, { useCallback, useEffect, useState } from "react";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
+
+import { useGetMobileSize } from "shared/utils";
 
 import { getColors } from "../../../../store/actions/colorsActions";
 import { setFilters } from "../../../../store/slices/filter/filterSlice";
@@ -15,6 +15,7 @@ function ProductFilterColors() {
   const [open, setOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(false);
 
+  const { isMobile } = useGetMobileSize("sm");
   const colorsList = useStoreSelector(state => state.colors.data);
   const filterColors = useStoreSelector(state => state.filters.colors);
 
@@ -51,8 +52,6 @@ function ProductFilterColors() {
   const handleClickMobile = () => {
     setOpenMobile(!openMobile);
   };
-
-  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
     <>

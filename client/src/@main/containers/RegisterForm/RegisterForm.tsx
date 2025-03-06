@@ -2,8 +2,8 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
@@ -19,10 +19,11 @@ import {
 } from "./StyledRegisterForm";
 import { LoginForm } from "./extensions/LoginForm";
 import { useFormLogin } from "./hooks";
+import type { RegisterProps } from "./models";
 import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useStoreDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -66,7 +67,7 @@ const RegisterForm = () => {
           </TabPanel>
 
           <TabPanel value="registration">
-            <Formik
+            <Formik<RegisterProps>
               initialValues={{
                 firstName: "",
                 lastName: "",
@@ -79,11 +80,11 @@ const RegisterForm = () => {
               onSubmit={async (values, { resetForm }) => {
                 const data = await dispatch(registerFetchData(values));
 
-                if (!data.error) {
-                  toast.success("Register success!");
-                  navigate("/");
-                  resetForm();
-                }
+                if (data.meta.requestStatus === "rejected") return;
+
+                toast.success("Register success!");
+                navigate("/");
+                resetForm();
               }}
             >
               {props => (
