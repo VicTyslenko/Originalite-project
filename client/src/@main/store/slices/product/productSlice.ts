@@ -1,5 +1,6 @@
 import { getProduct } from "@main/store/actions/productActions";
-import { createSlice } from "@reduxjs/toolkit";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { ProductData } from "shared/models/products.models";
 
 import type { ProductProps } from "./models";
 
@@ -21,7 +22,7 @@ export const productSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getProduct.fulfilled, (state, action) => {
+    builder.addCase(getProduct.fulfilled, (state, action: PayloadAction<ProductData>) => {
       state.data = { ...action.payload };
     });
   },

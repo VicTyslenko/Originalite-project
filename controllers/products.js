@@ -14,8 +14,7 @@ exports.addImages = (req, res, next) => {
     });
   } else {
     res.json({
-      message:
-        "Something wrong with receiving photos at server. Please, check the path folder",
+      message: "Something wrong with receiving photos at server. Please, check the path folder",
     });
   }
 };
@@ -26,10 +25,7 @@ exports.addProduct = (req, res, next) => {
   productFields.itemNo = rand();
 
   try {
-    productFields.name = productFields.name
-      .toLowerCase()
-      .trim()
-      .replace(/\s\s+/g, " ");
+    productFields.name = productFields.name.toLowerCase().trim().replace(/\s\s+/g, " ");
 
     // const imageUrls = req.body.previewImages.map(img => {
     //   return `/img/products/${productFields.itemNo}/${img.name}`;
@@ -67,10 +63,7 @@ exports.updateProduct = (req, res, next) => {
         const productFields = _.cloneDeep(req.body);
 
         try {
-          productFields.name = productFields.name
-            .toLowerCase()
-            .trim()
-            .replace(/\s\s+/g, " ");
+          productFields.name = productFields.name.toLowerCase().trim().replace(/\s\s+/g, " ");
         } catch (err) {
           res.status(400).json({
             message: `Error happened on server: "${err}" `,
@@ -79,11 +72,7 @@ exports.updateProduct = (req, res, next) => {
 
         const updatedProduct = queryCreator(productFields);
 
-        Product.findOneAndUpdate(
-          { _id: req.params.id },
-          { $set: updatedProduct },
-          { new: true }
-        )
+        Product.findOneAndUpdate({ _id: req.params.id }, { $set: updatedProduct }, { new: true })
           .then((product) => res.json(product))
           .catch((err) =>
             res.status(400).json({
@@ -140,16 +129,16 @@ exports.getProductsFilterParams = async (req, res, next) => {
   const mongooseQuery = filterParser(req.query);
   const perPage = Number(req.query.perPage);
   const startPage = Number(req.query.startPage);
-  const sort = req.query.sort;
+  // const sort = req.query.sort;
 
   try {
     const products = await Product.find(mongooseQuery)
       .skip(startPage * perPage - perPage)
-      .limit(perPage)
-      .sort(sort);
+      .limit(perPage);
+    // .sort(sort);
 
     const productsQuantity = await Product.find(mongooseQuery);
-    
+
     res.json({ products, productsQuantity: productsQuantity.length });
   } catch (err) {
     res.status(400).json({

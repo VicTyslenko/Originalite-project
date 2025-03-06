@@ -39,6 +39,7 @@ export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { stat
           Authorization: token,
         },
       });
+
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

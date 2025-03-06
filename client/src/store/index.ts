@@ -41,11 +41,19 @@ const persistConfigRegistration = {
   storage,
   whitelist: ["data"],
 };
+
+const persistConfigOrders = {
+  key: "orders",
+  storage,
+  whitelist: ["data"],
+};
 const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
 
 const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
 
 const persistedRgistrationReducer = persistReducer(persistConfigRegistration, registration);
+
+const persistedOrdersReducer = persistReducer(persistConfigOrders, orders);
 
 const rootReduser = combineReducers({
   productList,
@@ -61,7 +69,7 @@ const rootReduser = combineReducers({
   categories,
   users,
   newProduct,
-  orders,
+  orders: persistedOrdersReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReduser);

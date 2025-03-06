@@ -27,7 +27,7 @@ function LandingLoginPage() {
 						<InputItem variant="standard" id="demo-helper-text-misaligned-no-helper" label="Password" type="password" />
 					</InputsWrapp>
 					<ButtonBlock>
-						<StyledButton>Log in</StyledButton>
+						{/* <StyledButton>Log in</StyledButton> */}
 					</ButtonBlock>
 				</Form>
 			</Formik>

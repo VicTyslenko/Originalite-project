@@ -17,11 +17,10 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const dataProducts = useStoreSelector(state => state.cart.data);
-
   const priceItem = dataProducts?.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
 
   const handleBasketClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		//to prevent 
+    //to prevent
     const button = event.currentTarget;
     button.blur();
 
@@ -32,7 +31,7 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
     if (priceItem) {
       setTotalPrice(priceItem.reduce((accum, item) => accum + item, 0));
     }
-  }, [dataProducts]);
+  }, [priceItem]);
 
   return (
     <>

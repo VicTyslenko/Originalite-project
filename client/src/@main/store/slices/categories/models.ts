@@ -1,6 +1,6 @@
 export type CategoriesProps = {
   data: string;
   name: string;
-  parenntId: string;
+  parentId: string;
   _id: string;
 };

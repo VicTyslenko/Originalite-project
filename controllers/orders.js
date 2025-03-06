@@ -119,7 +119,9 @@ exports.placeOrder = async (req, res) => {
         orderId: existingOrder._id,
       });
     }
+
     /// Placing a new order ///
+
     const newOrder = new Order(order);
 
     if (order.customerId) {

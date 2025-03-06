@@ -1,6 +1,6 @@
 export type FiltersProps = {
-  minPrice?: string | null;
-  maxPrice?: string | null;
+  minPrice?: number;
+  maxPrice?: number;
   colors?: string[];
-  categories?: string | null;
+  categories: string | null;
 };

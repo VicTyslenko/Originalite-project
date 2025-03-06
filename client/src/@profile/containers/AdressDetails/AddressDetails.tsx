@@ -23,7 +23,7 @@ const AddressDetails = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
-    const data = await dispatch(ordersFetchData({ values, customerId: user?.id || null, products }));
+    const data = await dispatch(ordersFetchData({ ...values, customerId: user?.id || null, products }));
 
     if (data.meta.requestStatus === "rejected") return;
 

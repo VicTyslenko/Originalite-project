@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { CartProps } from "shared/models/cart.models";
 import type { RootState } from "store";
 
 import {
@@ -7,8 +6,9 @@ import {
   addProductToWishlist as fetchProductToWishlist,
   getWishlist as fetchWishlist,
 } from "../../../services/api/wishlistApi";
+import type { WishlistProps } from "../slices/wishlist/models";
 
-export const getWishlist = createAsyncThunk<CartProps, void, { state: RootState }>(
+export const getWishlist = createAsyncThunk<WishlistProps, void, { state: RootState }>(
   "wishlist/getWishlist",
   async (_, { getState }) => {
     const { auth, tempAuth } = getState();
@@ -27,7 +27,7 @@ export const getWishlist = createAsyncThunk<CartProps, void, { state: RootState 
   },
 );
 
-export const addProductToWishlist = createAsyncThunk<CartProps, string, { state: RootState }>(
+export const addProductToWishlist = createAsyncThunk<WishlistProps, string, { state: RootState }>(
   "wishlist/addProductToWishlist",
   async (id, { getState }) => {
     const { auth, tempAuth } = getState();
@@ -48,11 +48,9 @@ export const addProductToWishlist = createAsyncThunk<CartProps, string, { state:
     }
   },
 );
+export type WishlistResponse = WishlistProps | { products: [] };
 
-type EmptyWishlistProps = {
-  products: [];
-};
-export const deleteProductFromWishlist = createAsyncThunk<CartProps | EmptyWishlistProps, string, { state: RootState }>(
+export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, string, { state: RootState }>(
   "wishlist/deleteProductFromWishlist",
   async (id, { getState }) => {
     const { auth, tempAuth } = getState();
