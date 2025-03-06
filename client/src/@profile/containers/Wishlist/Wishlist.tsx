@@ -19,7 +19,7 @@ function Wishlist() {
   const cart = useStoreSelector(state => state.cart.data);
 
   const itemInCart = (id: string) => cart.some(cartItem => cartItem.product._id === id);
-  console.log("colors", wishList);
+
   const handleClick = (id: string) => {
     if (itemInCart(id)) {
       dispatch(deleteProductFromCart(id));

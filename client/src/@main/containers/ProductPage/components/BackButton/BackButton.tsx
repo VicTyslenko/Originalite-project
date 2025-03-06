@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { StyledButton } from "./BackButton.styles";
 
 function BackButton() {
-	let navigate = useNavigate();
+  const navigate = useNavigate();
 
-	return (
-		<StyledButton startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}>
-			Back
-		</StyledButton>
-	);
+  return (
+    <StyledButton startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}>
+      Back
+    </StyledButton>
+  );
 }
 
 export default BackButton;

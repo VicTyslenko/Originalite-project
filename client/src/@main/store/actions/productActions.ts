@@ -5,6 +5,5 @@ import { getProductById as fetchProductById } from "../../../services/api/produc
 
 export const getProduct = createAsyncThunk<ProductData, string>("product/getProductById", async itemNo => {
   const { data } = await fetchProductById(itemNo);
-  console.log("product", data);
   return data;
 });

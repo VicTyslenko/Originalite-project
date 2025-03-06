@@ -1,39 +1,26 @@
 import { styled } from "@mui/material/styles";
 
-import { Box, CardContent, Typography } from "@mui/material";
+import { Box, CardContent } from "@mui/material";
 
 export const ProductHeader = styled(Box)`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	max-width: 390px;
-`;
-
-export const StyledTitle = styled(Typography)`
-	max-height: 65px;
-	text-overflow: ellipsis;
-	overflow: hidden;
-
-	${props => props.theme.breakpoints.down("md")} {
-		height: 44px;
-	}
-	${props => props.theme.breakpoints.down("sm")} {
-		height: 32px;
-	}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 390px;
 `;
 
 export const StyledCardContent = styled(CardContent)`
-	height: 125px;
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: flex-start;
+  height: 125px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 
-	${props => props.theme.breakpoints.down("md")} {
-		height: 104px;
-	}
-	${props => props.theme.breakpoints.down("sm")} {
-		height: 73px;
-	}
+  ${props => props.theme.breakpoints.down("md")} {
+    height: 104px;
+  }
+  ${props => props.theme.breakpoints.down("sm")} {
+    height: 73px;
+  }
 `;

@@ -1,6 +1,8 @@
+import type { ProductListParamsProps } from "@main/store/models";
+
 import axiosInstance from "./axios";
 
-export function getProductsList(params) {
+export function getProductsList(params: ProductListParamsProps) {
   return axiosInstance.get("/products/filter", {
     params,
   });

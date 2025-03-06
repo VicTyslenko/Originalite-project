@@ -2,8 +2,6 @@ import jwt_decode from "jwt-decode";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 import { type UserData } from "shared/models/user.models";
 
-type UserProps = Omit<UserData, "customerNo" | "login" | "gender" | "birthday">;
-
 export const useUserData = () => {
   const tempAuth = useStoreSelector(state => state.tempAuth.tempData);
 
@@ -15,7 +13,7 @@ export const useUserData = () => {
     return null;
   }
 
-  const user = jwt_decode<UserProps>(token);
+  const user = jwt_decode<UserData>(token);
 
   return user;
 };
