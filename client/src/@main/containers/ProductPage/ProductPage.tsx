@@ -8,13 +8,12 @@ import { getProduct } from "../../store/actions/productActions";
 import BackButton from "./components/BackButton/BackButton";
 import ProductGallery from "./components/ProductGallery/ProductGallery";
 import ProductInfo from "./components/ProductInfo/ProductInfo";
-import ProductMore from "./components/ProductMore";
+import ProductMore from "./components/ProductMore/ProductMore";
 
 function ProductPage() {
   const product = useStoreSelector(state => state.product.data);
 
   const dispatch = useStoreDispatch();
-  console.log(product);
   const { id } = useParams();
 
   useEffect(() => {

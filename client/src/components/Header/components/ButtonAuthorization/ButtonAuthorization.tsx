@@ -2,11 +2,12 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import { ButtonGroup, ItemButton, LinkItem } from "components/Header/StyledHeader";
 import { useUserData } from "hooks/use-user-data";
 
-export const ButtonAuthorization = ({
-  handleDataSetEvent,
-}: {
+type Props = {
   handleDataSetEvent: (event: React.MouseEvent<HTMLDivElement>) => void;
-}) => {
+};
+
+
+export const ButtonAuthorization = ({ handleDataSetEvent }: Props) => {
   const user = useUserData();
 
   if (user) {

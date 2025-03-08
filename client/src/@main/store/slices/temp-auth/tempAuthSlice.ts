@@ -40,5 +40,5 @@ const tempAuthSlice = createSlice({
   },
 });
 
-export const { setTempAuth, clearTempAuth } = tempAuthSlice.actions;
+export const { clearTempAuth } = tempAuthSlice.actions;
 export default tempAuthSlice.reducer;

@@ -5,7 +5,7 @@ import Slider from "./components/Slider";
 function HomeLandingPage() {
 	return (
 		<>
-			{/* <Slider /> */}
+			<Slider />
 			<NewInSection />
 			<Categories />
 		</>

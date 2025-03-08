@@ -10,7 +10,6 @@ import ProductList from "../containers/ProductList/ProductList";
 import ProductPage from "../containers/ProductPage/ProductPage";
 import QuestionsLandingPage from "../containers/QuestionsLandingPage";
 import RegisterForm from "../containers/RegisterForm/RegisterForm";
-import SearchResultPage from "../containers/SearchResultPage";
 import ShoppingCart from "../containers/ShoppingCart";
 import EmptyCart from "../containers/ShoppingCart/EmptyCart/EmptyCart";
 import PaymentPage from "../containers/ShoppingCart/PaymentPage/PaymentPage";
@@ -32,7 +31,6 @@ function MainRoutes() {
       <Route path="/policy" element={<PolicyLandingPage />} />
       <Route path="/questions" element={<QuestionsLandingPage />} />
       <Route path="/work-us" element={<WorkUsLandingPage />} />
-      <Route path="/search/:searchId" element={<SearchResultPage />} />
       <Route path="/address-details" element={<AddressDetails />} />
     </Routes>
   );
