@@ -14,8 +14,7 @@ function Wishlist() {
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  const wishList = useStoreSelector(state => state.wishlist.data);
-
+  const wishList = useStoreSelector(state => state.wishlist?.data ?? []);
   const cart = useStoreSelector(state => state.cart.data);
 
   const itemInCart = (id: string) => cart.some(cartItem => cartItem.product._id === id);
@@ -28,7 +27,7 @@ function Wishlist() {
     }
   };
 
-  const MainContent = wishList.map(({ name, currentPrice, imageUrls, colors, sizes, _id }) => (
+  const MainContent = wishList?.map(({ name, currentPrice, imageUrls, colors, sizes, _id }) => (
     <Content key={_id}>
       <div className="wrapp">
         <FlexWrapper>
@@ -67,10 +66,12 @@ function Wishlist() {
     </Content>
   ));
 
-  const allPrices = wishList.map(product => product.currentPrice);
+  const allPrices = wishList?.map(product => product.currentPrice);
 
   useEffect(() => {
-    setTotalPrice(allPrices.reduce((a, b) => a + b, 0));
+    if (allPrices.length) {
+      setTotalPrice(allPrices.reduce((a, b) => a + b, 0));
+    }
   }, [allPrices]);
 
   return (

@@ -7,19 +7,28 @@ import type { WishlistProps } from "./models";
 
 type InitialProps = {
   data: ProductData[];
+  loading: boolean;
 };
+
 const initialState: InitialProps = {
   data: [],
+  loading: false,
 };
 
 export const wishlistSlice = createSlice({
   name: "wishlist",
-  initialState,
+  initialState: initialState,
   reducers: {},
 
   extraReducers: builder => {
+    builder.addCase(getWishlist.pending, state => {
+      state.loading = true;
+    });
+
     builder.addCase(getWishlist.fulfilled, (state, action: PayloadAction<WishlistProps>) => {
+      console.log("payload wishlist", action.payload);
       state.data = action.payload?.products;
+      state.loading = false;
     });
 
     builder.addCase(addProductToWishlist.fulfilled, (state, action: PayloadAction<WishlistProps>) => {

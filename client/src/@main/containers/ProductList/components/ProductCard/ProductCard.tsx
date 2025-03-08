@@ -5,7 +5,7 @@ import type { ProductData } from "shared/models/products.models";
 
 import { StyledCardContent } from "./ProductCard.styles";
 
-type Props = Pick<ProductData, "_id" | "currentPrice" | "name"> & { alt: string; url: string | undefined };
+type Props = Pick<ProductData, "_id" | "currentPrice" | "name"> & { alt: string; url?: string };
 
 function ProductCard({ url, alt, name, currentPrice, _id }: Props) {
   const navigate = useNavigate();

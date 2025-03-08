@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/material";
+import { DefaultTypography } from "shared/components/typography/default-typography";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { useGetMobileSize } from "shared/utils";
@@ -15,7 +15,7 @@ function ProductMore() {
     !isMobile && (
       <>
         <Box mb={2}>
-          <Typography variant="title">More for you</Typography>
+          <DefaultTypography>More for you</DefaultTypography>
         </Box>
         <StyledBox>
           {products &&
@@ -25,9 +25,9 @@ function ProductMore() {
                   <ProductMoreCard
                     key={_id}
                     url={imageUrls[0]}
-                    title={name}
-                    price={currentPrice}
-                    id={_id}
+                    name={name}
+                    currentPrice={currentPrice}
+                    _id={_id}
                     itemNo={itemNo}
                   />
                 ),
