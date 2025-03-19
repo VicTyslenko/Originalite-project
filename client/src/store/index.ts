@@ -21,7 +21,7 @@ import wishlist from "../@main/store/slices/wishlist/wishlistSlice";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["filters", "product", "address", "tempAuth"],
+  blacklist: ["filters", "product", "address", "tempAuth", "orders", "registration"],
 };
 
 const persistConfigAuth = {
