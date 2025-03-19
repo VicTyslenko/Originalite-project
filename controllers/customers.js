@@ -19,7 +19,9 @@ const queryCreator = require("../commonHelpers/queryCreator");
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res, next) => {
   // Clone query object, because validator module mutates req.body, adding other fields to object
+
   const initialQuery = _.cloneDeep(req.body);
+  console.log("query:", initialQuery);
   initialQuery.customerNo = rand();
 
   // Check Validation
@@ -134,7 +136,7 @@ exports.loginCustomer = async (req, res, next) => {
           }; // Create JWT Payload
 
           // Sign Token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: 6000 }, (err, token) => {
+          jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
             if (err) {
               return res.status(500).json({ message: "Token generation failed" });
             }
