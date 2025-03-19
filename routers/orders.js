@@ -9,7 +9,7 @@ const { placeOrder, updateOrder, cancelOrder, deleteOrder, getOrders, getOrder }
 
 router.post("/", placeOrder);
 
-router.put("/:id", passport.authenticate("jwt", { session: false }), updateOrder);
+router.put("/:id", updateOrder);
 
 router.delete("/cancel/:id", passport.authenticate("jwt", { session: false }), cancelOrder);
 

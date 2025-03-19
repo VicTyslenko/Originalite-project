@@ -10,9 +10,8 @@ export const registerFetchData = createAsyncThunk<UserModels, RegisterProps>(
   async (params, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post("/customers/", {
-        params,
+        ...params,
       });
-
       return data;
     } catch (err) {
       const axiosError = err as AxiosError;

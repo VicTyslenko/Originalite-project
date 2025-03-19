@@ -111,7 +111,7 @@ function MyProfile() {
                   value={props.values.birthday}
                   onChange={props.handleChange}
                   label="Birthday"
-                  placeholder="dd/mm/yyyy"
+                  placeholder="dd-mm-yyyy"
                   variant="standard"
                   helperText={props.touched.birthday && props.errors.birthday}
                   error={props.errors.birthday && Boolean(props.errors.birthday)}
