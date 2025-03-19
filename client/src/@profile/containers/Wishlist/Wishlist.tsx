@@ -1,21 +1,22 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Container, Typography } from "@mui/material";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
-import { Fragment, useEffect, useState } from "react";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
+import { useEffect, useState } from "react";
+import { DefaultTypography } from "shared/components/typography/default-typography";
 
 import { addProductToCart } from "../../../@main/store/actions/cart/cartActions";
 import { deleteProductFromCart } from "../../../@main/store/actions/cart/cartActions";
+import { getWishlist } from "../../../@main/store/actions/wishlistActions";
 import { deleteProductFromWishlist } from "../../../@main/store/actions/wishlistActions";
-import { Content, Description, FlexWrapper, StyledButton } from "./StyledWishList";
+import { Content, Description, FlexWrapper, LoaderWrapp, StyledButton } from "./StyledWishList";
+import { useGetWishlist } from "./hooks";
 
 function Wishlist() {
   const dispatch = useStoreDispatch();
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  const wishList = useStoreSelector(state => state.wishlist?.data ?? []);
-  const cart = useStoreSelector(state => state.cart.data);
+  const { wishList, cart, isLoading } = useGetWishlist();
 
   const itemInCart = (id: string) => cart.some(cartItem => cartItem.product._id === id);
 
@@ -26,6 +27,10 @@ function Wishlist() {
       dispatch(addProductToCart(id));
     }
   };
+
+  useEffect(() => {
+    dispatch(getWishlist());
+  }, []);
 
   const MainContent = wishList?.map(({ name, currentPrice, imageUrls, colors, sizes, _id }) => (
     <Content key={_id}>
@@ -59,7 +64,7 @@ function Wishlist() {
               }
             }}
           >
-            {_id && itemInCart(_id) ? "Delete" : "Add to cart"}
+            {_id && itemInCart(_id) ? "Delete from cart" : "Add to cart"}
           </StyledButton>
         </div>
       </div>
@@ -83,10 +88,18 @@ function Wishlist() {
       }}
     >
       {wishList.length > 0 ? (
-        <Fragment>
-          {MainContent}
-          <h2 className="total-price">Total price : {totalPrice}</h2>
-        </Fragment>
+        <>
+          {isLoading ? (
+            <LoaderWrapp>
+              <DefaultTypography>Wish list is loading...</DefaultTypography>
+            </LoaderWrapp>
+          ) : (
+            <>
+              {MainContent}
+              <h2 className="total-price">Total price : {totalPrice}</h2>
+            </>
+          )}
+        </>
       ) : (
         <Typography variant="h4" sx={{ mb: "141px", color: "black", display: "flex", justifyContent: "center" }}>
           Your wishlist is empty

@@ -26,7 +26,6 @@ export const wishlistSlice = createSlice({
     });
 
     builder.addCase(getWishlist.fulfilled, (state, action: PayloadAction<WishlistProps>) => {
-      console.log("payload wishlist", action.payload);
       state.data = action.payload?.products;
       state.loading = false;
     });

@@ -26,7 +26,7 @@ const PaymentPage = () => {
   const user = useUserData();
 
   const order = useStoreSelector(state => state.orders.data);
-  console.log("order", order);
+
   const dispatch = useStoreDispatch();
 
   const handleSubmit = async ({ values, resetForm }: SubmitPaymentProps) => {
@@ -36,19 +36,20 @@ const PaymentPage = () => {
       dispatch(clearCart());
     }
 
-    const data = await dispatch(
-      updateOrder({
-        orderId: order.orderId,
-        params: {
-          email: user.email,
-          letterSubject: "Order Payment Confirmation",
-          letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
-          paymentStatus: "paid",
-        },
-      }),
-    );
+    if (order?.orderId && user) {
+      dispatch(
+        updateOrder({
+          orderId: order.orderId,
+          params: {
+            email: user.email,
+            letterSubject: "Order Payment Confirmation",
+            letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
+            paymentStatus: "paid",
+          },
+        }),
+      );
+    }
 
-    console.log("data", data);
     setModal(true);
     resetForm();
   };
