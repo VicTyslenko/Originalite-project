@@ -6,7 +6,6 @@ type Props = {
   handleDataSetEvent: (event: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-
 export const ButtonAuthorization = ({ handleDataSetEvent }: Props) => {
   const user = useUserData();
 

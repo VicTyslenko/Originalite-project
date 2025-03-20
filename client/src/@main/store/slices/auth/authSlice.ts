@@ -45,6 +45,7 @@ const authReducer = createSlice({
     });
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
+      console.log("token", action.payload);
       state.data = action.payload;
     });
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
