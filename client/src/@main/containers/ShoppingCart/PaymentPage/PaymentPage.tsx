@@ -1,4 +1,4 @@
-import { updateOrder } from "@main/store/orders/ordersActions";
+import { updateOrder } from "@main/store/actions/orders/ordersActions";
 import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";

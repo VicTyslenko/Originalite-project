@@ -45,8 +45,13 @@ const authReducer = createSlice({
     });
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
-      console.log("token", action.payload);
-      state.data = action.payload;
+      console.log("payload", action.payload);
+      if (action.payload.refreshToken) {
+        sessionStorage.setItem("refresh-token", action.payload.refreshToken);
+      }
+
+      const { refreshToken, ...rest } = action.payload;
+      state.data = rest;
     });
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
       state.status = "error";

@@ -17,6 +17,11 @@ const CustomerSchema = new Schema(
       type: String,
       required: true,
     },
+    refreshToken: {
+      type: String,
+      default: null,
+    },
+
     login: {
       type: String,
       required: true,

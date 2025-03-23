@@ -7,6 +7,7 @@ const passport = require("passport");
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(10000000, 99999999);
 
+const { generateAccessToken, generateRefreshToken } = require("../utils/tokens");
 // Load Customer model
 const Customer = require("../models/Customer");
 
@@ -21,7 +22,6 @@ exports.createCustomer = (req, res, next) => {
   // Clone query object, because validator module mutates req.body, adding other fields to object
 
   const initialQuery = _.cloneDeep(req.body);
-  console.log("query:", initialQuery);
   initialQuery.customerNo = rand();
 
   // Check Validation
@@ -92,20 +92,18 @@ exports.createCustomer = (req, res, next) => {
     })
     .catch((err) =>
       res.status(400).json({
+
+
+        
         message: `Error happened on server: "${err}" `,
       })
     );
 };
 
+
 // Controller for customer login
 
-const generateAccessToken = (payload) => {
-  return jwt.sign(payload, keys.secretOrKey, { expiresIn: "15m" });
-};
-
-const generateRefreshToken = (payload) => {
-  return jwt.sign(payload, keys.refreshKey, { expiresIn: "7d" });
-};
+//HERE
 
 exports.loginCustomer = async (req, res, next) => {
   try {
@@ -113,6 +111,7 @@ exports.loginCustomer = async (req, res, next) => {
     if (!isValid) return res.status(400).json(errors);
 
     const { loginOrEmail, password } = req.body;
+
     const customer = await Customer.findOne({
       $or: [{ email: loginOrEmail }, { login: loginOrEmail }],
     });
@@ -151,6 +150,10 @@ exports.loginCustomer = async (req, res, next) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// refresh token handle
+
+exports.refreshToken = async (req, res) => {};
 
 exports.getCustomers = async (req, res) => {
   const customerAll = await Customer.find();

@@ -14,7 +14,7 @@ export const updateCustomer = createAsyncThunk<UserModels, ParamsProps, { state:
   async ({ _id, params }, { getState, rejectWithValue }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth?.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
 
     try {
       const { data } = await axiosInstance.put(`/customers/${_id}`, params, {
@@ -34,7 +34,7 @@ export const getCustomer = createAsyncThunk<UserModels, void, { state: RootState
   async (_, { getState, rejectWithValue }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth?.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
 
     try {
       if (token) {

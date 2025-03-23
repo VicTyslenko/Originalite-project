@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-import { ordersFetchData } from "../../orders/ordersActions";
+import { ordersFetchData } from "../../actions/orders/ordersActions";
 import { type InitialOrderState } from "./models";
 
 const initialState: InitialOrderState = {

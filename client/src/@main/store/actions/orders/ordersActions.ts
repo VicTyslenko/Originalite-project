@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { RootState } from "store";
 
-import axiosInstance from "../../../services/api/axios";
-import type { OrderModel } from "../slices/orders/models";
+import axiosInstance from "../../../../services/api/axios";
+import type { OrderModel } from "../../slices/orders/models";
 import type { OrdersParamsProps, UpdateOrderProps } from "./models";
 
 export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, { state: RootState }>(
@@ -10,7 +10,7 @@ export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, {
   async (params, { rejectWithValue, getState }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth?.data?.token || tempAuth.tempData?.token;
+    const token = auth?.data?.accessToken || tempAuth.tempData?.accessToken;
 
     try {
       const { data } = await axiosInstance.post("/orders/", params, {
@@ -31,7 +31,7 @@ export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { stat
   async ({ orderId, params }, { getState, rejectWithValue }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth?.data?.token || tempAuth.tempData?.token;
+    const token = auth?.data?.accessToken || tempAuth.tempData?.accessToken;
 
     try {
       const { data } = await axiosInstance.put(`/orders/${orderId}`, params, {

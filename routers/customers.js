@@ -3,7 +3,15 @@ const router = express.Router();
 const passport = require("passport");
 
 // Import controllers
-const { createCustomer, loginCustomer, getCustomer, editCustomerInfo, updatePassword, getCustomers } = require("../controllers/customers");
+const {
+  createCustomer,
+  loginCustomer,
+  getCustomer,
+  editCustomerInfo,
+  updatePassword,
+  getCustomers,
+  refreshToken,
+} = require("../controllers/customers");
 
 // @route   POST /customers
 // @desc    Register customer
@@ -31,5 +39,7 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), editCustome
 // @desc    Return current customer and success or error message
 // @access  Private
 router.put("/password", passport.authenticate("jwt", { session: false }), updatePassword);
+
+router.post("/refresh-token", refreshToken);
 
 module.exports = router;

@@ -12,7 +12,7 @@ export const getWishlist = createAsyncThunk<WishlistProps, void, { state: RootSt
   "wishlist/getWishlist",
   async (_, { getState }) => {
     const { auth, tempAuth } = getState();
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
     if (token) {
       const { data } = await fetchWishlist({
         config: {
@@ -31,7 +31,7 @@ export const addProductToWishlist = createAsyncThunk<WishlistProps, string, { st
   "wishlist/addProductToWishlist",
   async (id, { getState }) => {
     const { auth, tempAuth } = getState();
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     try {
       const { data } = await fetchProductToWishlist({
@@ -55,7 +55,7 @@ export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, stri
   async (id, { getState }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     const { data } = await fetchProductFromWishlist({
       id,

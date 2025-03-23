@@ -1,4 +1,4 @@
-import type { SubmitProps } from "@main/store/orders/models";
+import type { SubmitProps } from "@main/store/actions/orders/models";
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
-import { ordersFetchData } from "../../../@main/store/orders/ordersActions";
+import { ordersFetchData } from "../../../@main/store/actions/orders/ordersActions";
 import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
 import { ContentForm, StyledLink, Title } from "./StyledAddressDetails";
