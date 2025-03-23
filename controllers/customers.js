@@ -98,65 +98,58 @@ exports.createCustomer = (req, res, next) => {
 };
 
 // Controller for customer login
+
+const generateAccessToken = (payload) => {
+  return jwt.sign(payload, keys.secretOrKey, { expiresIn: "15m" });
+};
+
+const generateRefreshToken = (payload) => {
+  return jwt.sign(payload, keys.refreshKey, { expiresIn: "7d" });
+};
+
 exports.loginCustomer = async (req, res, next) => {
-  const { errors, isValid } = validateRegistrationForm(req.body);
+  try {
+    const { errors, isValid } = validateRegistrationForm(req.body);
+    if (!isValid) return res.status(400).json(errors);
 
-  // Check Validation
-  if (!isValid) {
-    return res.status(400).json(errors);
+    const { loginOrEmail, password } = req.body;
+    const customer = await Customer.findOne({
+      $or: [{ email: loginOrEmail }, { login: loginOrEmail }],
+    });
+
+    if (!customer) return res.status(404).json({ loginOrEmail: "Customer not found" });
+
+    const isMatch = await bcrypt.compare(password, customer.password);
+
+    if (!isMatch) return res.status(400).json({ password: "Password incorrect" });
+
+    // Create JWT Payload
+    const payload = {
+      id: customer.id,
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      isAdmin: customer.isAdmin,
+      email: customer.email,
+      address: customer.address,
+      telephone: customer.telephone,
+    };
+
+    // Generate Tokens
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
+
+    customer.refreshToken = refreshToken;
+    await customer.save();
+
+    res.json({
+      success: true,
+      accessToken: "Bearer " + accessToken,
+      refreshToken,
+    });
+  } catch (err) {
+    console.error("Error in login:", err);
+    res.status(500).json({ message: "Server error" });
   }
-
-  const loginOrEmail = req.body.loginOrEmail;
-  const password = req.body.password;
-  // const configs = await getConfigs();
-
-  // Find customer by email
-  Customer.findOne({
-    $or: [{ email: loginOrEmail }, { login: loginOrEmail }],
-  })
-    .then((customer) => {
-      // Check for customer
-      if (!customer) {
-        errors.loginOrEmail = "Customer not found";
-        return res.status(404).json(errors);
-      }
-
-      // Check Password
-      bcrypt.compare(password, customer.password).then((isMatch) => {
-        if (isMatch) {
-          // Customer Matched
-          const payload = {
-            id: customer.id,
-            firstName: customer.firstName,
-            lastName: customer.lastName,
-            isAdmin: customer.isAdmin,
-            email: customer.email,
-            address: customer.address,
-            telephone: customer.telephone,
-          }; // Create JWT Payload
-
-          // Sign Token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
-            if (err) {
-              return res.status(500).json({ message: "Token generation failed" });
-            }
-            res.json({
-              ...customer,
-              success: true,
-              token: "Bearer " + token,
-            });
-          });
-        } else {
-          errors.password = "Password incorrect";
-          return res.status(400).json(errors);
-        }
-      });
-    })
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
 };
 
 exports.getCustomers = async (req, res) => {

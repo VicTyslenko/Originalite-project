@@ -17,6 +17,6 @@ export interface UserData {
 
 export interface UserModels {
   success: boolean;
-  token: string;
+  accessToken: string;
   data: UserData | null;
 }
