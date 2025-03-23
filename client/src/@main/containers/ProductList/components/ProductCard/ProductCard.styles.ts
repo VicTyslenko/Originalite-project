@@ -1,6 +1,5 @@
-import { styled } from "@mui/material/styles";
-
 import { Box, CardContent } from "@mui/material";
+import styled from "styled-components";
 
 export const ProductHeader = styled(Box)`
   display: flex;
@@ -16,11 +15,5 @@ export const StyledCardContent = styled(CardContent)`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-
-  ${props => props.theme.breakpoints.down("md")} {
-    height: 104px;
-  }
-  ${props => props.theme.breakpoints.down("sm")} {
-    height: 73px;
-  }
 `;
+export const StyledTitle = styled.div``;
