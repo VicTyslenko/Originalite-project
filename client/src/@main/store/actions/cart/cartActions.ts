@@ -16,8 +16,7 @@ export const getCart = createAsyncThunk<CartProps | undefined, void, { state: Ro
   "cart/getCart",
   async (_, { getState }) => {
     const { auth, tempAuth } = getState();
-    const token = auth.data?.token || tempAuth.tempData?.token;
-
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
     if (token) {
       const { data } = await fetchCart({
         config: {
@@ -36,7 +35,7 @@ export const addProductToCart = createAsyncThunk<CartProps, string, { state: Roo
   async (id, { getState }) => {
     const { auth, product, cart, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     if (auth.data !== null || tempAuth.tempData !== null) {
       const { data } = await fetchProductToCart({
@@ -77,7 +76,7 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
   async (id, { getState }) => {
     const { auth, cart, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     const productInCart = cart.data.find(item => item.product._id === id);
 
@@ -111,7 +110,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
   async (id, { getState }) => {
     const { auth, cart, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     if (auth.data !== null || tempAuth.tempData !== null) {
       const { data } = await fetchProductFromCart({
@@ -122,7 +121,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
           },
         },
       });
-    
+
       return data;
     } else {
       const products = cart.data.filter(({ product }) => product._id !== id);
@@ -140,7 +139,7 @@ export const deleteCart = createAsyncThunk<DeleteCartProps, void, { state: RootS
   async (_, { getState, rejectWithValue }) => {
     const { auth, tempAuth } = getState();
 
-    const token = auth.data?.token || tempAuth.tempData?.token;
+    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
 
     if (!token) {
       return rejectWithValue("Authorization token is missing");
