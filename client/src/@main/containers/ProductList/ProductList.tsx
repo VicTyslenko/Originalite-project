@@ -39,7 +39,7 @@ function ProductList() {
     <>
       <StyledContainer maxWidth="lg">
         <ProductFilters />
-        {products.length !== 0 && (
+        {products && products.length !== 0 && (
           <Box sx={{ pb: "30px" }}>
             <DefaultTypography as="h3">{categories}</DefaultTypography>
             <StyledBox>
@@ -66,7 +66,7 @@ function ProductList() {
             </Stack>
           </Box>
         )}
-        {products.length === 0 && <EmptyProductPage />}
+        {products && products.length === 0 && <EmptyProductPage />}
       </StyledContainer>
     </>
   );
