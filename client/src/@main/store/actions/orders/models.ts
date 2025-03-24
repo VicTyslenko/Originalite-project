@@ -4,6 +4,7 @@ import type { ProductModels } from "shared/models/products.models";
 export type OrdersParamsProps = {
   customerId: string | null;
   products: ProductModels[];
+  orderId: string;
 } & AddressProps;
 
 export type SubmitProps = {
@@ -12,9 +13,9 @@ export type SubmitProps = {
 };
 
 export type UpdateOrderProps = {
-  orderId: string | null;
+  orderId: string;
   params: {
-    email: string;
+    email?: string;
     letterSubject: string;
     letterHtml: string;
     paymentStatus: string;

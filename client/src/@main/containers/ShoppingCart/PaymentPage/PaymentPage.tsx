@@ -1,5 +1,6 @@
 import { updateOrder } from "@main/store/actions/orders/ordersActions";
 import { clearCart } from "@main/store/slices/cart/cartSlice";
+import { clearOrderData } from "@main/store/slices/orders/ordersSlice";
 import { MenuItem, Select, TextField, Tooltip } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
@@ -8,6 +9,8 @@ import { useUserData } from "hooks/use-user-data";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
+
+import { LocalStorage } from "shared/utils";
 
 import { deleteCart } from "../../../store/actions/cart/cartActions";
 import PaymentModal from "../Modal/PaymentModal";
@@ -23,6 +26,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
+
   const user = useUserData();
 
   const order = useStoreSelector(state => state.orders.data);
@@ -36,18 +40,22 @@ const PaymentPage = () => {
       dispatch(clearCart());
     }
 
-    if (order?.orderId && user) {
-      dispatch(
+    if (order?.orderId) {
+      const response = await dispatch(
         updateOrder({
           orderId: order.orderId,
           params: {
-            email: user.email,
+            email: user?.email,
             letterSubject: "Order Payment Confirmation",
             letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
             paymentStatus: "paid",
           },
         }),
       );
+
+      if (response.meta.requestStatus === "fulfilled") {
+        dispatch(clearOrderData());
+      }
     }
 
     setModal(true);

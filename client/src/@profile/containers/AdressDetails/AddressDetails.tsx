@@ -13,7 +13,7 @@ import { ContentForm, StyledLink, Title } from "./StyledAddressDetails";
 
 const AddressDetails = () => {
   const dispatch = useStoreDispatch();
-
+  const order = useStoreSelector(state => state.orders.data);
   const user = useUserData();
 
   const products = useStoreSelector(state => state.cart.data);
@@ -23,7 +23,9 @@ const AddressDetails = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
-    const data = await dispatch(ordersFetchData({ ...values, customerId: user?.id || null, products }));
+    const data = await dispatch(
+      ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: order?.orderId! }),
+    );
 
     if (data.meta.requestStatus === "rejected") return;
 
