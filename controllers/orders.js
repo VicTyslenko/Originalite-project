@@ -96,16 +96,14 @@ exports.placeOrder = async (req, res) => {
     // }
 
     // checking if the order details are the same and the status is 'pending', just update the order
-    const { customerId } = req.body;
-
-    // if (!customerId) {
-    //   return res.status(400).json({ message: "Customer ID is required." });
-    // }
+    const { orderId } = req.body;
 
     const existingOrder = await Order.findOne({
-      customerId,
+      orderId,
       paymentStatus: "pending",
     });
+
+ 
 
     if (existingOrder) {
       existingOrder.address = req.body.address;

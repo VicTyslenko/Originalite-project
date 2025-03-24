@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
 import { ordersFetchData } from "../../actions/orders/ordersActions";
-import { type InitialOrderState } from "./models";
+import type { InitialOrderState, OrderModel } from "./models";
 
 const initialState: InitialOrderState = {
   data: null,
@@ -15,7 +15,11 @@ const ordersReducer = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    clearOrderData: state => {
+      state.data = null;
+    },
+  },
 
   extraReducers: builder => {
     builder.addCase(ordersFetchData.pending, state => {
@@ -23,13 +27,10 @@ const ordersReducer = createSlice({
       state.data = null;
     });
 
-    builder.addCase(ordersFetchData.fulfilled, (state, { payload }) => {
+    builder.addCase(ordersFetchData.fulfilled, (state, { payload }: { payload: OrderModel }) => {
       state.status = "loaded";
       state.data = payload;
-
       state.error = null;
-
-      console.log("new order", payload);
     });
 
     builder.addCase(ordersFetchData.rejected, (state, { payload }) => {
@@ -39,5 +40,7 @@ const ordersReducer = createSlice({
     });
   },
 });
+
+export const { clearOrderData } = ordersReducer.actions;
 
 export default ordersReducer.reducer;

@@ -47,6 +47,7 @@ const persistConfigOrders = {
   storage,
   whitelist: ["data"],
 };
+
 const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
 
 const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
