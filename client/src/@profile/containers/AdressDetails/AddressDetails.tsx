@@ -23,6 +23,8 @@ const AddressDetails = () => {
   const navigate = useNavigate();
 
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
+    if (!products.length) return;
+
     const data = await dispatch(
       ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: order?.orderId! }),
     );
@@ -60,7 +62,7 @@ const AddressDetails = () => {
               <Title>Please, fill the form with your details and delivery address</Title>
 
               <TextField
-                type="string"
+                type="text"
                 fullWidth
                 name="email"
                 value={props.values.email}
@@ -74,7 +76,7 @@ const AddressDetails = () => {
                 sx={{ mb: "6px" }}
               />
               <TextField
-                type="string"
+                type="text"
                 fullWidth
                 name="firstName"
                 label="First Name"
@@ -102,7 +104,7 @@ const AddressDetails = () => {
               />
 
               <TextField
-                type="number"
+                type="tel"
                 fullWidth
                 name="telephone"
                 label="Mobile Phone"
@@ -116,7 +118,7 @@ const AddressDetails = () => {
                 sx={{ mb: "6px" }}
               />
               <TextField
-                type="string"
+                type="text"
                 fullWidth
                 label="Address"
                 placeholder="address"

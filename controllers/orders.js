@@ -99,15 +99,17 @@ exports.placeOrder = async (req, res) => {
     const { orderId } = req.body;
 
     const existingOrder = await Order.findOne({
-      orderId,
+      _id: orderId,
       paymentStatus: "pending",
     });
 
- 
-
     if (existingOrder) {
-      existingOrder.address = req.body.address;
+      existingOrder.address = req.body.address ?? existingOrder.address;
       existingOrder.products = req.body.products;
+      existingOrder.firstName = req.body.firstName ?? existingOrder.firstName;
+      existingOrder.lastName = req.body.lastName ?? existingOrder.lastName;
+      existingOrder.telephone = req.body.telephone ?? existingOrder.telephone;
+      existingOrder.email = req.body.email ?? existingOrder.email;
 
       await existingOrder.save();
 
