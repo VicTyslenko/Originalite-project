@@ -14,9 +14,7 @@ export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, {
 
     try {
       const { data } = await axiosInstance.post("/orders/", params, {
-        headers: {
-          Authorization: token,
-        },
+        headers: token ? { Authorization: token } : {},
       });
 
       return data;
@@ -35,9 +33,7 @@ export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { stat
 
     try {
       const { data } = await axiosInstance.put(`/orders/${orderId}`, params, {
-        headers: {
-          Authorization: token,
-        },
+        headers: token ? { Authorization: token } : {},
       });
 
       return data;
