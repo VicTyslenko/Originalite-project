@@ -92,14 +92,10 @@ exports.createCustomer = (req, res, next) => {
     })
     .catch((err) =>
       res.status(400).json({
-
-
-        
         message: `Error happened on server: "${err}" `,
       })
     );
 };
-
 
 // Controller for customer login
 
@@ -140,10 +136,18 @@ exports.loginCustomer = async (req, res, next) => {
     customer.refreshToken = refreshToken;
     await customer.save();
 
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: isProduction,
+      sameSite: isProduction ? "None" : "Lax",
+    });
+
     res.json({
       success: true,
       accessToken: "Bearer " + accessToken,
-      refreshToken,
     });
   } catch (err) {
     console.error("Error in login:", err);

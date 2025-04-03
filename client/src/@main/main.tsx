@@ -9,7 +9,7 @@ function Main() {
   const dispatch = useStoreDispatch();
 
   const user = useUserData();
-
+  
   useEffect(() => {
     if (user) {
       dispatch(getCart());

@@ -9,7 +9,6 @@ export const useUserData = () => {
   const isAuth = useStoreSelector(state => state.auth.data);
 
   const token = isAuth?.accessToken || tempAuth?.accessToken;
-
   // useMemo prevents endless loop in the components when getting user
 
   return useMemo(() => {
