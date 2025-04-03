@@ -17,6 +17,7 @@ export const getCart = createAsyncThunk<CartProps | undefined, void, { state: Ro
   async (_, { getState }) => {
     const { auth, tempAuth } = getState();
     const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
+
     if (token) {
       const { data } = await fetchCart({
         config: {

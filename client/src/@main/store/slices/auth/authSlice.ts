@@ -45,14 +45,10 @@ const authReducer = createSlice({
     });
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
-      console.log("payload", action.payload);
-      if (action.payload.refreshToken) {
-        sessionStorage.setItem("refresh-token", action.payload.refreshToken);
-      }
 
-      const { refreshToken, ...rest } = action.payload;
-      state.data = rest;
+      state.data = action.payload;
     });
+
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
       state.status = "error";
       state.error = payload as AxiosError;
