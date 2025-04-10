@@ -142,6 +142,7 @@ exports.loginCustomer = async (req, res, next) => {
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
       secure: isProduction,
+      secure: false,
       sameSite: isProduction ? "None" : "Lax",
     });
 
@@ -155,9 +156,37 @@ exports.loginCustomer = async (req, res, next) => {
   }
 };
 
-// refresh token handle
+// Controller for verify refresh token
 
-exports.refreshToken = async (req, res) => {};
+exports.refreshToken = async (req, res) => {
+  try {
+    const cookies = req.cookies;
+
+    if (!cookies?.jwt) return res.sendStatus(401); // No cookie = unauthorized
+
+    const refreshToken = cookies.jwt;
+
+    const foundUser = await Customer.findOne({ refreshToken });
+
+    if (!foundUser) return res.sendStatus(403); // Forbidden
+
+    jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (err, decoded) => {
+      if (err || foundUser.userName !== decoded.userName) return res.sendStatus(403);
+
+      const accessToken = jwt.sign(
+        { userName: decoded.userName },
+
+        process.env.SECRET_OR_KEY,
+        { expiresIn: "15m" }
+      );
+
+      res.json({ accessToken });
+    });
+  } catch (err) {
+    console.log("Error in refreshToken handler:", err);
+    res.sendStatus(500); // Internal server error
+  }
+};
 
 exports.getCustomers = async (req, res) => {
   const customerAll = await Customer.find();

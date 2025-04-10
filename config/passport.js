@@ -7,7 +7,7 @@ const keys = require("./keys.js");
 
 module.exports = async passport => {
   const opts = {};
-  const configs = await getConfigs();
+  // const configs = await getConfigs();
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
   opts.secretOrKey = keys.secretOrKey;
 
