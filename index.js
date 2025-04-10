@@ -24,8 +24,16 @@ const sizes = require("./routers/sizes");
 const slides = require("./routers/slides");
 const subscribers = require("./routers/subscribers");
 const wishlist = require("./routers/wishlist");
+const credentials = require("./middleware/credentials");
+const corsOptions = require("./config/corsOptions");
+const cookieParser = require("cookie-parser");
 
-app.use(cors());
+app.use(cookieParser());
+
+// cors middlware check
+app.use(credentials);
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

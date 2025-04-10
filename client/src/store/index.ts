@@ -21,13 +21,7 @@ import wishlist from "../@main/store/slices/wishlist/wishlistSlice";
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["filters", "product", "address", "tempAuth", "orders", "registration"],
-};
-
-const persistConfigAuth = {
-  key: "auth",
-  storage,
-  whitelist: ["data"],
+  blacklist: ["filters", "product", "address", "tempAuth", "orders", "registration", "auth"],
 };
 
 const persistConfigTempAuth = {
@@ -48,8 +42,6 @@ const persistConfigOrders = {
   whitelist: ["data"],
 };
 
-const persistedAuthReducer = persistReducer(persistConfigAuth, auth);
-
 const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
 
 const persistedRgistrationReducer = persistReducer(persistConfigRegistration, registration);
@@ -59,7 +51,7 @@ const persistedOrdersReducer = persistReducer(persistConfigOrders, orders);
 const rootReduser = combineReducers({
   productList,
   product,
-  auth: persistedAuthReducer,
+  auth,
   tempAuth: persistedTempAuthReducer,
   registration: persistedRgistrationReducer,
   cart,

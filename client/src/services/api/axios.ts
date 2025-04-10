@@ -6,7 +6,7 @@ const API_URI =
 const instance = axios.create({
   baseURL: API_URI,
   timeout: 3000,
-  withCredentials: false,
+  withCredentials: true,
 });
 
 export default instance;

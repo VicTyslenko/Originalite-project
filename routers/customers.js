@@ -23,11 +23,15 @@ router.get("/", getCustomers);
 // @route   POST /customers/login
 // @desc    Login Customer / Returning JWT Token
 // @access  Public
-router.post("/login", loginCustomer);
 
+router.post("/login", loginCustomer);
+// @route  GET /
+// @desc   Return access token
+router.get("/refresh", refreshToken);
 // @route   GET /
 // @desc    Return current customer
 // @access  Private
+
 router.get("/me", passport.authenticate("jwt", { session: false }), getCustomer);
 
 // @route   PUT /customers
@@ -40,6 +44,5 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), editCustome
 // @access  Private
 router.put("/password", passport.authenticate("jwt", { session: false }), updatePassword);
 
-router.post("/refresh-token", refreshToken);
 
 module.exports = router;
