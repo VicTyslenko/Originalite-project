@@ -1,30 +1,18 @@
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
+import { useAxiosPrivate } from "shared/hooks/use-axios-private";
+import { useRefreshToken } from "shared/hooks/use-refresh";
 
-// import
 import MainRoutes from "./router";
 import { getCart } from "./store/actions/cart/cartActions";
 
 function Main() {
   const dispatch = useStoreDispatch();
-
+  useAxiosPrivate();
   const user = useUserData();
 
-  useEffect(() => {
-    (async function () {
-      try {
-        const res = await fetch("http://localhost:4444/api/customers/refresh", {
-          credentials: "include", 
-        });
-
-        const data = await res.json(); 
-    
-      } catch (err) {
-        console.log("ERROR:", err);
-      }
-    })();
-  }, []);
+  const refresh = useRefreshToken();
 
   useEffect(() => {
     if (user) {
@@ -32,6 +20,18 @@ function Main() {
     }
   }, [user, dispatch]);
 
+  useEffect(() => {
+    console.log("user", user);
+    if (!user) {
+      (async () => {
+        try {
+          await refresh();
+        } catch (err) {
+          console.warn("No active session");
+        }
+      })();
+    }
+  }, [user, refresh]);
   return <MainRoutes />;
 }
 

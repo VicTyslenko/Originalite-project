@@ -18,7 +18,7 @@ const validateRegistrationForm = require("../validation/validationHelper");
 const queryCreator = require("../commonHelpers/queryCreator");
 
 // Controller for creating customer and saving to DB
-exports.createCustomer = (req, res, next) => {
+exports.createCustomer = (req, res) => {
   // Clone query object, because validator module mutates req.body, adding other fields to object
 
   const initialQuery = _.cloneDeep(req.body);
@@ -101,7 +101,7 @@ exports.createCustomer = (req, res, next) => {
 
 //HERE
 
-exports.loginCustomer = async (req, res, next) => {
+exports.loginCustomer = async (req, res) => {
   try {
     const { errors, isValid } = validateRegistrationForm(req.body);
     if (!isValid) return res.status(400).json(errors);
