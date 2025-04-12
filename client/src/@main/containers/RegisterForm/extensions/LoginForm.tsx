@@ -39,7 +39,6 @@ export const LoginForm = () => {
             ? await dispatch(actionFetchAuth(values))
             : await dispatch(actionFetchTempAuth(values));
 
-
           if (data.meta.requestStatus === "fulfilled") {
             navigate("/");
             toast.success("Login successfull!");
