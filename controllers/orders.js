@@ -142,7 +142,7 @@ exports.placeOrder = async (req, res) => {
           }
         }
 
-        const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
+        const mailResult = await (subscriberMail, letterSubject, letterHtml, res);
 
         for (item of order.products) {
           const id = item.product._id;

@@ -12,21 +12,15 @@ import {
 
 // CartProps types defined for returned data from server, void as a second arg(we don't pass any arguments in this function)
 
-export const getCart = createAsyncThunk<CartProps | undefined, void, { state: RootState }>(
+export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { message: string } }>(
   "cart/getCart",
-  async (_, { getState }) => {
-    const { auth, tempAuth } = getState();
-    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetchCart();
 
-    if (token) {
-      const { data } = await fetchCart({
-        config: {
-          headers: {
-            Authorization: token,
-          },
-        },
-      });
-      return data;
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
   },
 );

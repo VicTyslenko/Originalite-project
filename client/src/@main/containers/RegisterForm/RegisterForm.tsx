@@ -79,7 +79,7 @@ const RegisterForm = () => {
               validationSchema={validationRegisterSchema}
               onSubmit={async (values, { resetForm }) => {
                 const data = await dispatch(registerFetchData(values));
-
+                console.log("data", data);
                 if (data.meta.requestStatus === "rejected") return;
 
                 toast.success("Register success!");

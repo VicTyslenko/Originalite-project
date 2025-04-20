@@ -11,6 +11,7 @@ const {
   updatePassword,
   getCustomers,
   refreshToken,
+  verifyCustomer,
 } = require("../controllers/customers");
 
 // @route   POST /customers
@@ -20,6 +21,7 @@ router.post("/", createCustomer);
 
 router.get("/", getCustomers);
 
+router.get("/verify/:token", verifyCustomer);
 // @route   POST /customers/login
 // @desc    Login Customer / Returning JWT Token
 // @access  Public
@@ -43,6 +45,5 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), editCustome
 // @desc    Return current customer and success or error message
 // @access  Private
 router.put("/password", passport.authenticate("jwt", { session: false }), updatePassword);
-
 
 module.exports = router;

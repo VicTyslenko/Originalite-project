@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 function NoMatch() {
+
+	console.log('Hello!')
 	return (
 		<div>
 			<h2>Nothing to see here!</h2>
