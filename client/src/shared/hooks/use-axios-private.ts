@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import instance from "services/api/axios";
 
+import { refreshToken } from "shared/utils";
+
 import { useStoreSelector } from "./global/use-store-selector";
-import { useRefreshToken } from "./use-refresh";
 
 export const useAxiosPrivate = () => {
-  const refresh = useRefreshToken();
-
   const authData = useStoreSelector(state => state.auth.data);
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export const useAxiosPrivate = () => {
         const prevRequest = error?.config;
         if (error?.response.status === 403 && !prevRequest.sent) {
           prevRequest.sent = true;
-          const newAccessToken = await refresh();
+          const newAccessToken = await refreshToken();
 
           prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return instance(prevRequest);
@@ -40,7 +39,7 @@ export const useAxiosPrivate = () => {
       instance.interceptors.request.eject(requestIntercept);
       instance.interceptors.response.eject(responseIntercept);
     };
-  }, [authData, refresh]);
+  }, [authData]);
 
   return instance;
 };

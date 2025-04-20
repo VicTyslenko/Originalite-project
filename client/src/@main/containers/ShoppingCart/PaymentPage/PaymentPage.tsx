@@ -10,8 +10,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
-import { LocalStorage } from "shared/utils";
-
 import { deleteCart } from "../../../store/actions/cart/cartActions";
 import PaymentModal from "../Modal/PaymentModal";
 import SVG from "../SVG/SVG";
@@ -24,7 +22,6 @@ import { validationSchema } from "./validation";
 
 const PaymentPage = () => {
   const navigate = useNavigate();
-
   const [modal, setModal] = useState(false);
 
   const user = useUserData();

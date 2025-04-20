@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
+const sendMail = require("../commonHelpers/mailSender");
 const keys = require("../config/keys");
-const getConfigs = require("../config/getConfigs");
-const passport = require("passport");
+
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(10000000, 99999999);
 
@@ -22,6 +22,7 @@ exports.createCustomer = (req, res) => {
   // Clone query object, because validator module mutates req.body, adding other fields to object
 
   const initialQuery = _.cloneDeep(req.body);
+
   initialQuery.customerNo = rand();
 
   // Check Validation
@@ -62,26 +63,53 @@ exports.createCustomer = (req, res) => {
 
           newCustomer
             .save()
-            .then((customer) => {
-              const payload = {
-                id: customer.id,
-                firstName: customer.firstName,
-                lastName: customer.lastName,
-                isAdmin: customer.isAdmin,
-                email: customer.email,
-                address: customer.address,
-                telephone: customer.telephone,
-              }; // Create JWT Payload
+            .then(async (customer) => {
+              //here
+              try {
+                const emailToken = jwt.sign(
+                  {
+                    email: userData.email,
+                  },
+                  process.env.NODEMAILER_PASSWORD,
+                  { expiresIn: "1d" }
+                );
 
-              // Sign Token
-              jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
+                const confirmLink = `http://localhost:3000/verify?token=${emailToken}`;
+
+                await sendMail(
+                  customer.email,
+                  "Confirm your email",
+                  `<h2>Hi ${customer.firstName}</h2>
+       <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
+                );
                 res.json({
-                  ...customer,
                   success: true,
-                  token: "Bearer " + token,
+                  message: "User registered. Please check your email to confirm your account.",
                 });
-              });
+              } catch (err) {
+                console.log(err);
+              }
             })
+            // .then((customer) => {
+            //   const payload = {
+            //     id: customer.id,
+            //     firstName: customer.firstName,
+            //     lastName: customer.lastName,
+            //     isAdmin: customer.isAdmin,
+            //     email: customer.email,
+            //     address: customer.address,
+            //     telephone: customer.telephone,
+            //   }; // Create JWT Payload
+
+            //   // Sign Token
+            //   // jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
+            //   //   res.json({
+            //   //     ...customer,
+            //   //     success: true,
+            //   //     token: "Bearer " + token,
+            //   //   });
+            //   // });
+            // })
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,
@@ -97,9 +125,30 @@ exports.createCustomer = (req, res) => {
     );
 };
 
-// Controller for customer login
+// Controller to verify the customer by email
 
-//HERE
+exports.verifyCustomer = async (req, res) => {
+  const token = req.params.token;
+
+  if (!token) return res.status(400).json("No token provided");
+
+  try {
+    const decoded = jwt.verify(token, process.env.NODEMAILER_PASSWORD);
+
+    const user = await Customer.findOne({ email: decoded.email });
+    if (!user) return res.status(404).json("User not found");
+
+    user.emailConfirmed = true;
+    await user.save();
+
+    return res.status(200).json({ message: "Email confirmed!" });
+  } catch (err) {
+    console.error(err);
+    return res.status(400).json("Invalid or expired token");
+  }
+};
+
+// Controller for customer login
 
 exports.loginCustomer = async (req, res) => {
   try {
@@ -148,7 +197,7 @@ exports.loginCustomer = async (req, res) => {
 
     res.json({
       success: true,
-      accessToken: "Bearer " + accessToken,
+      accessToken,
     });
   } catch (err) {
     console.error("Error in login:", err);
@@ -167,14 +216,17 @@ exports.refreshToken = async (req, res) => {
     const refreshToken = cookies.jwt;
 
     const foundUser = await Customer.findOne({ refreshToken });
-
+    console.log("found user", foundUser);
     if (!foundUser) return res.sendStatus(403); // Forbidden
+    console.log("refresh token", refreshToken);
 
     jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (err, decoded) => {
       if (err || foundUser.userName !== decoded.userName) return res.sendStatus(403);
 
+      const { id, email, firstName, lastName, isAdmin } = decoded;
+
       const accessToken = jwt.sign(
-        { userName: decoded.userName },
+        { id, email, firstName, lastName, isAdmin },
 
         process.env.SECRET_OR_KEY,
         { expiresIn: "15m" }

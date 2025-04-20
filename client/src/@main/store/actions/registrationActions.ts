@@ -7,10 +7,11 @@ import axiosInstance from "../../../services/api/axios";
 
 export const registerFetchData = createAsyncThunk<UserModels, RegisterProps>(
   "register/actionFetchData",
-  async (params, { rejectWithValue }) => {
+  async (params,{ rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post("/customers/", {
         ...params,
+       
       });
       return data;
     } catch (err) {

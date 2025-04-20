@@ -265,7 +265,7 @@ exports.deleteProductFromCart = async (req, res, next) => {
     );
 };
 
-exports.getCart = (req, res, next) => {
+exports.getCart = (req, res) => {
   Cart.findOne({ customerId: req.user.id })
     .populate("products.product")
     .populate("customerId")

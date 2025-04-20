@@ -1,5 +1,7 @@
 import AddressDetails from "@profile/containers/AdressDetails/AddressDetails";
+import VerificationPage from "components/Verification/VerificationPage";
 import { Route, Routes } from "react-router-dom";
+import NoMatch from "routes/NoMatch";
 
 import ContactLandingPage from "../containers/ContactLandingPage";
 import HistoryBrandLandingPage from "../containers/HistoryBrandLandingPage";
@@ -15,7 +17,7 @@ import EmptyCart from "../containers/ShoppingCart/EmptyCart/EmptyCart";
 import PaymentPage from "../containers/ShoppingCart/PaymentPage/PaymentPage";
 import WorkUsLandingPage from "../containers/WorkUsLandingPage";
 
-function MainRoutes() {
+const MainRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomeLandingPage />} />
@@ -32,8 +34,10 @@ function MainRoutes() {
       <Route path="/questions" element={<QuestionsLandingPage />} />
       <Route path="/work-us" element={<WorkUsLandingPage />} />
       <Route path="/address-details" element={<AddressDetails />} />
+      <Route path="/verify" element={<VerificationPage />} />
+      <Route path="*" element={<NoMatch />} />
     </Routes>
   );
-}
+};
 
 export default MainRoutes;
