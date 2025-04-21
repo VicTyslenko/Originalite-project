@@ -1,5 +1,6 @@
 import { ThemeProvider } from "@mui/material/styles";
 
+import { AppContainer } from "globalStyles";
 import { Toaster } from "react-hot-toast";
 
 import Footer from "./components/Footer/Footer";
@@ -10,10 +11,12 @@ import theme from "./theme";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <AppRoutes />
-      <Footer />
-      <Toaster position="top-center" reverseOrder={true} />
+      <AppContainer>
+        <Header />
+        <AppRoutes />
+        <Footer />
+        <Toaster position="top-center" reverseOrder={true} />
+      </AppContainer>
     </ThemeProvider>
   );
 }

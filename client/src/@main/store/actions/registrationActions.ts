@@ -1,17 +1,20 @@
 import type { RegisterProps } from "@main/containers/RegisterForm/models";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
-import type { UserModels } from "shared/models/user.models";
 
 import axiosInstance from "../../../services/api/axios";
 
-export const registerFetchData = createAsyncThunk<UserModels, RegisterProps>(
+type ResponseData = {
+  success: boolean;
+  message: string;
+};
+
+export const registerFetchData = createAsyncThunk<ResponseData, RegisterProps>(
   "register/actionFetchData",
-  async (params,{ rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.post("/customers/", {
         ...params,
-       
       });
       return data;
     } catch (err) {

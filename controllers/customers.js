@@ -64,11 +64,10 @@ exports.createCustomer = (req, res) => {
           newCustomer
             .save()
             .then(async (customer) => {
-              //here
               try {
                 const emailToken = jwt.sign(
                   {
-                    email: userData.email,
+                    email: customer.email,
                   },
                   process.env.NODEMAILER_PASSWORD,
                   { expiresIn: "1d" }

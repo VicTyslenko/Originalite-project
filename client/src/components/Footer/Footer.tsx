@@ -3,8 +3,6 @@ import { Container, Grid } from "@mui/material";
 import { ContainerWrapper, ContentWrapp, LinkContainer, StyledLink, StyledText } from "./Footer.styles";
 
 function Footer() {
-  // const matches = useMediaQuery('(min-width:969px)');
-
   return (
     <ContainerWrapper>
       <Container maxWidth="lg">
