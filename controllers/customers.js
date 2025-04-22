@@ -89,26 +89,7 @@ exports.createCustomer = (req, res) => {
                 console.log(err);
               }
             })
-            // .then((customer) => {
-            //   const payload = {
-            //     id: customer.id,
-            //     firstName: customer.firstName,
-            //     lastName: customer.lastName,
-            //     isAdmin: customer.isAdmin,
-            //     email: customer.email,
-            //     address: customer.address,
-            //     telephone: customer.telephone,
-            //   }; // Create JWT Payload
 
-            //   // Sign Token
-            //   // jwt.sign(payload, keys.secretOrKey, { expiresIn: 36000 }, (err, token) => {
-            //   //   res.json({
-            //   //     ...customer,
-            //   //     success: true,
-            //   //     token: "Bearer " + token,
-            //   //   });
-            //   // });
-            // })
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,
@@ -122,6 +103,31 @@ exports.createCustomer = (req, res) => {
         message: `Error happened on server: "${err}" `,
       })
     );
+};
+
+exports.resendEmail = async (req, res) => {
+  const userEmail = req.body.email;
+
+  try {
+    const customer = await Customer.findOne({ email: userEmail });
+
+    if (!customer) return res.status(404).json("Customer not found");
+    const emailToken = jwt.sign({ email: customer.email }, process.env.NODEMAILER_PASSWORD, { expiresIn: "1d" });
+
+    const confirmLink = `http://localhost:3000/verify?token=${emailToken}`;
+
+    await sendMail(
+      customer.email,
+      "Confirm your email",
+      `<h2>Hi ${customer.firstName}</h2>
+      <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
+    );
+
+    res.json({ message: `The link to ${customer.email} was sent successfully` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to send confirmation email" });
+  }
 };
 
 // Controller to verify the customer by email
@@ -215,9 +221,8 @@ exports.refreshToken = async (req, res) => {
     const refreshToken = cookies.jwt;
 
     const foundUser = await Customer.findOne({ refreshToken });
-    console.log("found user", foundUser);
+
     if (!foundUser) return res.sendStatus(403); // Forbidden
-    console.log("refresh token", refreshToken);
 
     jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (err, decoded) => {
       if (err || foundUser.userName !== decoded.userName) return res.sendStatus(403);

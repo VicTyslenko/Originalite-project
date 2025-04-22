@@ -14,7 +14,7 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
 
   const navigate = useNavigate();
 
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const dataProducts = useStoreSelector(state => state.cart.data);
   const priceItem = dataProducts?.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);

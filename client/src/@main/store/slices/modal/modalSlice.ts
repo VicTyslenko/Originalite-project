@@ -6,6 +6,7 @@ const initialState: { modal: boolean } = {
 
 const modalReducer = createSlice({
   name: "modal",
+
   initialState,
 
   reducers: {

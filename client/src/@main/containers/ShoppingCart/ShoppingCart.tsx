@@ -22,7 +22,6 @@ import {
 
 function ShoppingCart() {
   const dispatch = useStoreDispatch();
-
   const [totalPrice, setTotalPrice] = useState(0);
   const cart = useStoreSelector(state => state.cart.data);
 
