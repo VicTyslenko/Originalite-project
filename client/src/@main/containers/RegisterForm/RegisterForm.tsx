@@ -3,11 +3,14 @@ import { Tab } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 
+import { resendLink } from "./utils";
+
 import { registerFetchData } from "../../store/actions/registrationActions";
+import PaymentModal from "../ShoppingCart/Modal/PaymentModal";
 import {
   ButtonWrappReg,
   ContainerWrapper,
@@ -27,6 +30,8 @@ const RegisterForm = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [open, setOpen] = useState(false);
+
   const currentTab = searchParams.get("tab") || "login";
 
   const { registrationError } = useFormLogin();
@@ -38,6 +43,11 @@ const RegisterForm = () => {
       searchParameters.set("tab", path);
       return searchParameters;
     });
+  };
+
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate("/");
   };
 
   return (
@@ -79,11 +89,11 @@ const RegisterForm = () => {
               validationSchema={validationRegisterSchema}
               onSubmit={async (values, { resetForm }) => {
                 const data = await dispatch(registerFetchData(values));
-                console.log("data", data);
+
                 if (data.meta.requestStatus === "rejected") return;
 
-                toast.success("Register success!");
-                navigate("/");
+                setOpen(true);
+
                 resetForm();
               }}
             >
@@ -170,6 +180,18 @@ const RegisterForm = () => {
                     <ButtonWrappReg>
                       <StyledButtonReg type="submit">Register</StyledButtonReg>
                     </ButtonWrappReg>
+
+                    {open && (
+                      <PaymentModal
+                        open={open}
+                        close={() => resendLink(props.values.email)}
+                        text="We sent you a link, please, verify your email."
+                        confirm={handleModalClose}
+                        actions
+                        confirmText="Continue to main page"
+                        cancelText="Recend email"
+                      />
+                    )}
                   </form>
                 </LoginWrapperReg>
               )}

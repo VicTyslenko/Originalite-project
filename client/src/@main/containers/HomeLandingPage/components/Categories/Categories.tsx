@@ -8,8 +8,8 @@ import {
   GridItem,
   ImageText,
   ImageWrap,
-} from "./Categories.styles.ts";
-import { itemData } from "./data.ts";
+} from "./Categories.styles";
+import { itemData } from "./data";
 
 function Categories() {
   return (

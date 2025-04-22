@@ -12,6 +12,7 @@ const {
   getCustomers,
   refreshToken,
   verifyCustomer,
+  resendEmail,
 } = require("../controllers/customers");
 
 // @route   POST /customers
@@ -20,6 +21,8 @@ const {
 router.post("/", createCustomer);
 
 router.get("/", getCustomers);
+
+router.post("/resend-email", resendEmail);
 
 router.get("/verify/:token", verifyCustomer);
 // @route   POST /customers/login
