@@ -19,6 +19,7 @@ export const useLogout = () => {
       dispatch(clearDataAuth());
       dispatch(clearCart());
 
+      localStorage.setItem("keepSignedIn", String(false));
       navigate("/");
     } catch (error) {
       console.error(error);

@@ -14,6 +14,8 @@ function Main() {
   const { user } = useUserData();
   const isLoggedOut = useStoreSelector(state => state.auth.isLoggedOut);
 
+  const keepSignedIn = localStorage.getItem("keepSignedIn") === "true";
+
   useEffect(() => {
     if (user) {
       dispatch(getCart());
@@ -21,7 +23,7 @@ function Main() {
   }, [user]);
 
   useEffect(() => {
-    if (!user && !isLoggedOut) {
+    if (!user && !isLoggedOut && keepSignedIn) {
       (async () => {
         try {
           const token = await refreshToken();
@@ -32,7 +34,7 @@ function Main() {
         }
       })();
     }
-  }, [user, isLoggedOut]);
+  }, [user, isLoggedOut, keepSignedIn]);
 
   return <MainRoutes />;
 }
