@@ -13,6 +13,7 @@ const {
   refreshToken,
   verifyCustomer,
   resendEmail,
+  handleLogout,
 } = require("../controllers/customers");
 
 // @route   POST /customers
@@ -29,6 +30,7 @@ router.get("/verify/:token", verifyCustomer);
 // @desc    Login Customer / Returning JWT Token
 // @access  Public
 
+router.post("/logout", handleLogout);
 router.post("/login", loginCustomer);
 // @route  GET /
 // @desc   Return access token

@@ -23,9 +23,5 @@ router.delete("/:productId", passport.authenticate("jwt", { session: false }), d
 
 router.delete("/product/:productId", passport.authenticate("jwt", { session: false }), decreaseCartProductQuantity);
 
-router.get(
-  "/",
-  passport.authenticate("jwt", {session: false}),
-  getCart
-);
+router.get("/", passport.authenticate("jwt", { session: false }), getCart);
 module.exports = router;

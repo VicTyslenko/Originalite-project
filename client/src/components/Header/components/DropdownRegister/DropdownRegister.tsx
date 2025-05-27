@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { DefaultTypography } from "shared/components/typography/default-typography";
 import type { RegisterProps } from "shared/models/auth.models";
 
-import { actionFetchTempAuth } from "../../../../@main/store/actions/authActions";
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
 import {
   BoxWrapp,
@@ -33,9 +32,13 @@ function DropdownRegister({ active }: { active: Height }) {
   const navigate = useNavigate();
 
   const handleFormSubmit = async (values: RegisterProps, resetForm: () => void) => {
-    const data = values.keepSignedIn
-      ? await dispatch(actionFetchAuth(values))
-      : await dispatch(actionFetchTempAuth(values));
+    if (values.keepSignedIn) {
+      localStorage.setItem("keepSignedIn", "true");
+    } else {
+      localStorage.removeItem("keepSignedIn");
+    }
+
+    const data = await dispatch(actionFetchAuth(values));
 
     if (data.meta.requestStatus === "fulfilled") {
       toast.success("Login successful!");
@@ -85,6 +88,7 @@ function DropdownRegister({ active }: { active: Height }) {
                       helperText={props.touched.password && props.errors.password}
                     />
                   </InputsWrapp>
+
                   <CheckBoxWrapp>
                     <Checkbox value={props.values.keepSignedIn} onChange={props.handleChange} name="keepSignedIn" />
                     <DefaultTypography>Keep me signed in</DefaultTypography>

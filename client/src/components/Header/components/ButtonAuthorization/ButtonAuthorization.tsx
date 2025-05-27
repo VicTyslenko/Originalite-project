@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const ButtonAuthorization = ({ handleDataSetEvent }: Props) => {
-  const user = useUserData();
+  const {user} = useUserData();
 
   if (user) {
     return (

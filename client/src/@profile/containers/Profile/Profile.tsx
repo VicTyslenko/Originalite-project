@@ -6,22 +6,14 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Container, Grid, Typography } from "@mui/material";
 import { useUserData } from "hooks/use-user-data";
-import { useNavigate } from "react-router-dom";
 import { useLogout } from "shared/hooks/hooks";
 
 import * as S from "./StyledUserProfile";
 
 function Profile() {
-  const navigate = useNavigate();
+  const { user } = useUserData();
 
-  const user = useUserData();
-
-  const { singOut } = useLogout();
-
-  const handleLogout = () => {
-    singOut();
-    navigate("/");
-  };
+  const { signOut } = useLogout();
 
   return (
     <Container maxWidth="lg" sx={{ mt: "150px", mb: "100px" }}>
@@ -91,7 +83,7 @@ function Profile() {
           </Grid>
         )}
         <Grid item xs={6}>
-          <S.StyledButton onClick={() => handleLogout()}>
+          <S.StyledButton onClick={() => signOut()}>
             <S.FlexWrapp>
               <ExitToAppIcon fontSize="large" />
               <div className="content">

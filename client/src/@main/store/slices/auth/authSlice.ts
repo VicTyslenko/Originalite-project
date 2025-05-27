@@ -5,13 +5,13 @@ import type { UserModels } from "shared/models/user.models";
 
 import { actionFetchAuth } from "../../actions/authActions";
 import { updateCustomer } from "../../actions/customersActions";
-import { registerFetchData } from "../../actions/registrationActions";
 import { type InitialStateProps } from "./models";
 
 const initialState: InitialStateProps = {
   data: null,
   status: "loading",
   error: null,
+  isLoggedOut: false,
 };
 
 const authReducer = createSlice({
@@ -21,28 +21,16 @@ const authReducer = createSlice({
     clearDataAuth(state) {
       state.data = null;
       state.error = null;
+      state.isLoggedOut = true;
     },
 
     setAuth(state, action: PayloadAction<UserModels>) {
       state.data = action.payload;
+      state.isLoggedOut = false;
     },
   },
 
   extraReducers: builder => {
-    builder.addCase(registerFetchData.pending, state => {
-      state.status = "loading";
-      state.data = null;
-    });
-    builder.addCase(registerFetchData.fulfilled, (state, action: PayloadAction<UserModels>) => {
-      state.status = "loaded";
-      state.data = action.payload;
-    });
-    builder.addCase(registerFetchData.rejected, (state, { payload }) => {
-      state.status = "error";
-
-      state.error = payload as AxiosError;
-    });
-
     builder.addCase(actionFetchAuth.pending, state => {
       state.status = "loading";
       state.data = null;
@@ -50,6 +38,7 @@ const authReducer = createSlice({
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
       state.data = action.payload;
+      state.isLoggedOut = false;
     });
 
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {

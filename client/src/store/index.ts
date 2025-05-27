@@ -2,7 +2,6 @@ import cart from "@main/store/slices/cart/cartSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import sessionStorage from "redux-persist/lib/storage/session";
 
 import newProduct from "../@editor/store/slices/newProductSlice";
 import users from "../@editor/store/slices/usersSlice";
@@ -14,8 +13,6 @@ import modal from "../@main/store/slices/modal/modalSlice";
 import orders from "../@main/store/slices/orders/ordersSlice";
 import productList from "../@main/store/slices/product-list/productListSlice";
 import product from "../@main/store/slices/product/productSlice";
-import registration from "../@main/store/slices/registration/registrationSlice";
-import tempAuth from "../@main/store/slices/temp-auth/tempAuthSlice";
 import wishlist from "../@main/store/slices/wishlist/wishlistSlice";
 
 const persistConfig = {
@@ -23,17 +20,10 @@ const persistConfig = {
   storage,
   blacklist: ["filters", "product", "address", "tempAuth", "orders", "registration", "auth"],
 };
-
-const persistConfigTempAuth = {
-  key: "tempAuth",
-  storage: sessionStorage,
-  whitelist: ["tempData"],
-};
-
-const persistConfigRegistration = {
-  key: "registration ",
+const persistAuth = {
+  key: "auth",
   storage,
-  whitelist: ["data"],
+  whitelist: ["isLoggedOut"],
 };
 
 const persistConfigOrders = {
@@ -42,18 +32,14 @@ const persistConfigOrders = {
   whitelist: ["data"],
 };
 
-const persistedTempAuthReducer = persistReducer(persistConfigTempAuth, tempAuth);
-
-const persistedRgistrationReducer = persistReducer(persistConfigRegistration, registration);
-
 const persistedOrdersReducer = persistReducer(persistConfigOrders, orders);
+const persistAuthReducer = persistReducer(persistAuth, auth);
 
 const rootReduser = combineReducers({
   productList,
   product,
-  auth,
-  tempAuth: persistedTempAuthReducer,
-  registration: persistedRgistrationReducer,
+  auth: persistAuthReducer,
+
   cart,
   modal,
   wishlist,

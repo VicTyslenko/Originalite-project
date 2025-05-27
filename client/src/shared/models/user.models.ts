@@ -10,7 +10,6 @@ export interface UserData {
   password: string;
   telephone?: string;
   isAdmin: boolean;
-  // _id: string;
   id: string;
   date?: string | Date;
 }
@@ -18,5 +17,4 @@ export interface UserData {
 export interface UserModels {
   success?: boolean;
   accessToken: string;
-  // data: UserData | null;
 }

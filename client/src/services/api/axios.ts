@@ -19,7 +19,6 @@ const privateInstance = axios.create({
 privateInstance.interceptors.request.use(
   config => {
     const { store } = require("../../store/index");
-
     const token = store.getState().auth.data?.accessToken;
 
     if (token && !config.headers["Authorization"]) {
@@ -45,4 +44,9 @@ privateInstance.interceptors.response.use(
   },
 );
 
-export default privateInstance;
+const getAxiosInstance = () => {
+  const keepSignedIn = localStorage.getItem("keepSignedIn");
+  return keepSignedIn ? privateInstance : publicInstance;
+};
+
+export default getAxiosInstance();

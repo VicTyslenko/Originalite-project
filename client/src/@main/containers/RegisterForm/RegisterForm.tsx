@@ -21,7 +21,6 @@ import {
   StyledButtonReg,
 } from "./StyledRegisterForm";
 import { LoginForm } from "./extensions/LoginForm";
-import { useFormLogin } from "./hooks";
 import type { RegisterProps } from "./models";
 import { validationRegisterSchema } from "./validation";
 
@@ -33,8 +32,6 @@ const RegisterForm = () => {
   const [open, setOpen] = useState(false);
 
   const currentTab = searchParams.get("tab") || "login";
-
-  const { registrationError } = useFormLogin();
 
   const navigate = useNavigate();
 
@@ -174,9 +171,6 @@ const RegisterForm = () => {
                       />
                     </InputsWrappReg>
 
-                    <div className="flex-error">
-                      {registrationError && <span className="message">{Object.values(registrationError)}</span>}
-                    </div>
                     <ButtonWrappReg>
                       <StyledButtonReg type="submit">Register</StyledButtonReg>
                     </ButtonWrappReg>
