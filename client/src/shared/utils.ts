@@ -23,6 +23,7 @@ export const refreshToken = async () => {
   const authData = store.getState().auth.data;
   try {
     const response = await publicInstance.get("customers/refresh");
+
     if (response.data) {
       const accessToken = response.data.accessToken;
       store.dispatch(

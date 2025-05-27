@@ -19,7 +19,6 @@ const privateInstance = axios.create({
 privateInstance.interceptors.request.use(
   config => {
     const { store } = require("../../store/index");
-
     const token = store.getState().auth.data?.accessToken;
 
     if (token && !config.headers["Authorization"]) {

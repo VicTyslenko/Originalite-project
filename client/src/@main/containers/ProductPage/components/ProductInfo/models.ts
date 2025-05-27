@@ -1,8 +1,13 @@
 export type ProductInfoProps = {
   id: string;
   name: string;
-  productId: string;
+  productUrl: string;
   currentPrice: string;
-  colors: string;
-  sizes: string;
+  colors: {
+    color: string;
+    hash: string;
+  }[];
+  sizes: string[];
+  productDetails: string;
+  productDelivery: string;
 };

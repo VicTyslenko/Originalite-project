@@ -1,26 +1,31 @@
 import { clearDataAuth } from "@main/store/slices/auth/authSlice";
 import { clearCart } from "@main/store/slices/cart/cartSlice";
-import { clearDataRegister } from "@main/store/slices/registration/registrationSlice";
 import { clearTempAuth } from "@main/store/slices/temp-auth/tempAuthSlice";
 import { type Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
-
-import { LocalStorage } from "shared/utils";
+import { useNavigate } from "react-router-dom";
+import { publicInstance } from "services/api/axios";
 
 export const useLogout = () => {
   const dispatch = useStoreDispatch();
 
-  const singOut = () => {
-    dispatch(clearTempAuth());
-    dispatch(clearDataAuth());
-    dispatch(clearCart());
-    dispatch(clearDataRegister());
+  const navigate = useNavigate();
 
-    LocalStorage.deleteAuthToken();
-    LocalStorage.deleteTempAuthToken();
+  const signOut = async () => {
+    try {
+      await publicInstance.post("customers/logout");
+
+      dispatch(clearTempAuth());
+      dispatch(clearDataAuth());
+      dispatch(clearCart());
+
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  return { singOut };
+  return { signOut };
 };
 
 export const useGetMobileSize = (size: number | Breakpoint) => {

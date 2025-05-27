@@ -3,18 +3,11 @@ const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const sendMail = require("../commonHelpers/mailSender");
 const keys = require("../config/keys");
-
 const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(10000000, 99999999);
-
 const { generateAccessToken, generateRefreshToken } = require("../utils/tokens");
-// Load Customer model
 const Customer = require("../models/Customer");
-
-// Load validation helper to validate all received fields
 const validateRegistrationForm = require("../validation/validationHelper");
-
-// Load helper for creating correct query to save customer to DB
 const queryCreator = require("../commonHelpers/queryCreator");
 
 // Controller for creating customer and saving to DB
@@ -242,6 +235,33 @@ exports.refreshToken = async (req, res) => {
     console.log("Error in refreshToken handler:", err);
     res.sendStatus(500); // Internal server error
   }
+};
+
+exports.handleLogout = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies) return res.sendStatus(203); // not found
+
+  const refreshToken = cookies.jwt;
+
+  const foundUser = await Customer.findOne({ refreshToken });
+
+  if (!foundUser) {
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+
+    return res.sendStatus(204);
+  }
+
+  foundUser.refreshToken = "";
+  await foundUser.save();
+  //Clear cookie
+
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    sameSite: "None",
+    secure: true,
+  });
+
+  res.sendStatus(204);
 };
 
 exports.getCustomers = async (req, res) => {
