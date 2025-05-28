@@ -1,5 +1,4 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { RootState } from "store";
 
 import {
   deleteProductFromWishlist as fetchProductFromWishlist,
@@ -8,39 +7,18 @@ import {
 } from "../../../services/api/wishlistApi";
 import type { WishlistProps } from "../slices/wishlist/models";
 
-export const getWishlist = createAsyncThunk<WishlistProps, void, { state: RootState }>(
-  "wishlist/getWishlist",
-  async (_, { getState }) => {
-    const { auth } = getState();
-    const token = auth.data?.accessToken;
-    if (token) {
-      const { data } = await fetchWishlist({
-        config: {
-          headers: {
-            Authorization: token,
-          },
-        },
-      });
+export const getWishlist = createAsyncThunk<WishlistProps, void>("wishlist/getWishlist", async () => {
+  const { data } = await fetchWishlist();
 
-      return data;
-    }
-  },
-);
+  return data;
+});
 
-export const addProductToWishlist = createAsyncThunk<WishlistProps, string, { state: RootState }>(
+export const addProductToWishlist = createAsyncThunk<WishlistProps, string>(
   "wishlist/addProductToWishlist",
-  async (id, { getState }) => {
-    const { auth } = getState();
-    const token = auth.data?.accessToken;
-
+  async id => {
     try {
       const { data } = await fetchProductToWishlist({
         id,
-        config: {
-          headers: {
-            Authorization: token,
-          },
-        },
       });
       return data;
     } catch (error) {
@@ -50,20 +28,11 @@ export const addProductToWishlist = createAsyncThunk<WishlistProps, string, { st
 );
 export type WishlistResponse = WishlistProps | { products: [] };
 
-export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, string, { state: RootState }>(
+export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, string>(
   "wishlist/deleteProductFromWishlist",
-  async (id, { getState }) => {
-    const { auth } = getState();
-
-    const token = auth.data?.accessToken;
-
+  async id => {
     const { data } = await fetchProductFromWishlist({
       id,
-      config: {
-        headers: {
-          Authorization: token,
-        },
-      },
     });
 
     return data;

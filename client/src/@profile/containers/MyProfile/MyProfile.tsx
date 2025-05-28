@@ -14,7 +14,7 @@ import validationSchema from "./validation";
 function MyProfile() {
   const dispatch = useStoreDispatch();
 
-  const user = useUserData();
+  const { user } = useUserData();
 
   const errorMessage = useStoreSelector(state => state.auth.error);
 
@@ -56,7 +56,7 @@ function MyProfile() {
                   placeholder="Email"
                   value={props.values.email}
                   helperText={props.touched.email && props.errors.email}
-                  error={props.touched.email && props.errors.email}
+                  error={Boolean(props.touched.email && props.errors.email)}
                   onChange={props.handleChange}
                   variant="standard"
                   sx={{ mb: "6px" }}
@@ -114,7 +114,7 @@ function MyProfile() {
                   placeholder="dd-mm-yyyy"
                   variant="standard"
                   helperText={props.touched.birthday && props.errors.birthday}
-                  error={props.errors.birthday && Boolean(props.errors.birthday)}
+                  error={Boolean(props.errors.birthday && props.errors.birthday)}
                   sx={{ mb: "6px" }}
                 />
 
