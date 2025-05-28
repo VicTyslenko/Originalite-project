@@ -1,21 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import type { RootState } from "store";
 
 import axiosInstance from "../../../../services/api/axios";
 import type { OrderModel } from "../../slices/orders/models";
 import type { OrdersParamsProps, UpdateOrderProps } from "./models";
 
-export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, { state: RootState }>(
+export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps>(
   "orders/actionFetchData",
-  async (params, { rejectWithValue, getState }) => {
-    const { auth } = getState();
-
-    const token = auth?.data?.accessToken;
-
+  async (params, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/orders/", params, {
-        headers: token ? { Authorization: token } : {},
-      });
+      const { data } = await axiosInstance.post("/orders/", params);
 
       return data;
     } catch (err: any) {
@@ -24,17 +17,11 @@ export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, {
   },
 );
 
-export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { state: RootState }>(
+export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps>(
   "orders/actionFetchData",
-  async ({ orderId, params }, { getState, rejectWithValue }) => {
-    const { auth } = getState();
-
-    const token = auth?.data?.accessToken;
-
+  async ({ orderId, params }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.put(`/orders/${orderId}`, params, {
-        headers: token ? { Authorization: token } : {},
-      });
+      const { data } = await axiosInstance.put(`/orders/${orderId}`, params);
 
       return data;
     } catch (error: any) {

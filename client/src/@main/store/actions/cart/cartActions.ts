@@ -30,8 +30,6 @@ export const addProductToCart = createAsyncThunk<CartProps, string, { state: Roo
   async (id, { getState }) => {
     const { auth, product, cart } = getState();
 
-    const token = auth.data?.accessToken;
-
     if (auth.data !== null) {
       const { data } = await fetchProductToCart({
         id,
@@ -39,11 +37,6 @@ export const addProductToCart = createAsyncThunk<CartProps, string, { state: Roo
         data: {
           size: product.currentSize,
           color: product.currentColor,
-        },
-        config: {
-          headers: {
-            Authorization: token,
-          },
         },
       });
 
@@ -71,20 +64,12 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
   async (id, { getState }) => {
     const { auth, cart } = getState();
 
-    const token = auth.data?.accessToken;
-
     const productInCart = cart.data.find(item => item.product._id === id);
 
     if (productInCart && productInCart.cartQuantity > 1) {
       if (auth.data !== null) {
         const { data } = await fetchDecreaseQuantity({
           id,
-
-          config: {
-            headers: {
-              Authorization: token,
-            },
-          },
         });
 
         return data;
@@ -105,16 +90,9 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
   async (id, { getState }) => {
     const { auth, cart } = getState();
 
-    const token = auth.data?.accessToken;
-
     if (auth.data !== null) {
       const { data } = await fetchProductFromCart({
         id,
-        config: {
-          headers: {
-            Authorization: token,
-          },
-        },
       });
 
       return data;
@@ -129,27 +107,11 @@ type DeleteCartProps = {
   message: string;
 };
 
-export const deleteCart = createAsyncThunk<DeleteCartProps, void, { state: RootState }>(
-  "cart/deleteCart",
-  async (_, { getState, rejectWithValue }) => {
-    const { auth } = getState();
-
-    const token = auth.data?.accessToken;
-
-    if (!token) {
-      return rejectWithValue("Authorization token is missing");
-    }
-    try {
-      const { data } = await fetchDeleteCart({
-        config: {
-          headers: {
-            Authorization: token,
-          },
-        },
-      });
-      return data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  },
-);
+export const deleteCart = createAsyncThunk<DeleteCartProps, void>("cart/deleteCart", async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await fetchDeleteCart();
+    return data;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+});

@@ -14,13 +14,15 @@ export const useAutoLogin = () => {
 
   useEffect(() => {
     if (!user && !isLoggedOut && keepSignedIn) {
-      (async () => {
+      async function refreshIfNeedeed() {
         try {
           await refreshToken();
         } catch (error) {
           console.error(error);
         }
-      })();
+      }
+
+      refreshIfNeedeed();
     }
   }, [user, isLoggedOut, keepSignedIn]);
 };
