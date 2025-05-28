@@ -8,9 +8,9 @@ import type { OrdersParamsProps, UpdateOrderProps } from "./models";
 export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, { state: RootState }>(
   "orders/actionFetchData",
   async (params, { rejectWithValue, getState }) => {
-    const { auth, tempAuth } = getState();
+    const { auth } = getState();
 
-    const token = auth?.data?.accessToken || tempAuth.tempData?.accessToken;
+    const token = auth?.data?.accessToken;
 
     try {
       const { data } = await axiosInstance.post("/orders/", params, {
@@ -27,9 +27,9 @@ export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps, {
 export const updateOrder = createAsyncThunk<OrderModel, UpdateOrderProps, { state: RootState }>(
   "orders/actionFetchData",
   async ({ orderId, params }, { getState, rejectWithValue }) => {
-    const { auth, tempAuth } = getState();
+    const { auth } = getState();
 
-    const token = auth?.data?.accessToken || tempAuth.tempData?.accessToken;
+    const token = auth?.data?.accessToken;
 
     try {
       const { data } = await axiosInstance.put(`/orders/${orderId}`, params, {

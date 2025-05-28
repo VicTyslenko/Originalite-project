@@ -11,8 +11,8 @@ import type { WishlistProps } from "../slices/wishlist/models";
 export const getWishlist = createAsyncThunk<WishlistProps, void, { state: RootState }>(
   "wishlist/getWishlist",
   async (_, { getState }) => {
-    const { auth, tempAuth } = getState();
-    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
+    const { auth } = getState();
+    const token = auth.data?.accessToken;
     if (token) {
       const { data } = await fetchWishlist({
         config: {
@@ -30,8 +30,8 @@ export const getWishlist = createAsyncThunk<WishlistProps, void, { state: RootSt
 export const addProductToWishlist = createAsyncThunk<WishlistProps, string, { state: RootState }>(
   "wishlist/addProductToWishlist",
   async (id, { getState }) => {
-    const { auth, tempAuth } = getState();
-    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
+    const { auth } = getState();
+    const token = auth.data?.accessToken;
 
     try {
       const { data } = await fetchProductToWishlist({
@@ -53,9 +53,9 @@ export type WishlistResponse = WishlistProps | { products: [] };
 export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, string, { state: RootState }>(
   "wishlist/deleteProductFromWishlist",
   async (id, { getState }) => {
-    const { auth, tempAuth } = getState();
+    const { auth } = getState();
 
-    const token = auth.data?.accessToken || tempAuth.tempData?.accessToken;
+    const token = auth.data?.accessToken;
 
     const { data } = await fetchProductFromWishlist({
       id,
@@ -65,7 +65,7 @@ export const deleteProductFromWishlist = createAsyncThunk<WishlistResponse, stri
         },
       },
     });
-    console.log("wishlist delete", data);
+
     return data;
   },
 );

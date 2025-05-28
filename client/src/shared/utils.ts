@@ -4,7 +4,6 @@ import { publicInstance } from "services/api/axios";
 
 export const LocalStorage = {
   deleteAuthToken: () => localStorage.removeItem("persist:auth"),
-  deleteTempAuthToken: () => sessionStorage.removeItem("persist:tempAuth"),
 };
 
 export const useGetMobileSize = (size: number | Breakpoint) => {

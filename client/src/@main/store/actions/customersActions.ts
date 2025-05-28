@@ -12,9 +12,9 @@ type ParamsProps = {
 export const updateCustomer = createAsyncThunk<UserModels, ParamsProps, { state: RootState }>(
   "customers/updateCustomer",
   async ({ _id, params }, { getState, rejectWithValue }) => {
-    const { auth, tempAuth } = getState();
+    const { auth } = getState();
 
-    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
+    const token = auth.data?.accessToken;
 
     try {
       const { data } = await axiosInstance.put(`/customers/${_id}`, params, {
@@ -32,9 +32,9 @@ export const updateCustomer = createAsyncThunk<UserModels, ParamsProps, { state:
 export const getCustomer = createAsyncThunk<UserModels, void, { state: RootState }>(
   "auth/actionFetchUserData",
   async (_, { getState, rejectWithValue }) => {
-    const { auth, tempAuth } = getState();
+    const { auth } = getState();
 
-    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
+    const token = auth.data?.accessToken;
 
     try {
       if (token) {
