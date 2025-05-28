@@ -1,5 +1,4 @@
 import { actionFetchAuth } from "@main/store/actions/authActions";
-import { actionFetchTempAuth } from "@main/store/actions/authActions";
 import { Checkbox } from "@mui/material";
 import { validationSchema } from "components/Header/components/DropdownRegister/validation";
 import { Form, Formik } from "formik";
@@ -35,9 +34,13 @@ export const LoginForm = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm }) => {
-          const data = values.keepSignedIn
-            ? await dispatch(actionFetchAuth(values))
-            : await dispatch(actionFetchTempAuth(values));
+          if (values.keepSignedIn) {
+            localStorage.setItem("keepSignedIn", "true");
+          } else {
+            localStorage.removeItem("keepSignedIn");
+          }
+
+          const data = await dispatch(actionFetchAuth(values));
 
           if (data.meta.requestStatus === "fulfilled") {
             navigate("/");
@@ -92,7 +95,7 @@ export const LoginForm = () => {
                 />
                 <p className="box-text">Keep me signed in</p>
               </CheckBoxWrapp>
-
+              Keep me signed in
               <ButtonWrapp>
                 <StyledButton type="submit">LOG IN</StyledButton>
               </ButtonWrapp>

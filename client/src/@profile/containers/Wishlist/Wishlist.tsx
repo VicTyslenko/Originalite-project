@@ -71,13 +71,13 @@ function Wishlist() {
     </Content>
   ));
 
-  const allPrices = wishList?.map(product => product.currentPrice);
+  // const allPrices = wishList?.map(product => product.currentPrice);
 
-  useEffect(() => {
-    if (allPrices.length) {
-      setTotalPrice(allPrices.reduce((a, b) => a + b, 0));
-    }
-  }, [allPrices]);
+  // useEffect(() => {
+  //   if (allPrices.length) {
+  //     setTotalPrice(allPrices.reduce((a, b) => a + b, 0));
+  //   }
+  // }, [allPrices]);
 
   return (
     <Container
@@ -87,7 +87,7 @@ function Wishlist() {
         marginBottom: "50px",
       }}
     >
-      {wishList.length > 0 ? (
+      {/* {wishList && wishList.length > 0 ? (
         <>
           {isLoading ? (
             <LoaderWrapp>
@@ -104,7 +104,7 @@ function Wishlist() {
         <Typography variant="h4" sx={{ mb: "141px", color: "black", display: "flex", justifyContent: "center" }}>
           Your wishlist is empty
         </Typography>
-      )}
+      )} */}
     </Container>
   );
 }

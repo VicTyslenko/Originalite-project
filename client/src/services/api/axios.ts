@@ -44,9 +44,4 @@ privateInstance.interceptors.response.use(
   },
 );
 
-const getAxiosInstance = () => {
-  const keepSignedIn = localStorage.getItem("keepSignedIn");
-  return keepSignedIn ? privateInstance : publicInstance;
-};
-
-export default getAxiosInstance();
+export default privateInstance;

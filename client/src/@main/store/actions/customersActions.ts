@@ -1,7 +1,6 @@
 import type { UpdateCustomerProps } from "@profile/containers/MyProfile/models";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { type UserModels } from "shared/models/user.models";
-import type { RootState } from "store";
 
 import axiosInstance from "../../../services/api/axios";
 
@@ -9,19 +8,11 @@ type ParamsProps = {
   params: UpdateCustomerProps;
   _id: string;
 };
-export const updateCustomer = createAsyncThunk<UserModels, ParamsProps, { state: RootState }>(
+export const updateCustomer = createAsyncThunk<UserModels, ParamsProps>(
   "customers/updateCustomer",
-  async ({ _id, params }, { getState, rejectWithValue }) => {
-    const { auth, tempAuth } = getState();
-
-    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
-
+  async ({ _id, params }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.put(`/customers/${_id}`, params, {
-        headers: {
-          Authorization: token,
-        },
-      });
+      const { data } = await axiosInstance.put(`/customers/${_id}`, params);
       return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -29,22 +20,12 @@ export const updateCustomer = createAsyncThunk<UserModels, ParamsProps, { state:
   },
 );
 
-export const getCustomer = createAsyncThunk<UserModels, void, { state: RootState }>(
+export const getCustomer = createAsyncThunk<UserModels, void>(
   "auth/actionFetchUserData",
-  async (_, { getState, rejectWithValue }) => {
-    const { auth, tempAuth } = getState();
-
-    const token = auth.data?.accessToken || tempAuth?.tempData?.accessToken;
-
+  async (_, { rejectWithValue }) => {
     try {
-      if (token) {
-        const { data } = await axiosInstance.get("/customers/me", {
-          headers: {
-            Authorization: token,
-          },
-        });
-        return data;
-      }
+      const { data } = await axiosInstance.get("/customers/me");
+      return data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }

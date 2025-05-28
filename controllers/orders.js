@@ -61,7 +61,7 @@ exports.placeOrder = async (req, res) => {
 
     // const productAvailibilityInfo = await productAvailibilityChecker(order.products);
 
-    ///////////////////////////temporary commented products availability checking
+    //temporary commented products availability checking
 
     // if (productAvailibilityInfo.productsAvailibilityStatus) {
     //   // res.json({

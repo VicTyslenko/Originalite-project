@@ -6,7 +6,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import { Container, Grid, Typography } from "@mui/material";
 import { useUserData } from "hooks/use-user-data";
-import { useLogout } from "shared/hooks/hooks";
+import { useLogout } from "shared/hooks/use-logout";
 
 import * as S from "./StyledUserProfile";
 

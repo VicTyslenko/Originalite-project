@@ -225,6 +225,7 @@ exports.deleteWishlist = (req, res, next) => {
 };
 
 exports.getWishlist = (req, res, next) => {
+
   Wishlist.findOne({ customerId: req.user.id })
     .populate('products')
     .populate('customerId')

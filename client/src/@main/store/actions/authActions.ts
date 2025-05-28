@@ -16,18 +16,3 @@ export const actionFetchAuth = createAsyncThunk<UserModels, LoginProps, { reject
     }
   },
 );
-// login user and save to session storage
-export const actionFetchTempAuth = createAsyncThunk<UserModels, LoginProps, { rejectValue: { message: string } }>(
-  "auth/actionFetchTempData",
-  async (params, { rejectWithValue }) => {
-    try {
-      const { data } = await axiosInstance.post("/customers/login", params);
-
-      return data;
-    } catch (err: any) {
-      return rejectWithValue(err.response.data);
-    }
-  },
-);
-
-
