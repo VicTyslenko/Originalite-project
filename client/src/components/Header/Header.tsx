@@ -31,7 +31,7 @@ function Header() {
   const rootEl = useRef<HTMLDivElement | null>(null);
 
   const modal = useStoreSelector(state => state.modal.modal);
-
+  
   const [dataMenu, setDataMenu] = useState<string>("");
 
   const handleDataSetEvent = (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
