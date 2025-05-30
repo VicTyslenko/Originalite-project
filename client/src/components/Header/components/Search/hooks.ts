@@ -35,38 +35,33 @@ export const useSearch = () => {
     setSearchedItems(filtered);
   };
 
+  const handleFilterNavigate = (navigateValue: string, categories: string | null = null) => {
+    dispatch(
+      setFilters({
+        categories,
+      }),
+    );
+
+    navigate(`store/${navigateValue}`);
+    dispatch(closeModal());
+    setInputValue("");
+    setSearchedItems([]);
+  };
+
   const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      searchedItems.forEach(i => {
-        console.log(i.name, i.parentId);
+      for (let i of searchedItems) {
         if (!i.name) {
-          dispatch(
-            setFilters({
-              categories: null,
-            }),
-          );
-          navigate(`store/${inputValue}`);
-          dispatch(closeModal());
-        } else if (i.name === inputValue) {
-          dispatch(
-            setFilters({
-              categories: inputValue,
-            }),
-          );
-          navigate(`store/woman`);
-          dispatch(closeModal());
+          handleFilterNavigate(inputValue);
+          break;
         } else if (i.parentId === "accessories") {
-          dispatch(
-            setFilters({
-              categories: i.name,
-            }),
-          );
-          navigate("store/accessories");
-          dispatch(closeModal());
+          handleFilterNavigate(i.parentId, inputValue);
+          break;
+        } else {
+          handleFilterNavigate(i.parentId, inputValue);
+          break;
         }
-      });
-      // setInputValue("");
-      // setSearchedItems([]);
+      }
     }
   };
 
