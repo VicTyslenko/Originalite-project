@@ -1,4 +1,5 @@
 import { deleteProductFromCart } from "@main/store/actions/cart/cartActions";
+import { closeModal } from "@main/store/slices/modal/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { Link } from "react-router-dom";
@@ -13,12 +14,16 @@ type Props = {
 export const ShoppingBagItem = ({ products }: Props) => {
   const dispatch = useStoreDispatch();
 
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+  };
+
   return products.map(
     ({ product }) =>
       product && (
         <S.ContentItem key={product._id}>
           <Link to={`product/${product.itemNo}`}>
-            <S.ImageWrapp className="image-wrapp">
+            <S.ImageWrapp className="image-wrapp" onClick={handleCloseModal}>
               <img className="image" src={product.imageUrls[0]} alt="" />
             </S.ImageWrapp>
           </Link>

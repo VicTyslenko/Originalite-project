@@ -24,7 +24,7 @@ const PaymentPage = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
 
-  const user = useUserData();
+  const { user } = useUserData();
 
   const order = useStoreSelector(state => state.orders.data);
 

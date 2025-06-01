@@ -10,12 +10,5 @@ export const useUserData = () => {
 
   const decodedUser = !token ? null : jwt_decode<UserData>(token);
 
-  // useMemo prevents endless loop in the components when getting user
-
-  // const decodedUser = useMemo(() => {
-  //   if (!token) return null;
-  //   return jwt_decode<UserData>(token);
-  // }, [token]);
-
   return { user: decodedUser, isLoggedOut };
 };
