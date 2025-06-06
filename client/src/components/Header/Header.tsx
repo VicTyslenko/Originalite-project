@@ -31,7 +31,7 @@ function Header() {
   const rootEl = useRef<HTMLDivElement | null>(null);
 
   const modal = useStoreSelector(state => state.modal.modal);
-  
+
   const [dataMenu, setDataMenu] = useState<string>("");
 
   const handleDataSetEvent = (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLDivElement>) => {
@@ -121,7 +121,8 @@ function Header() {
         <WomanMenu active={modal && dataMenu === "menuWomen" ? "auto" : 0} />
         <Accessory active={modal && dataMenu === "menuAccessory" ? "auto" : 0} />
         <Search active={modal && dataMenu === "menuSearch" ? "auto" : 0} />
-        <ShoppingBag isShoppingBag={modal && dataMenu === "shoppingBag"} />
+
+        {modal && <ShoppingBag isShoppingBag={dataMenu === "shoppingBag"} />}
       </Container>
     </ContainerWrapper>
   );

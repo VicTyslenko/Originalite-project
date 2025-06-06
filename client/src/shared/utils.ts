@@ -1,4 +1,6 @@
 import { setAuth } from "@main/store/slices/auth/authSlice";
+import { clearDataAuth } from "@main/store/slices/auth/authSlice";
+import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { type Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 import { publicInstance } from "services/api/axios";
 
@@ -37,4 +39,21 @@ export const refreshToken = async () => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const userLogout = async () => {
+  const { store } = require("../store/index");
+  store.dispatch(clearCart());
+  store.dispatch(clearDataAuth());
+
+  localStorage.removeItem("root");
+  localStorage.removeItem("keepSignedIn");
+
+  try {
+    await publicInstance.post("customers/logout");
+  } catch (error) {
+
+  }
+
+  return "Hello!";
 };

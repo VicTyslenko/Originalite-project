@@ -28,9 +28,9 @@ export const useAutoLogin = () => {
     }
   }, [user, isLoggedOut, keepSignedIn]);
 
-  useEffect(() => {
-    (async function () {
-      await dispatch(getCart());
-    })();
-  }, [user]);
+  // useEffect(() => {
+  //   (async function () {
+  //     await dispatch(getCart());
+  //   })();
+  // }, [user]);
 };

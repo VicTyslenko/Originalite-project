@@ -1,3 +1,4 @@
+import { getCart } from "@main/store/actions/cart/cartActions";
 import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Container, Drawer } from "@mui/material";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
@@ -17,6 +18,7 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const dataProducts = useStoreSelector(state => state.cart.data);
+
   const priceItem = dataProducts?.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
 
   const handleBasketClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -32,6 +34,10 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
       setTotalPrice(priceItem.reduce((accum, item) => accum + item, 0));
     }
   }, [priceItem]);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dataProducts]);
 
   return (
     <>

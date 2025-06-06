@@ -1,10 +1,10 @@
 import axios from "axios";
 
-import { refreshToken } from "shared/utils";
+import { refreshToken, userLogout } from "shared/utils";
 
-const API_URI =
-  process.env.NODE_ENV === "production" ? "https://originalite-project.onrender.com/api" : "http://localhost:4444/api";
-
+// const API_URI =
+//   process.env.NODE_ENV === "production" ? "https://originalite-project.onrender.com/api" : "http://localhost:4444/api";
+const API_URI = "https://originalite-server.onrender.com";
 export const publicInstance = axios.create({
   baseURL: API_URI,
   withCredentials: true,
@@ -32,15 +32,25 @@ privateInstance.interceptors.request.use(
 privateInstance.interceptors.response.use(
   res => res,
   async error => {
+    console.log("Interceptor triggered", error?.response?.status);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;
-      const newToken = await refreshToken();
 
-      prevRequest.headers["Authorization"] = `Bearer ${newToken}`;
-      return privateInstance(prevRequest);
+      try {
+        const newToken = await refreshToken();
+
+        prevRequest.headers["Authorization"] = `Bearer ${newToken}`;
+        return privateInstance(prevRequest);
+      } catch (error) {
+        localStorage.removeItem("root");
+        localStorage.removeItem("keepSignedIn");
+
+        const test = await userLogout();
+        console.log(test);
+        return Promise.reject(error);
+      }
     }
-    return Promise.reject(error);
   },
 );
 

@@ -72,7 +72,7 @@ exports.createCustomer = (req, res) => {
                   customer.email,
                   "Confirm your email",
                   `<h2>Hi ${customer.firstName}</h2>
-       <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
+                   <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
                 );
                 res.json({
                   success: true,
@@ -192,7 +192,8 @@ exports.loginCustomer = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 60 * 1000,
+      // maxAge: 24 * 60 * 60 * 1000,
       secure: isProduction,
       secure: false,
       sameSite: isProduction ? "None" : "Lax",

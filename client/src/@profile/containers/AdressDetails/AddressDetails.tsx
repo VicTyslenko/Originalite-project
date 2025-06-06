@@ -31,7 +31,7 @@ const AddressDetails = () => {
 
     if (data.meta.requestStatus === "rejected") return;
 
-    dispatch(setAuth(data?.payload?.accessToken));
+    // dispatch(setAuth(data?.payload?.accessToken));
 
     console.log(data);
 
