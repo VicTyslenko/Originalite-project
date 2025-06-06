@@ -2,9 +2,9 @@ import axios from "axios";
 
 import { refreshToken, userLogout } from "shared/utils";
 
-// const API_URI =
-//   process.env.NODE_ENV === "production" ? "https://originalite-project.onrender.com/api" : "http://localhost:4444/api";
-const API_URI = "https://originalite-server.onrender.com";
+const API_URI =
+  process.env.NODE_ENV === "production" ? "https://originalite-server.onrender.com/api" : "http://localhost:4444/api";
+
 export const publicInstance = axios.create({
   baseURL: API_URI,
   withCredentials: true,
