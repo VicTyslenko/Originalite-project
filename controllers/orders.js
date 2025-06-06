@@ -1,9 +1,11 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
 const sendMail = require("../commonHelpers/mailSender");
+const jwt = require("jsonwebtoken");
 const validateOrderForm = require("../validation/validationHelper");
 const productAvailibilityChecker = require("../commonHelpers/productAvailibilityChecker");
 const subtractProductsFromCart = require("../commonHelpers/subtractProductsFromCart");
+const keys = require("../config/keys");
 const _ = require("lodash");
 
 const Customer = require("../models/Customer");
@@ -15,19 +17,32 @@ exports.placeOrder = async (req, res) => {
   try {
     const order = _.cloneDeep(req.body);
     order.orderNo = String(rand());
-    let cartProducts = [];
+
+    const customer = await Customer.findById(order.customerId);
+
+    if (!customer) {
+      return res.status(404).json({ message: `Customer with id ${order.customerId} not found` });
+    }
 
     if (req.body.address) {
       order.address = req.body.address;
+      customer.address = req.body.address;
     }
 
-    // if (req.body.shipping) {
-    //   order.shipping = req.body.shipping;
-    // }
+    if (req.body.telephone) {
+      customer.telephone = req.body.telephone;
+    }
 
-    // if (req.body.paymentInfo) {
-    //   order.paymentInfo = req.body.paymentInfo;
-    // }
+    await customer.save();
+
+    const accessTokenPayload = {
+      address: customer.address,
+      telephone: customer.telephone,
+    };
+
+    const accessToken = jwt.sign(accessTokenPayload, keys.secretOrKey, { expiresIn: 36000 });
+
+    let cartProducts = [];
 
     const isGuest = !req.body.customerId;
 
@@ -39,20 +54,6 @@ exports.placeOrder = async (req, res) => {
     order.products = isGuest ? req.body.products : cartProducts.length > 0 ? cartProducts : req.body.products;
     order.guest = isGuest;
 
-    // if (cartProducts.length > 0) {
-    //   order.products = _.cloneDeep(cartProducts);
-    // } else {
-    //   order.products = req.body.products;
-    // }
-
-    // if (req.body.customerId) {
-    //   order.customerId = req.body.customerId;
-
-    //   cartProducts = await subtractProductsFromCart(order.customerId);
-    // }
-
-    // order.guest = !req.body.customerId;
-
     if (!req.body.products && cartProducts.length < 1) {
       res.status(400).json({ message: "The list of products is required, but absent!" });
     }
@@ -60,8 +61,6 @@ exports.placeOrder = async (req, res) => {
     order.totalSum = order.products.reduce((sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity, 0);
 
     // const productAvailibilityInfo = await productAvailibilityChecker(order.products);
-
-    //temporary commented products availability checking
 
     // if (productAvailibilityInfo.productsAvailibilityStatus) {
     //   // res.json({
@@ -80,20 +79,6 @@ exports.placeOrder = async (req, res) => {
     if (!isValid) {
       return res.status(400).json(errors);
     }
-
-    // if (!letterSubject) {
-    //   return res.status(400).json({
-    //     message:
-    //       "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter."
-    //   });
-    // }
-
-    // if (!letterHtml) {
-    //   return res.status(400).json({
-    //     message:
-    //       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter."
-    //   });
-    // }
 
     // checking if the order details are the same and the status is 'pending', just update the order
     const { orderId } = req.body;
@@ -117,6 +102,7 @@ exports.placeOrder = async (req, res) => {
         message: "Existing order updated successfully.",
         order: existingOrder,
         orderId: existingOrder._id,
+        accessToken,
       });
     }
 
@@ -131,18 +117,7 @@ exports.placeOrder = async (req, res) => {
     newOrder
       .save()
       .then(async (order) => {
-        if (req.body.address || req.body.telephone) {
-          const customer = await Customer.findById(order.customerId);
-
-          if (customer) {
-            customer.address = req.body.address || customer.address;
-            customer.telephone = req.body.telephone || customer.telephone;
-
-            await customer.save();
-          }
-        }
-
-        const mailResult = await (subscriberMail, letterSubject, letterHtml, res);
+        const mailResult = await sendMail(subscriberMail, letterSubject, letterHtml, res);
 
         for (item of order.products) {
           const id = item.product._id;
@@ -152,11 +127,11 @@ exports.placeOrder = async (req, res) => {
         }
 
         // return orderId to save it on frontend to update the same order in the future
-        return res.status(201).json({ message: "Order created successfully", order, orderId: newOrder._id, mailResult });
+        return res.status(201).json({ message: "Order created successfully", order, orderId: newOrder._id, mailResult, accessToken });
       })
       .catch((err) =>
         res.status(400).json({
-          message: `Error happened on server: "${err}" `,
+          message: `Error happened on server when placing an order: ${err}`,
         })
       );
     // }
@@ -240,7 +215,7 @@ exports.updateOrder = (req, res, next) => {
         })
         .catch((err) =>
           res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+            message: `Error happened on server when updating an order "${err}" `,
           })
         );
     }

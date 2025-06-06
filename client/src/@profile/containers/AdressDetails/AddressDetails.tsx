@@ -1,4 +1,5 @@
 import type { SubmitProps } from "@main/store/actions/orders/models";
+import { setAuth } from "@main/store/slices/auth/authSlice";
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
@@ -14,8 +15,7 @@ import { ContentForm, StyledLink, Title } from "./StyledAddressDetails";
 const AddressDetails = () => {
   const dispatch = useStoreDispatch();
   const order = useStoreSelector(state => state.orders.data);
-  const user = useUserData();
-
+  const { user } = useUserData();
   const products = useStoreSelector(state => state.cart.data);
 
   const serverError = useStoreSelector(state => state.orders.error);
@@ -30,6 +30,10 @@ const AddressDetails = () => {
     );
 
     if (data.meta.requestStatus === "rejected") return;
+
+    // dispatch(setAuth(data?.payload?.accessToken));
+
+    console.log(data);
 
     toast.success("Address saved!");
     navigate("/payment");

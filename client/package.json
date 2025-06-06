@@ -46,7 +46,7 @@
 		"setup": "npm i --unsafe-perm",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"build-client": "cd client && npm install && npm run build",
+		"build-client": "npm install && npm run build",
 		"start:claster": "concurrently \"nodemon index.js\" \"react-scripts start\"",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",

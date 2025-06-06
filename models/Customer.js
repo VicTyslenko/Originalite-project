@@ -39,6 +39,7 @@ const CustomerSchema = new Schema(
     },
     birthday: {
       type: String,
+      default: "",
     },
     gender: {
       type: String,
@@ -53,6 +54,7 @@ const CustomerSchema = new Schema(
     },
     address: {
       type: String,
+      default: "",
     },
 
     enabled: {

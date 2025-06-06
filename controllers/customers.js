@@ -72,7 +72,7 @@ exports.createCustomer = (req, res) => {
                   customer.email,
                   "Confirm your email",
                   `<h2>Hi ${customer.firstName}</h2>
-       <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
+                   <p>Please confirm your email by clicking <a href="${confirmLink}">here</a>.</p>`
                 );
                 res.json({
                   success: true,
@@ -165,8 +165,9 @@ exports.loginCustomer = async (req, res) => {
 
     if (!isMatch) return res.status(400).json({ password: "Password incorrect" });
 
-    // Create JWT Payload
-    const payload = {
+    // Generating payloads for refresh token and access token
+
+    const accessTokenPayload = {
       id: customer.id,
       firstName: customer.firstName,
       lastName: customer.lastName,
@@ -174,11 +175,15 @@ exports.loginCustomer = async (req, res) => {
       email: customer.email,
       address: customer.address,
       telephone: customer.telephone,
+      birthday: customer.birthday,
     };
+    const accessToken = generateAccessToken(accessTokenPayload);
 
-    // Generate Tokens
-    const accessToken = generateAccessToken(payload);
-    const refreshToken = generateRefreshToken(payload);
+    const refreshTokenPayload = {
+      id: customer.id,
+      email: customer.email,
+    };
+    const refreshToken = generateRefreshToken(refreshTokenPayload);
 
     customer.refreshToken = refreshToken;
     await customer.save();
@@ -187,7 +192,8 @@ exports.loginCustomer = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 60 * 1000,
+      // maxAge: 24 * 60 * 60 * 1000,
       secure: isProduction,
       secure: false,
       sameSite: isProduction ? "None" : "Lax",
@@ -217,13 +223,13 @@ exports.refreshToken = async (req, res) => {
 
     if (!foundUser) return res.sendStatus(403); // Forbidden
 
-    jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (err, decoded) => {
-      if (err || foundUser.userName !== decoded.userName) return res.sendStatus(403);
+    jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (error) => {
+      if (error) return res.sendStatus(403); // Token not associated with any user
 
-      const { id, email, firstName, lastName, isAdmin } = decoded;
+      const { id, email, firstName, lastName, isAdmin, telephone, birthday, address } = foundUser;
 
       const accessToken = jwt.sign(
-        { id, email, firstName, lastName, isAdmin },
+        { id, email, firstName, lastName, isAdmin, telephone, birthday, address },
 
         process.env.SECRET_OR_KEY,
         { expiresIn: "15m" }
@@ -374,6 +380,7 @@ exports.editCustomerInfo = async (req, res) => {
 };
 
 // Controller for editing customer password
+//here go
 exports.updatePassword = (req, res) => {
   // Check Validation
   const { errors, isValid } = validateRegistrationForm(req.body);

@@ -80,10 +80,10 @@ function ShoppingCart() {
         <PaymentModal
           open={open}
           close={() => setOpen(false)}
-          text="Do you want to remove this item from your Shopping Bag?"
+          text="Do you want to remove this item?"
           actions
           customStyles={{
-            width: "600px",
+            minWidth: "450px",
           }}
           confirm={() => {
             setOpen(false);
@@ -95,6 +95,7 @@ function ShoppingCart() {
       )}
     </ContentWrapp>
   ));
+
   return (
     <Container
       maxWidth="lg"

@@ -121,7 +121,8 @@ function Header() {
         <WomanMenu active={modal && dataMenu === "menuWomen" ? "auto" : 0} />
         <Accessory active={modal && dataMenu === "menuAccessory" ? "auto" : 0} />
         <Search active={modal && dataMenu === "menuSearch" ? "auto" : 0} />
-        <ShoppingBag isShoppingBag={modal && dataMenu === "shoppingBag"} />
+
+        {modal && <ShoppingBag isShoppingBag={dataMenu === "shoppingBag"} />}
       </Container>
     </ContainerWrapper>
   );

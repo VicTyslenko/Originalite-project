@@ -1,6 +1,10 @@
+
+
 import MainRoutes from "./router";
 
 function Main() {
+
+
   return <MainRoutes />;
 }
 
