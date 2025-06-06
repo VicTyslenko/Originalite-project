@@ -122,7 +122,7 @@ function Header() {
         <Accessory active={modal && dataMenu === "menuAccessory" ? "auto" : 0} />
         <Search active={modal && dataMenu === "menuSearch" ? "auto" : 0} />
 
-        {modal && <ShoppingBag isShoppingBag={dataMenu === "shoppingBag"} />}
+        <ShoppingBag isShoppingBag={modal && dataMenu === "shoppingBag"} />
       </Container>
     </ContainerWrapper>
   );
