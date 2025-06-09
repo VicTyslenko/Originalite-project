@@ -192,11 +192,9 @@ exports.loginCustomer = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      maxAge: 60 * 1000,
-      // maxAge: 24 * 60 * 60 * 1000,
-      // secure: isProduction,
-      secure: true,
 
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: true,
       sameSite: isProduction ? "None" : "Lax",
     });
 
