@@ -35,10 +35,6 @@ function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
     }
   }, [priceItem]);
 
-  useEffect(() => {
-    dispatch(getCart());
-  }, [dataProducts]);
-
   return (
     <>
       <Drawer

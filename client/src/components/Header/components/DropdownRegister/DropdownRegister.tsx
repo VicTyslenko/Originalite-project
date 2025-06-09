@@ -20,6 +20,7 @@ import {
   InputItem,
   InputsWrapp,
   LinkItem,
+  LoaderWrapp,
   WrappAnimate,
 } from "./StyledDropdownRegister";
 import { validationSchema } from "./validation";
@@ -27,7 +28,7 @@ import { validationSchema } from "./validation";
 function DropdownRegister({ active }: { active: Height }) {
   const dispatch = useStoreDispatch();
 
-  const { errorMessage } = useFormLogin();
+  const { errorMessage, loader } = useFormLogin();
 
   const navigate = useNavigate();
 
@@ -116,6 +117,7 @@ function DropdownRegister({ active }: { active: Height }) {
           </FormPages>
         </BoxWrapp>
       </Container>
+      {loader && <LoaderWrapp>Logging in...</LoaderWrapp>}
     </WrappAnimate>
   );
 }

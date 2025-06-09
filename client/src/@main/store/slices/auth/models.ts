@@ -6,4 +6,5 @@ export interface InitialStateProps {
   error: AxiosError | null;
   data: UserModels | null;
   isLoggedOut: boolean;
+  loader: boolean;
 }

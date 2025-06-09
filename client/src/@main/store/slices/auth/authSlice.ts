@@ -11,6 +11,7 @@ const initialState: InitialStateProps = {
   data: null,
   status: "loading",
   error: null,
+  loader: false,
   isLoggedOut: false,
 };
 
@@ -34,16 +35,19 @@ const authReducer = createSlice({
     builder.addCase(actionFetchAuth.pending, state => {
       state.status = "loading";
       state.data = null;
+      state.loader = true;
     });
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
       state.data = action.payload;
       state.isLoggedOut = false;
+      state.loader = false;
     });
 
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
       state.status = "error";
       state.error = payload as AxiosError;
+      state.loader = true;
     });
 
     builder.addCase(updateCustomer.fulfilled, (state, action: PayloadAction<UserModels>) => {
