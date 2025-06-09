@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { refreshToken, userLogout } from "shared/utils";
+import { refreshToken } from "shared/utils";
 
 const API_URI =
   process.env.NODE_ENV === "production" ? "https://originalite-server.onrender.com/api" : "http://localhost:4444/api";

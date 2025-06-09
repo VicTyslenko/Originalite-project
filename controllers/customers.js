@@ -215,7 +215,7 @@ exports.refreshToken = async (req, res) => {
   try {
     const cookies = req.cookies;
 
-    if (!cookies?.jwt) return res.sendStatus(401); // No cookie = unauthorized
+    // if (!cookies?.jwt) return res.sendStatus(401); // No cookie = unauthorized
 
     const refreshToken = cookies.jwt;
 
@@ -235,7 +235,7 @@ exports.refreshToken = async (req, res) => {
         { expiresIn: "15m" }
       );
 
-      res.json({ accessToken });
+      res.json({ accessToken, cookies, refreshToken, });
     });
   } catch (err) {
     console.log("Error in refreshToken handler:", err);
@@ -245,7 +245,7 @@ exports.refreshToken = async (req, res) => {
 
 exports.handleLogout = async (req, res) => {
   const refreshToken = req.cookies?.jwt;
-  console.log(refreshToken);
+
   if (!refreshToken) return res.sendStatus(204);
 
   const foundUser = await Customer.findOne({ refreshToken });

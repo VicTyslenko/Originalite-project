@@ -41,19 +41,3 @@ export const refreshToken = async () => {
   }
 };
 
-export const userLogout = async () => {
-  const { store } = require("../store/index");
-  store.dispatch(clearCart());
-  store.dispatch(clearDataAuth());
-
-  localStorage.removeItem("root");
-  localStorage.removeItem("keepSignedIn");
-
-  try {
-    await publicInstance.post("customers/logout");
-  } catch (error) {
-
-  }
-
-  return "Hello!";
-};
