@@ -203,6 +203,7 @@ exports.loginCustomer = async (req, res) => {
     res.json({
       success: true,
       accessToken,
+      test: isProduction,
     });
   } catch (err) {
     console.error("Error in login:", err);
@@ -246,7 +247,7 @@ exports.refreshToken = async (req, res) => {
 
 exports.handleLogout = async (req, res) => {
   const refreshToken = req.cookies?.jwt;
-console.log(refreshToken)
+  console.log(refreshToken);
   if (!refreshToken) return res.sendStatus(204);
 
   const foundUser = await Customer.findOne({ refreshToken });

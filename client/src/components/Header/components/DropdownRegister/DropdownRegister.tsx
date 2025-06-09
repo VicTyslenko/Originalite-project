@@ -40,7 +40,7 @@ function DropdownRegister({ active }: { active: Height }) {
     }
 
     const data = await dispatch(actionFetchAuth(values));
-
+    console.log(data);
     if (data.meta.requestStatus === "fulfilled") {
       toast.success("Login successful!");
       dispatch(closeModal());
