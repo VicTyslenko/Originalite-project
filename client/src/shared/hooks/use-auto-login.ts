@@ -1,5 +1,3 @@
-import { getCart } from "@main/store/actions/cart/cartActions";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
 
@@ -9,7 +7,7 @@ import { useStoreSelector } from "./global/use-store-selector";
 
 export const useAutoLogin = () => {
   const { user } = useUserData();
-  const dispatch = useStoreDispatch();
+
   const isLoggedOut = useStoreSelector(state => state.auth.isLoggedOut);
 
   const keepSignedIn = localStorage.getItem("keepSignedIn") === "true";

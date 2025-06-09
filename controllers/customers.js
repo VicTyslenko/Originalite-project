@@ -194,8 +194,9 @@ exports.loginCustomer = async (req, res) => {
       httpOnly: true,
       maxAge: 60 * 1000,
       // maxAge: 24 * 60 * 60 * 1000,
-      secure: isProduction,
-      secure: false,
+      // secure: isProduction,
+      secure: true,
+
       sameSite: isProduction ? "None" : "Lax",
     });
 
@@ -244,10 +245,9 @@ exports.refreshToken = async (req, res) => {
 };
 
 exports.handleLogout = async (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies) return res.sendStatus(203); // not found
-
-  const refreshToken = cookies.jwt;
+  const refreshToken = req.cookies?.jwt;
+console.log(refreshToken)
+  if (!refreshToken) return res.sendStatus(204);
 
   const foundUser = await Customer.findOne({ refreshToken });
 
