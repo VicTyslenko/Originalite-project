@@ -32,7 +32,6 @@ privateInstance.interceptors.request.use(
 privateInstance.interceptors.response.use(
   res => res,
   async error => {
-    console.log("Interceptor triggered", error?.response?.status);
     const prevRequest = error?.config;
     if (error?.response?.status === 403 && !prevRequest?.sent) {
       prevRequest.sent = true;

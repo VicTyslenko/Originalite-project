@@ -12,6 +12,7 @@ import type { InitialProps } from "./models";
 
 const initialState: InitialProps = {
   data: [],
+  loader: false,
 };
 
 export const cartSlice = createSlice({
@@ -24,8 +25,14 @@ export const cartSlice = createSlice({
   },
 
   extraReducers: builder => {
+    builder.addCase(getCart.pending, state => {
+      state.data = null;
+      state.loader = true;
+    });
+
     builder.addCase(getCart.fulfilled, (state, action: PayloadAction<CartProps | undefined>) => {
       state.data = action.payload?.products || [];
+      state.loader = false;
     });
 
     builder.addCase(addProductToCart.fulfilled, (state, action: PayloadAction<CartProps>) => {

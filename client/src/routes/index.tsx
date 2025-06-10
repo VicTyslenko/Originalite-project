@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { useAutoLogin } from "shared/hooks/use-auto-login";
 
 const Main = React.lazy(() => import("../@main/main"));
+
 const Profile = React.lazy(() => import("../@profile/profile"));
 const Editor = React.lazy(() => import("../@editor/app"));
 

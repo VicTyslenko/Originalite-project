@@ -1,3 +1,5 @@
+import { getCart } from "@main/store/actions/cart/cartActions";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
 
@@ -25,10 +27,4 @@ export const useAutoLogin = () => {
       refreshIfNeedeed();
     }
   }, [user, isLoggedOut, keepSignedIn]);
-
-  // useEffect(() => {
-  //   (async function () {
-  //     await dispatch(getCart());
-  //   })();
-  // }, [user]);
 };

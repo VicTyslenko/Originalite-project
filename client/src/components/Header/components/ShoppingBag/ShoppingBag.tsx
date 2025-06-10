@@ -1,49 +1,17 @@
-import { getCart } from "@main/store/actions/cart/cartActions";
-import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Container, Drawer } from "@mui/material";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import EmptyCart from "../../../../@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingBag";
 import { ShoppingBagItem } from "./extensions/ShoppingBagItem";
+import { useShoppingBag } from "./hooks";
+import type { ShoppingBagProps } from "./models";
 
-function ShoppingBag({ isShoppingBag }: { isShoppingBag: boolean }) {
-  const dispatch = useStoreDispatch();
-
-  const navigate = useNavigate();
-
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-
-  const dataProducts = useStoreSelector(state => state.cart.data);
-
-  const priceItem = dataProducts?.map(({ product, cartQuantity }) => product && product.currentPrice * cartQuantity);
-
-  const handleBasketClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    //to prevent
-    const button = event.currentTarget;
-    button.blur();
-
-    dispatch(closeModal());
-    navigate("/shopping-cart");
-  };
-  useEffect(() => {
-    if (priceItem) {
-      setTotalPrice(priceItem.reduce((accum, item) => accum + item, 0));
-    }
-  }, [priceItem]);
+function ShoppingBag({ isShoppingBag }: ShoppingBagProps) {
+  const { dataProducts, handleModalClose, totalPrice, handleBasketClick, loader } = useShoppingBag({ isShoppingBag });
 
   return (
     <>
-      <Drawer
-        anchor="right"
-        open={isShoppingBag}
-        onClose={() => {
-          dispatch(closeModal());
-        }}
-      >
+      <Drawer anchor="right" open={isShoppingBag} onClose={handleModalClose}>
         <Container
           onClick={e => e.stopPropagation()}
           style={{

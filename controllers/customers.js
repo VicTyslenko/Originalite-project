@@ -192,9 +192,8 @@ exports.loginCustomer = async (req, res) => {
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-
       maxAge: 24 * 60 * 60 * 1000,
-      secure: true,
+      secure: isProduction,
       sameSite: isProduction ? "None" : "Lax",
     });
 
@@ -235,7 +234,7 @@ exports.refreshToken = async (req, res) => {
         { expiresIn: "15m" }
       );
 
-      res.json({ accessToken, cookies, refreshToken, });
+      res.json({ accessToken, cookies });
     });
   } catch (err) {
     console.log("Error in refreshToken handler:", err);

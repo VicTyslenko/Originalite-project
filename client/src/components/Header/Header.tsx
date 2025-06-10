@@ -105,7 +105,7 @@ function Header() {
                 dispatch(openModal());
 
                 const target = event.target as HTMLInputElement;
-                target.blur();
+                // target.blur();
                 setDataMenu(target.dataset.menu || "");
               }}
             >
