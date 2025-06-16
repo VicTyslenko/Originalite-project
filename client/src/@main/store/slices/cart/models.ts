@@ -1,6 +1,5 @@
-import type { ProductModels } from "shared/models/products.models";
+import type { CartProps } from "shared/models/cart.models";
 
-export type InitialProps = {
-  data: ProductModels[] | null;
+export interface InitialProps extends CartProps {
   loader: boolean;
-};
+}

@@ -6,7 +6,7 @@ import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 import { ColorIcon, ColorList, ListItemButtonStyled, ListItemIconColor, ListStyled } from "../StyledProductInfo";
 
 type Props = {
-  colors: {
+  colors?: {
     color: string;
     hash: string;
   }[];
@@ -23,7 +23,7 @@ function ProductInfoColors({ colors }: Props) {
     <ColorList>
       <Typography variant="subtitle2">Color</Typography>
       <ListStyled>
-        {colors.map(({ color, hash }) => (
+        {colors?.map(({ color, hash }) => (
           <ListItemButtonStyled
             key={color}
             selected={currentColor === color}

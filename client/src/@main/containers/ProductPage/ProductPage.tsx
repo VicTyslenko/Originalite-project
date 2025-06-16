@@ -11,7 +11,7 @@ import ProductInfo from "./components/ProductInfo/ProductInfo";
 import ProductMore from "./components/ProductMore/ProductMore";
 
 function ProductPage() {
-  const product = useStoreSelector(state => state.product.data);
+  const product = useStoreSelector(state => state.product.product);
 
   const dispatch = useStoreDispatch();
   const { id } = useParams();

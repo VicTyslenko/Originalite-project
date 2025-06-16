@@ -4,7 +4,7 @@ type Colors = {
 };
 
 export interface ProductData {
-  _id?: string;
+  _id: string;
   itemNo: string;
   enabled: boolean;
   name: string;

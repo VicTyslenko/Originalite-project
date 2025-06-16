@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { CartProps } from "shared/models/cart.models";
+import type { ProductModels } from "shared/models/products.models";
+import type { ProductData } from "shared/models/products.models";
 import { type RootState } from "store";
 
 import {
@@ -25,37 +27,34 @@ export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { messag
   },
 );
 
-export const addProductToCart = createAsyncThunk<CartProps, string, { state: RootState }>(
+export const addProductToCart = createAsyncThunk<ProductModels[], string, { state: RootState }>(
   "cart/addProductToCart",
   async (id, { getState }) => {
     const { auth, product, cart } = getState();
 
+    // if user logged in:
     if (auth.data !== null) {
       const { data } = await fetchProductToCart({
         id,
-
         data: {
           size: product.currentSize,
           color: product.currentColor,
         },
       });
 
-      return data;
-    } else {
-      const products = cart?.data.find(item => item.product._id === id)
-        ? cart.data.map(item => (item.product._id === id ? { ...item, cartQuantity: item.cartQuantity + 1 } : item))
-        : [
-            ...cart.data,
-            {
-              product: product.data,
-              cartQuantity: 1,
-              size: product.currentSize,
-              color: product.currentColor,
-            },
-          ];
-
-      return { products };
+      return data.products;
     }
+
+    //if user is not logged in:
+    if (!cart.products.length) return [{ ...product, cartQuantity: 1 }];
+
+    const existingProduct = cart.products.find(item => item.product._id === id);
+
+    return existingProduct
+      ? cart.products.map(item =>
+          item.product._id === existingProduct.product._id ? { ...item, cartQuantity: item.cartQuantity + 1 } : item,
+        )
+      : [...cart.products, { ...product, cartQuantity: 1 }];
   },
 );
 
@@ -64,7 +63,7 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
   async (id, { getState }) => {
     const { auth, cart } = getState();
 
-    const productInCart = cart.data.find(item => item.product._id === id);
+    const productInCart = cart.products.find(item => item.product._id === id);
 
     if (productInCart && productInCart.cartQuantity > 1) {
       if (auth.data !== null) {
@@ -74,13 +73,13 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
 
         return data;
       } else {
-        const updatedProducts = cart.data.map(item =>
+        const updatedProducts = cart.products.map(item =>
           item.product._id === id ? { ...item, cartQuantity: item.cartQuantity - 1 } : item,
         );
         return { products: updatedProducts };
       }
     } else {
-      return { products: cart.data };
+      return { products: cart.products };
     }
   },
 );
@@ -97,7 +96,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
 
       return data;
     } else {
-      const products = cart.data.filter(({ product }) => product._id !== id);
+      const products = cart.products.filter(({ product }) => product._id !== id);
 
       return { products };
     }

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
+import styled from "styled-components";
 
 export const ModalWrapWindow = styled.div`
 	min-height: 100vh;
@@ -8,6 +8,7 @@ export const ModalWrapWindow = styled.div`
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, 0.6);
+
 	display: flex;
 	justify-content: center;
 	align-items: center;

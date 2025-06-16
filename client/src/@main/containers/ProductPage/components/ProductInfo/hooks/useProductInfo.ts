@@ -1,9 +1,9 @@
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 export const useProductInfo = () => {
-  const cart = useStoreSelector(state => state.cart.data);
+  const cart = useStoreSelector(state => state.cart.products);
 
-  const product = useStoreSelector(state => state.product.data);
+  const product = useStoreSelector(state => state.product.product);
 
   const user = useStoreSelector(state => state.auth.data);
 

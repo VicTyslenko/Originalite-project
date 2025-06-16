@@ -23,12 +23,12 @@ import {
 function ShoppingCart() {
   const dispatch = useStoreDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
-  const cart = useStoreSelector(state => state.cart.data);
-
+  const cart = useStoreSelector(state => state.cart.products);
+  // console.log("cart", cart);
   const [open, setOpen] = useState(false);
 
   const priceItem = cart?.map(({ product, cartQuantity }) => product.currentPrice * cartQuantity);
-
+  // console.log(priceItem);
   useEffect(() => {
     if (priceItem) {
       setTotalPrice(priceItem.reduce((a, b) => a + b, 0));

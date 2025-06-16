@@ -8,7 +8,6 @@ import type { ShoppingBagProps } from "./models";
 
 function ShoppingBag({ isShoppingBag }: ShoppingBagProps) {
   const { dataProducts, handleModalClose, totalPrice, handleBasketClick, loader } = useShoppingBag({ isShoppingBag });
-
   return (
     <>
       <Drawer anchor="right" open={isShoppingBag} onClose={handleModalClose}>

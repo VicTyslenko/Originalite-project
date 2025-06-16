@@ -5,7 +5,7 @@ import type { ProductData } from "shared/models/products.models";
 import type { ProductProps } from "./models";
 
 const initialState: ProductProps = {
-  data: null,
+  product: null,
   currentColor: null,
   currentSize: null,
 };
@@ -23,7 +23,7 @@ export const productSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(getProduct.fulfilled, (state, action: PayloadAction<ProductData>) => {
-      state.data = { ...action.payload };
+      state.product = { ...action.payload };
     });
   },
 });

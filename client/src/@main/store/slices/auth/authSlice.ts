@@ -12,7 +12,7 @@ const initialState: InitialStateProps = {
   status: "loading",
   error: null,
   loader: false,
-  isLoggedOut: false,
+  isLoggedOut: true,
 };
 
 const authReducer = createSlice({

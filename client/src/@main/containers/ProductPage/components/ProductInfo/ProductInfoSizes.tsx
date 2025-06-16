@@ -8,7 +8,7 @@ import { ListItemButtonStyled, ListStyled, SizeList } from "./StyledProductInfo"
 import img from "./sizeguide.jpg";
 
 type Props = {
-  sizes: string[];
+  sizes?: string[];
 };
 function ProductInfoSizes({ sizes }: Props) {
   const currentSize = useStoreSelector(state => state.product.currentSize);
@@ -36,7 +36,7 @@ function ProductInfoSizes({ sizes }: Props) {
     <SizeList>
       <Typography variant="subtitle2">Size</Typography>
       <ListStyled>
-        {sizes.map(item => (
+        {sizes?.map(item => (
           <ListItemButtonStyled key={item} selected={currentSize === item} onClick={() => handleListSizeClick(item)}>
             <ListItemText primary={item} />
           </ListItemButtonStyled>
