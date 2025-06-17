@@ -26,8 +26,8 @@ export interface ProductData {
 
 export interface ProductModels {
   cartQuantity: number;
-  color: string;
+  currentColor: string;
   product: ProductData;
-  size: string;
+  currentSize: string;
   _id: string;
 }

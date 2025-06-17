@@ -7,7 +7,7 @@ import {
 } from "@main/store/actions/cart/cartActions";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { CartProps } from "shared/models/cart.models";
-import type { ProductData, ProductModels } from "shared/models/products.models";
+import type { ProductModels } from "shared/models/products.models";
 
 import type { InitialProps } from "./models";
 
@@ -42,7 +42,6 @@ export const cartSlice = createSlice({
 
     builder.addCase(deleteProductFromCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       const { products } = action.payload;
-
       state.products = [...products];
     });
 
