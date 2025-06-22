@@ -1,26 +1,24 @@
 import type { SubmitProps } from "@main/store/actions/orders/models";
-import { setAuth } from "@main/store/slices/auth/authSlice";
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { DefaultButton } from "shared/components/typography/default-button/default-button";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { ordersFetchData } from "../../../@main/store/actions/orders/ordersActions";
 import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
-import { ContentForm, StyledLink, Title } from "./StyledAddressDetails";
+import * as S from "./StyledAddressDetails";
 
 const AddressDetails = () => {
   const dispatch = useStoreDispatch();
   const order = useStoreSelector(state => state.orders.data);
   const { user } = useUserData();
-  const products = useStoreSelector(state => state.cart.data);
-
-  const serverError = useStoreSelector(state => state.orders.error);
-
+  const products = useStoreSelector(state => state.cart.products);
   const navigate = useNavigate();
+  const serverError = useStoreSelector(state => state.orders.error);
 
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
     if (!products.length) return;
@@ -30,10 +28,6 @@ const AddressDetails = () => {
     );
 
     if (data.meta.requestStatus === "rejected") return;
-
-    // dispatch(setAuth(data?.payload?.accessToken));
-
-    console.log(data);
 
     toast.success("Address saved!");
     navigate("/payment");
@@ -61,9 +55,9 @@ const AddressDetails = () => {
         onSubmit={(values, { resetForm }) => handleFormSubmit({ values, resetForm })}
       >
         {props => (
-          <ContentForm>
+          <S.ContentForm>
             <form onSubmit={props.handleSubmit}>
-              <Title>Please, fill the form with your details and delivery address</Title>
+              <S.Title>Please, fill the form with your details and delivery address</S.Title>
 
               <TextField
                 type="text"
@@ -136,15 +130,12 @@ const AddressDetails = () => {
                 sx={{ mb: "6px" }}
               />
               {serverError && <span className="server-error">{Object.values(serverError)}</span>}
-              <div>
-                <div className="button-wrapp">
-                  <StyledLink as="button" type="submit">
-                    Save
-                  </StyledLink>
-                </div>
-              </div>
+
+              <S.ButtonWrapp>
+                <DefaultButton type="submit">Save</DefaultButton>
+              </S.ButtonWrapp>
             </form>
-          </ContentForm>
+          </S.ContentForm>
         )}
       </Formik>
     </Container>

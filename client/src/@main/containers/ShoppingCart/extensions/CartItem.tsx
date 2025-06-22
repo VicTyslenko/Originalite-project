@@ -17,7 +17,7 @@ export const CartItem = ({ product, currentColor, currentSize, cartQuantity }: P
     useShoppingCart();
 
   return (
-    <ContentWrapp key={product._id}>
+    <ContentWrapp>
       <Content>
         <div className="image-wrapp">
           <Link to={`/product/${product.itemNo}`}>

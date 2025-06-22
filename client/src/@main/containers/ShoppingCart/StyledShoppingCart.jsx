@@ -51,63 +51,7 @@ export const RightSideWrapp = styled.div`
 	width: 362px;
 	background: #c4c4c4;
 	height: fit-content;
-	padding: 40px 0 40px 40px;
-	& .delivery {
-		color: #002068;
-		font-weight: 600;
-	}
-	& .title {
-		margin: 0 0 30px 0;
-		font-weight: 700;
-		font-size: 16px;
-		line-height: 16px;
-		font-family: "Josefin Sans";
-		text-transform: uppercase;
-	}
-	& .discount {
-		font-weight: 400;
-		font-size: 12px;
-		line-height: 16px;
-		font-family: "Open Sans";
-		text-transform: uppercase;
-		margin: 0;
-	}
-	& .line {
-		margin-top: 77px;
-		margin-bottom: 50px;
-		height: 1px;
-		background: grey;
-		border: none;
-	}
-	& .order {
-		font-weight: 400;
-		font-size: 14px;
-		line-height: 14px;
-		font-family: "Josefin Sans";
-		text-transform: uppercase;
-		margin-bottom: 30px;
-	}
-	& .order-delivery {
-		font-size: 10px;
-	}
-	& .total-price {
-		font-size: 18px;
-		line-height: 14px;
-		margin-left: 2rem;
-	}
-	& .total {
-		font-weight: 700;
-		font-size: 14px;
-		line-height: 14px;
-		text-transform: uppercase;
-		font-family: "Josefin Sans";
-		margin-bottom: 130px;
-		margin-top: 3rem;
-	}
-	& .button-wrapp {
-		display: flex;
-		justify-content: center;
-	}
+	padding: 40px;
 `;
 export const Content = styled.div`
 	display: flex;
@@ -130,7 +74,6 @@ export const Content = styled.div`
 	& .image {
 		min-width: 174px;
 		width: 174px;
-		/* height: 253px; */
 		object-fit: cover;
 	}
 	& .title {
@@ -160,4 +103,62 @@ export const Content = styled.div`
 		background: white;
 		cursor: pointer;
 	}
+`;
+
+export const Title = styled.h1`
+	color: black;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 25px;
+	font-family: "Open Sans";
+	text-transform: uppercase;
+`;
+
+export const Discount = styled.p`
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+	font-family: "Open Sans";
+	text-transform: uppercase;
+	margin: 0;
+`;
+
+export const Line = styled.hr`
+	margin-top: 77px;
+	margin-bottom: 50px;
+	height: 1px;
+	background: grey;
+	border: none;
+`;
+export const OrderValue = styled.p`
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 14px;
+	font-family: "Josefin Sans";
+	text-transform: uppercase;
+	margin-bottom: 30px;
+`;
+
+export const Delivery = styled.p`
+	color: #002068;
+	font-weight: 600;
+`;
+
+export const Total = styled.p`
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 25px;
+	font-family: "Open Sans";
+
+	& .total-price {
+		font-size: 18px;
+		line-height: 14px;
+		margin-left: 2rem;
+	}
+`;
+
+export const ButtonWrapp = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;

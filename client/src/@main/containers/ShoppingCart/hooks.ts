@@ -12,6 +12,7 @@ export const useShoppingCart = () => {
   const handleIncrement = (id: string) => {
     dispatch(addProductToCart(id));
   };
+  
   const handleOpenModal = (id: string) => {
     setSelectedId(id);
     setOpen(true);
