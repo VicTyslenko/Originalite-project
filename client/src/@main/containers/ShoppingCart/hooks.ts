@@ -1,30 +1,21 @@
-import { useStoreDispatch } from "hooks/use-store-dispatch";
-import { useState } from "react";
-
-import { addProductToCart, decrementItemInCart, deleteProductFromCart } from "../../store/actions/cart/cartActions";
+import { useEffect, useState } from "react";
+import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 export const useShoppingCart = () => {
-  const dispatch = useStoreDispatch();
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const [selectedId, setSelectedId] = useState("");
+  const [orderValue, setOrderValue] = useState(0);
+  const cart = useStoreSelector(state => state.cart.products);
+console.log()
+  const itemPrice = cart?.map(el => el.product.currentPrice * el.cartQuantity);
 
-  const [open, setOpen] = useState(false);
-  const handleIncrement = (id: string) => {
-    dispatch(addProductToCart(id));
-  };
-  
-  const handleOpenModal = (id: string) => {
-    setSelectedId(id);
-    setOpen(true);
-  };
-  const hanleDecrement = (id: string) => {
-    dispatch(decrementItemInCart(id));
-  };
+  useEffect(() => {
+    setOrderValue(() => {
+      const result = itemPrice?.reduce((a, b) => a + b) ?? 0;
 
-  const handleConfirm = (id: string) => {
-    dispatch(deleteProductFromCart(id));
-    setOpen(false);
-  };
+      return result;
+    });
+  }, [itemPrice]);
 
-  return { handleConfirm, hanleDecrement, handleIncrement, handleOpenModal, open, selectedId, setOpen };
+  return { totalPrice, cart, orderValue };
 };

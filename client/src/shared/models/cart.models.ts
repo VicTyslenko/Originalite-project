@@ -1,5 +1,5 @@
 import type { ProductModels } from "./products.models";
 
 export interface CartProps {
-  products: ProductModels[];
+  products: ProductModels[] | null;
 }

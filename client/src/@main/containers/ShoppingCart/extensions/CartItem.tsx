@@ -3,7 +3,7 @@ import type { ProductData } from "shared/models/products.models";
 
 import PaymentModal from "../Modal/PaymentModal";
 import { Content, ContentWrapp, RemoveButton, StyledDiv } from "../StyledShoppingCart";
-import { useShoppingCart } from "../hooks";
+import { useCartItem } from "./hooks";
 
 type Props = {
   product: ProductData;
@@ -13,8 +13,7 @@ type Props = {
 };
 
 export const CartItem = ({ product, currentColor, currentSize, cartQuantity }: Props) => {
-  const { open, handleConfirm, hanleDecrement, handleIncrement, handleOpenModal, selectedId, setOpen } =
-    useShoppingCart();
+  const { open, handleConfirm, hanleDecrement, handleIncrement, handleOpenModal, selectedId, setOpen } = useCartItem();
 
   return (
     <ContentWrapp>

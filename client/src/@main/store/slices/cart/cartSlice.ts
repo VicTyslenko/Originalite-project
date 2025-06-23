@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(deleteProductFromCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       const { products } = action.payload;
-      state.products = [...products];
+      state.products = [...(products ?? [])];
     });
 
     builder.addCase(decrementItemInCart.fulfilled, (state, action: PayloadAction<CartProps>) => {

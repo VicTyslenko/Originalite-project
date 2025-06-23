@@ -21,7 +21,7 @@ const AddressDetails = () => {
   const serverError = useStoreSelector(state => state.orders.error);
 
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
-    if (!products.length) return;
+    if (!products?.length) return;
 
     const data = await dispatch(
       ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: order?.orderId! }),

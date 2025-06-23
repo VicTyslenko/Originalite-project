@@ -1,24 +1,13 @@
-import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { DefaultButton } from "shared/components/typography/default-button/default-button";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import EmptyCart from "./EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingCart";
 import { CartItem } from "./extensions/CartItem";
+import { CheckoutInfo } from "./extensions/checkout-info/checkout-info";
+import { useShoppingCart } from "./hooks";
 
 function ShoppingCart() {
-  const [totalPrice, setTotalPrice] = useState(0);
-  const cart = useStoreSelector(state => state.cart.products);
-  const navigate = useNavigate();
-  const itemPrice = cart.map(el => el.product.currentPrice * el.cartQuantity);
-
-  useEffect(() => {
-    const totalResult = itemPrice.reduce((a, b) => a + b);
-    setTotalPrice(totalResult);
-  }, [itemPrice]);
+  const { cart } = useShoppingCart();
 
   return (
     <Container
@@ -42,20 +31,7 @@ function ShoppingCart() {
             ))}
           </S.LeftSideWrapp>
 
-          <S.RightSideWrapp>
-            <S.Title>Shopping bag total</S.Title>
-            <S.Discount>Add a discount code</S.Discount>
-            <TextField id="standard-basic" variant="standard" />
-            <S.Line />
-            <S.OrderValue>Order value :</S.OrderValue>
-            <S.Delivery>Delivery :</S.Delivery>
-
-            <S.Total>
-              Total price: <span className="total-price">{totalPrice} $ </span>
-            </S.Total>
-
-            <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>
-          </S.RightSideWrapp>
+          <CheckoutInfo />
         </S.ShoppingCartWrapp>
       ) : (
         <EmptyCart />
