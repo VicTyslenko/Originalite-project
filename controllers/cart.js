@@ -1,5 +1,6 @@
 const Cart = require("../models/Cart");
 const Product = require("../models/Product");
+const Discount = require("../models/Discount");
 const queryCreator = require("../commonHelpers/queryCreator");
 const _ = require("lodash");
 
@@ -67,6 +68,16 @@ exports.updateCart = (req, res, next) => {
       })
     );
 };
+// discount controller
+
+exports.applyDiscountToCart = async (req, res) => {
+  const discountCode = req.body.discountCode;
+  const mongoDiscount = await Discount.findOne({ code: discountCode.toUpperCase() });
+
+  if (!mongoDiscount) return res.status(404).json({ message: "Discount code not found" });
+
+  return res.status(200).json({ message: "Discount code found successfully!" });
+};
 
 exports.addProductToCart = async (req, res, next) => {
   let productToAdd;
@@ -102,7 +113,7 @@ exports.addProductToCart = async (req, res, next) => {
 
           newCart
             .save()
-            .then((cart) => res.json(cart))
+            .then((cart) => res.json({ message: "Product added to cart successfully!", cart }))
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,

@@ -9,13 +9,17 @@ const {
   deleteCart,
   deleteProductFromCart,
   getCart,
+  applyDiscountToCart,
 } = require("../controllers/cart");
 
 router.post("/", passport.authenticate("jwt", { session: false }), createCart);
 
 router.put("/", passport.authenticate("jwt", { session: false }), updateCart);
+router.put("/", passport.authenticate("jwt", { session: false }), updateCart);
 
 router.put("/:productId", passport.authenticate("jwt", { session: false }), addProductToCart);
+
+router.post("/discount", applyDiscountToCart);
 
 router.delete("/", passport.authenticate("jwt", { session: false }), deleteCart);
 

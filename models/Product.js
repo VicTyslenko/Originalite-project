@@ -5,68 +5,72 @@ const ProductSchema = new Schema(
   {
     itemNo: {
       type: String,
-      required: true
+      required: true,
     },
     enabled: {
       type: Boolean,
       required: true,
-      default: true
+      default: true,
     },
     name: {
       type: String,
-      required: true
+      required: true,
     },
     currentPrice: {
       type: Number,
-      required: true
+      required: true,
     },
     previousPrice: {
-      type: Number
+      type: Number,
     },
     male: {
       type: String,
-      required: true
+      required: true,
     },
     categories: {
       type: String,
-      required: true
+      required: true,
     },
     imageUrls: [
       {
         type: String,
-        required: true
-      }
+        required: true,
+      },
     ],
     quantity: {
       type: Number,
       required: true,
-      default: 0
+      default: 0,
     },
     colors: {
-      type: Array
+      type: Array,
     },
     sizes: {
-      type: Array
+      type: Array,
     },
     productDetails: {
-      type: String
+      type: String,
+    },
+    discount: {
+      type: Schema.Types.ObjectId,
+      ref: "discount",
     },
     productDelivery: {
-      type: String
+      type: String,
     },
     productUrl: {
-      type: String
+      type: String,
     },
     brand: {
-      type: String
+      type: String,
     },
     sellerseller: {
-      type: String
+      type: String,
     },
     date: {
       type: Date,
-      default: Date.now
-    }
+      default: Date.now,
+    },
   },
   { strict: false }
 );
