@@ -3,37 +3,25 @@ import * as S from "./styles";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { publicInstance } from "services/api/axios";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { useShoppingCart } from "../../hooks";
+import { initialValues } from "./data";
+import { useCheckInfo } from "./hooks";
 
 export const CheckoutInfo = () => {
   const navigate = useNavigate();
 
-  const cart = useStoreSelector(state => state.cart.products);
-  console.log(cart);
-  const { totalPrice, orderValue } = useShoppingCart();
+  const { handleSubmit } = useCheckInfo();
+
+  const { orderValue } = useShoppingCart();
   return (
     <S.Wrapper>
       <S.Title>Shopping bag total</S.Title>
       <Formik
-        initialValues={{
-          discount: "",
-        }}
-        onSubmit={async (values, { resetForm }) => {
-          try {
-            const res = await publicInstance.post("/cart/discount", {
-              discountCode: values.discount,
-            });
-
-            console.log(res);
-          } catch (error) {
-            console.error("error", error);
-          }
-          resetForm();
-          console.log(values);
+        initialValues={initialValues}
+        onSubmit={(values, { resetForm }) => {
+          handleSubmit(values, resetForm);
         }}
       >
         {props => (
@@ -59,7 +47,7 @@ export const CheckoutInfo = () => {
       <S.Delivery>Delivery :</S.Delivery>
 
       <S.Total>
-        Total price: <span className="total-price">{totalPrice} $ </span>
+        Total price: <span className="total-price">{} $ </span>
       </S.Total>
       <S.ButtonWrapp>
         <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>

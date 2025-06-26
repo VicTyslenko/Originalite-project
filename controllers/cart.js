@@ -71,12 +71,20 @@ exports.updateCart = (req, res, next) => {
 // discount controller
 
 exports.applyDiscountToCart = async (req, res) => {
-  const discountCode = req.body.discountCode;
-  const mongoDiscount = await Discount.findOne({ code: discountCode.toUpperCase() });
+  const userCode = req.body.discountCode;
 
-  if (!mongoDiscount) return res.status(404).json({ message: "Discount code not found" });
+  try {
+    const dataBaseDiscount = await Discount.findOne({ code: userCode });
+    if (!dataBaseDiscount) return res.status(404).json({ message: "Discount code not found" });
 
-  return res.status(200).json({ message: "Discount code found successfully!" });
+    const discountData = await Discount.find();
+
+    return res.status(200).json({ message: "Discount code found successfully!", discountData });
+  } catch (error) {
+    console.error("Error applying discount", error);
+
+    return res.sendStatus(500).json({ message: "Internal server error" });
+  }
 };
 
 exports.addProductToCart = async (req, res, next) => {
