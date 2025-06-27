@@ -5,16 +5,14 @@ import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
 
-import { useShoppingCart } from "../../hooks";
 import { initialValues } from "./data";
 import { useCheckInfo } from "./hooks";
 
 export const CheckoutInfo = () => {
   const navigate = useNavigate();
 
-  const { handleSubmit } = useCheckInfo();
+  const { handleSubmit, orderValue, totalPrice, errorMessage } = useCheckInfo();
 
-  const { orderValue } = useShoppingCart();
   return (
     <S.Wrapper>
       <S.Title>Shopping bag total</S.Title>
@@ -38,6 +36,7 @@ export const CheckoutInfo = () => {
               />
               <DefaultButton type="submit">Apply</DefaultButton>
             </S.InputWrapp>
+            {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
           </S.Form>
         )}
       </Formik>
@@ -47,7 +46,7 @@ export const CheckoutInfo = () => {
       <S.Delivery>Delivery :</S.Delivery>
 
       <S.Total>
-        Total price: <span className="total-price">{} $ </span>
+        Total price: <span className="total-price">{totalPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>
         <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>

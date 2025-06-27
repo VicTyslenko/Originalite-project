@@ -27,7 +27,6 @@ import WomanMenu from "./components/WomenMenu";
 
 function Header() {
   const dispatch = useStoreDispatch();
-
   const rootEl = useRef<HTMLDivElement | null>(null);
 
   const modal = useStoreSelector(state => state.modal.modal);

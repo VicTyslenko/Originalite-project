@@ -75,7 +75,7 @@ exports.applyDiscountToCart = async (req, res) => {
 
   try {
     const dataBaseDiscount = await Discount.findOne({ code: userCode });
-    if (!dataBaseDiscount) return res.status(404).json({ message: "Discount code not found" });
+    if (!dataBaseDiscount) return res.status(404).json({ message: "Invalid discount code!" });
 
     const discountData = await Discount.find();
 

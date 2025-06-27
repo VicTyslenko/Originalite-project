@@ -4,10 +4,10 @@ import EmptyCart from "./EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingCart";
 import { CartItem } from "./extensions/CartItem";
 import { CheckoutInfo } from "./extensions/checkout-info/checkout-info";
-import { useShoppingCart } from "./hooks";
+import { useCheckInfo } from "./extensions/checkout-info/hooks";
 
 function ShoppingCart() {
-  const { cart } = useShoppingCart();
+  const { cart } = useCheckInfo();
 
   return (
     <Container

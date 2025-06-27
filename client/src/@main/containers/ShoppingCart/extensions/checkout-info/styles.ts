@@ -84,3 +84,10 @@ export const InputWrapp = styled.div`
     color: #002068;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-size: 13px;
+  margin: 0;
+  padding: 0;
+`;
