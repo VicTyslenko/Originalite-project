@@ -8,6 +8,7 @@ import type { DiscountProps } from "./models";
 export const useCheckInfo = () => {
   const cart = useStoreSelector(state => state.cart.products);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const orderValue = useMemo(() => {
     return (
       cart?.reduce((sum, item) => {
@@ -31,26 +32,24 @@ export const useCheckInfo = () => {
 
       if (res.status === 200) {
         const resultData = res.data.discountData as DiscountProps[];
-        console.log(resultData);
 
         const validDiscountData = resultData.find(el => {
           let isNotExpired = new Date(el.expiresAt) > new Date();
 
-          return el.isActive && isNotExpired ? el : null;
+          return isNotExpired && el.isActive;
         });
+
+        if (validDiscountData) {
+          const { value } = validDiscountData;
+          setTotalPrice(() => {
+            const discountValue = (orderValue * value) / 100;
+
+            const result = orderValue - discountValue;
+
+            return Math.ceil(result);
+          });
+        }
         console.log(validDiscountData);
-
-        // const searchedObject = resultData.find(el => el.code.toLocaleLowerCase() === values.discount.toLowerCase());
-
-        // if (!searchedObject) return;
-
-        // const { value } = searchedObject;
-
-        // const discountValue = Math.ceil((orderValue * value) / 100);
-
-        // const finalPrice = orderValue - discountValue;
-
-        // setTotalPrice(finalPrice);
         setErrorMessage(null);
       }
 
