@@ -1,32 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCartData } from "hooks/use-cart-data";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { getDiscount } from "services/api/cartApi";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
-import type { InitialProps } from "./models";
-import type { DiscountProps } from "./models";
+import type { DiscountProps, SubmitProps } from "./models";
 
 export const useCheckInfo = () => {
-  const cart = useStoreSelector(state => state.cart.products);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [discount, setDiscount] = useState<number>(0);
 
-  const orderValue = useMemo(() => {
-    return (
-      cart?.reduce((sum, item) => {
-        const itemPrice = item.product.currentPrice * item.cartQuantity;
+  const [isActivatedDiscount, setIsActivatedDiscount] = useState(false);
 
-        return sum + itemPrice;
-      }, 0) ?? 0
-    );
-  }, [cart]);
+  const { orderValue } = useCartData();
 
-  const [totalPrice, setTotalPrice] = useState(orderValue);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
     setTotalPrice(orderValue);
   }, [orderValue]);
 
   // Submit discount code function
-  const handleSubmit = async (values: InitialProps, resetForm: () => void) => {
+  const handleSubmit = async ({ values, resetForm, setFieldError }: SubmitProps) => {
     try {
       const res = await getDiscount({ discountCode: values.discount });
 
@@ -41,24 +34,28 @@ export const useCheckInfo = () => {
 
         if (validDiscountData) {
           const { value } = validDiscountData;
-          setTotalPrice(() => {
-            const discountValue = (orderValue * value) / 100;
-
-            const result = orderValue - discountValue;
-
-            return Math.ceil(result);
-          });
+          setDiscount(value);
+          setIsActivatedDiscount(true);
+          toast.success("Discount code has applied!");
         }
-        console.log(validDiscountData);
-        setErrorMessage(null);
       }
 
       resetForm();
     } catch (error: any) {
-      setErrorMessage(error.response.data.message);
+      setFieldError("discount", error.response.data.message);
       console.error("error", error.response.data.message);
     }
   };
 
-  return { handleSubmit, orderValue, totalPrice, cart, errorMessage };
+  useEffect(() => {
+    setTotalPrice(() => {
+      const discountValue = (orderValue * discount) / 100;
+
+      const result = Math.ceil(orderValue - discountValue);
+
+      return result;
+    });
+  }, [discount, orderValue]);
+
+  return { handleSubmit, totalPrice, isActivatedDiscount };
 };

@@ -7,7 +7,8 @@ import { useShoppingBag } from "./hooks";
 import type { ShoppingBagProps } from "./models";
 
 function ShoppingBag({ isShoppingBag }: ShoppingBagProps) {
-  const { dataProducts, handleModalClose, totalPrice, handleBasketClick } = useShoppingBag({ isShoppingBag });
+  const { dataProducts, orderValue, handleModalClose, handleBasketClick } = useShoppingBag({ isShoppingBag });
+
   return (
     <>
       <Drawer anchor="right" open={isShoppingBag} onClose={handleModalClose}>
@@ -28,7 +29,7 @@ function ShoppingBag({ isShoppingBag }: ShoppingBagProps) {
 
                 <S.FooterContent>
                   <S.TotalPrice>
-                    <span>Total : {totalPrice} $</span>
+                    <span>Total :{orderValue} $</span>
                   </S.TotalPrice>
                   <S.ButtonShoppingBag onClick={handleBasketClick}>Basket</S.ButtonShoppingBag>
                 </S.FooterContent>

@@ -1,13 +1,13 @@
 import { Container } from "@mui/system";
-
+import { useCartData } from "hooks/use-cart-data";
 import EmptyCart from "./EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingCart";
 import { CartItem } from "./extensions/CartItem";
 import { CheckoutInfo } from "./extensions/checkout-info/checkout-info";
-import { useCheckInfo } from "./extensions/checkout-info/hooks";
 
 function ShoppingCart() {
-  const { cart } = useCheckInfo();
+
+  const {cartData} = useCartData()
 
   return (
     <Container
@@ -17,10 +17,10 @@ function ShoppingCart() {
         marginTop: "40px",
       }}
     >
-      {cart && cart.length > 0 ? (
+      {cartData && cartData.length > 0 ? (
         <S.ShoppingCartWrapp>
           <S.LeftSideWrapp>
-            {cart.map(i => (
+            {cartData.map(i => (
               <CartItem
                 key={i.product._id}
                 product={i.product}

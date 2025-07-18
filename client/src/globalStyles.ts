@@ -15,13 +15,14 @@ const GlobalStyle = createGlobalStyle`
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-  	img{
+  	img, p{
 		max-width: 100%;
 		vertical-align: middle;
 		height: auto;
 		margin: 0;
 		border: 0;
 	}
+
 
 `;
 

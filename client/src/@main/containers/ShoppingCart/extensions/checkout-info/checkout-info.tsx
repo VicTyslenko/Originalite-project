@@ -2,6 +2,7 @@ import * as S from "./styles";
 
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
+import { useCartData } from "hooks/use-cart-data";
 import { useNavigate } from "react-router-dom";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
 
@@ -11,15 +12,17 @@ import { useCheckInfo } from "./hooks";
 export const CheckoutInfo = () => {
   const navigate = useNavigate();
 
-  const { handleSubmit, orderValue, totalPrice, errorMessage } = useCheckInfo();
+  const { orderValue } = useCartData();
+
+  const { handleSubmit, totalPrice, isActivatedDiscount } = useCheckInfo();
 
   return (
     <S.Wrapper>
       <S.Title>Shopping bag total</S.Title>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values, { resetForm }) => {
-          handleSubmit(values, resetForm);
+        onSubmit={(values, { resetForm, setFieldError }) => {
+          handleSubmit({ values, resetForm, setFieldError });
         }}
       >
         {props => (
@@ -32,21 +35,25 @@ export const CheckoutInfo = () => {
                 variant="standard"
                 value={props.values.discount}
                 onChange={props.handleChange}
+                error={props.touched.discount && Boolean(props.errors.discount)}
                 name="discount"
               />
               <DefaultButton type="submit">Apply</DefaultButton>
             </S.InputWrapp>
-            {errorMessage && <S.ErrorMessage>{errorMessage}</S.ErrorMessage>}
+
+            {props.errors.discount && <S.ErrorMessage>{props.errors.discount}</S.ErrorMessage>}
           </S.Form>
         )}
       </Formik>
 
       <S.Line />
       <S.OrderValue>Order value : {orderValue}</S.OrderValue>
-      <S.Delivery>Delivery :</S.Delivery>
+      {/* <S.Delivery>Delivery :</S.Delivery> */}
 
       <S.Total>
-        Total price: <span className="total-price">{totalPrice} $ </span>
+        {isActivatedDiscount && <p className="active-discount">with discount</p>}
+        Total price:
+        <span className="total-price">{totalPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>
         <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>

@@ -49,11 +49,16 @@ export const Total = styled.p`
   font-size: 18px;
   line-height: 25px;
   font-family: "Open Sans";
-
+  margin-bottom: 10px;
   & .total-price {
     font-size: 18px;
     line-height: 14px;
-    margin-left: 2rem;
+    margin-left: 1rem;
+  }
+  & .active-discount {
+    color: #388e3c;
+    font-weight: 500;
+    font-size: 14px;
   }
 `;
 
@@ -86,7 +91,7 @@ export const InputWrapp = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  color: red;
+  color: #d32f2f;
   font-size: 13px;
   margin: 0;
   padding: 0;

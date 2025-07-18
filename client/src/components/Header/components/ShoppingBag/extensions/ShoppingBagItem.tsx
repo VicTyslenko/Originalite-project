@@ -19,7 +19,7 @@ export const ShoppingBagItem = ({ products }: Props) => {
   };
 
   return products.map(
-    ({ product }) =>
+    ({ product, cartQuantity }) =>
       product && (
         <S.ContentItem key={product._id}>
           <Link to={`product/${product.itemNo}`}>
@@ -33,6 +33,7 @@ export const ShoppingBagItem = ({ products }: Props) => {
               <S.Price>
                 Price : <span className="price">{product.currentPrice} $</span>
               </S.Price>
+              <p>Qty: {cartQuantity}</p>
             </div>
             <S.RemoveIcon onClick={() => product._id && dispatch(deleteProductFromCart(product._id))}>
               <CloseIcon />

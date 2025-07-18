@@ -1,3 +1,4 @@
+
 import type { SubmitProps } from "@main/store/actions/orders/models";
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
@@ -16,6 +17,7 @@ const AddressDetails = () => {
   const dispatch = useStoreDispatch();
   const order = useStoreSelector(state => state.orders.data);
   const { user } = useUserData();
+
   const products = useStoreSelector(state => state.cart.products);
   const navigate = useNavigate();
   const serverError = useStoreSelector(state => state.orders.error);
@@ -58,7 +60,7 @@ const AddressDetails = () => {
           <S.ContentForm>
             <form onSubmit={props.handleSubmit}>
               <S.Title>Please, fill the form with your details and delivery address</S.Title>
-
+              {/* 
               <TextField
                 type="text"
                 fullWidth
@@ -72,7 +74,7 @@ const AddressDetails = () => {
                 multiline
                 variant="standard"
                 sx={{ mb: "6px" }}
-              />
+              /> */}
               <TextField
                 type="text"
                 fullWidth
@@ -86,7 +88,7 @@ const AddressDetails = () => {
                 error={props.touched.firstName && Boolean(props.errors.firstName)}
                 helperText={props.touched.firstName && props.errors.firstName}
               />
-              <TextField
+              {/* <TextField
                 name="lastName"
                 type="string"
                 fullWidth
@@ -128,7 +130,7 @@ const AddressDetails = () => {
                 error={props.touched.address && Boolean(props.errors.address)}
                 helperText={props.touched.address && props.errors.address}
                 sx={{ mb: "6px" }}
-              />
+              /> */}
               {serverError && <span className="server-error">{Object.values(serverError)}</span>}
 
               <S.ButtonWrapp>

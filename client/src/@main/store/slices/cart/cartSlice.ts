@@ -33,6 +33,7 @@ export const cartSlice = createSlice({
 
     builder.addCase(getCart.fulfilled, (state, action: PayloadAction<CartProps | undefined>) => {
       state.products = action.payload?.products || [];
+
       state.loader = false;
     });
 
