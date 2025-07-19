@@ -43,22 +43,24 @@ export const Delivery = styled.p`
   color: #002068;
   font-weight: 600;
 `;
+type TotalProps = {
+  isActive: boolean;
+};
 
-export const Total = styled.p`
+export const Total = styled.p<TotalProps>`
   font-weight: 700;
   font-size: 18px;
   line-height: 25px;
   font-family: "Open Sans";
   margin-bottom: 10px;
+
+  color: ${({ isActive }) => (isActive ? "green" : "black")};
+
   & .total-price {
     font-size: 18px;
     line-height: 14px;
     margin-left: 1rem;
-  }
-  & .active-discount {
-    color: #388e3c;
-    font-weight: 500;
-    font-size: 14px;
+    color: black;
   }
 `;
 

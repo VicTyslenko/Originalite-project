@@ -5,6 +5,7 @@ import { Form, Formik } from "formik";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { LocalStorage } from "utils/local-storage";
 
 import {
   ButtonWrapp,
@@ -35,9 +36,9 @@ export const LoginForm = () => {
         validationSchema={validationSchema}
         onSubmit={async (values, { resetForm }) => {
           if (values.keepSignedIn) {
-            localStorage.setItem("keepSignedIn", "true");
+            LocalStorage.setKeepSignIn("true");
           } else {
-            localStorage.removeItem("keepSignedIn");
+            LocalStorage.removeKeepSignIn();
           }
 
           const data = await dispatch(actionFetchAuth(values));

@@ -7,5 +7,6 @@ export const useCartData = () => {
 
   const orderValue = allPrices?.reduce((sum, el) => sum + el, 0) || 0;
 
+
   return { orderValue, cartData };
 };

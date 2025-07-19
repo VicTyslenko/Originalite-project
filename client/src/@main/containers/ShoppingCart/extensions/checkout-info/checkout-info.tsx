@@ -14,7 +14,7 @@ export const CheckoutInfo = () => {
 
   const { orderValue } = useCartData();
 
-  const { handleSubmit, totalPrice, isActivatedDiscount } = useCheckInfo();
+  const { handleSubmit, discountPrice, discount } = useCheckInfo();
 
   return (
     <S.Wrapper>
@@ -50,10 +50,9 @@ export const CheckoutInfo = () => {
       <S.OrderValue>Order value : {orderValue}</S.OrderValue>
       {/* <S.Delivery>Delivery :</S.Delivery> */}
 
-      <S.Total>
-        {isActivatedDiscount && <p className="active-discount">with discount</p>}
-        Total price:
-        <span className="total-price">{totalPrice} $ </span>
+      <S.Total isActive={discount > 0}>
+        {discount > 0 ? "Discount" : "Total"} price
+        <span className="total-price">{discountPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>
         <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>

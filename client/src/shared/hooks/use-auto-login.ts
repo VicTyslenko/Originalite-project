@@ -1,7 +1,6 @@
-import { getCart } from "@main/store/actions/cart/cartActions";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
+import { LocalStorage } from "utils/local-storage";
 
 import { refreshToken } from "shared/utils";
 
@@ -12,7 +11,7 @@ export const useAutoLogin = () => {
 
   const isLoggedOut = useStoreSelector(state => state.auth.isLoggedOut);
 
-  const keepSignedIn = localStorage.getItem("keepSignedIn") === "true";
+  const keepSignedIn = LocalStorage.getKeepSignIn();
 
   useEffect(() => {
     if (!user && !isLoggedOut && keepSignedIn) {

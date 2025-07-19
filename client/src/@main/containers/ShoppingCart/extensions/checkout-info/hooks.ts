@@ -2,21 +2,20 @@ import { useCartData } from "hooks/use-cart-data";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getDiscount } from "services/api/cartApi";
+import { SessionStorage } from "utils/session-storage";
 
 import type { DiscountProps, SubmitProps } from "./models";
 
 export const useCheckInfo = () => {
-  const [discount, setDiscount] = useState<number>(0);
+  const [discount, setDiscount] = useState<number>(() => {
+    return Number(SessionStorage.getDiscount()) || 0;
+  });
+
+  const [discountPrice, setDiscountPrice] = useState<number>(0);
 
   const [isActivatedDiscount, setIsActivatedDiscount] = useState(false);
 
   const { orderValue } = useCartData();
-
-  const [totalPrice, setTotalPrice] = useState<number>(0);
-
-  useEffect(() => {
-    setTotalPrice(orderValue);
-  }, [orderValue]);
 
   // Submit discount code function
   const handleSubmit = async ({ values, resetForm, setFieldError }: SubmitProps) => {
@@ -34,8 +33,12 @@ export const useCheckInfo = () => {
 
         if (validDiscountData) {
           const { value } = validDiscountData;
+
           setDiscount(value);
+
+          SessionStorage.setDiscount(String(value));
           setIsActivatedDiscount(true);
+
           toast.success("Discount code has applied!");
         }
       }
@@ -48,14 +51,17 @@ export const useCheckInfo = () => {
   };
 
   useEffect(() => {
-    setTotalPrice(() => {
+    if (discount > 0) {
       const discountValue = (orderValue * discount) / 100;
 
-      const result = Math.ceil(orderValue - discountValue);
+      setDiscountPrice(() => {
+        const result = Math.ceil(orderValue - discountValue);
+        return result;
+      });
+    } else {
+      setDiscountPrice(orderValue);
+    }
+  }, [isActivatedDiscount, orderValue, discount]);
 
-      return result;
-    });
-  }, [discount, orderValue]);
-
-  return { handleSubmit, totalPrice, isActivatedDiscount };
+  return { handleSubmit, discountPrice, isActivatedDiscount, discount };
 };

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { DefaultTypography } from "shared/components/typography/default-typography";
 import type { RegisterProps } from "shared/models/auth.models";
+import { LocalStorage } from "utils/local-storage";
 
 import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
 import {
@@ -34,9 +35,9 @@ function DropdownRegister({ active }: { active: Height }) {
 
   const handleFormSubmit = async (values: RegisterProps, resetForm: () => void) => {
     if (values.keepSignedIn) {
-      localStorage.setItem("keepSignedIn", "true");
+      LocalStorage.setKeepSignIn("true");
     } else {
-      localStorage.removeItem("keepSignedIn");
+      LocalStorage.removeKeepSignIn();
     }
 
     const data = await dispatch(actionFetchAuth(values));

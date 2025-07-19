@@ -1,13 +1,21 @@
 import { Container } from "@mui/system";
 import { useCartData } from "hooks/use-cart-data";
+import { useEffect } from "react";
+import { SessionStorage } from "utils/session-storage";
+
 import EmptyCart from "./EmptyCart/EmptyCart";
 import * as S from "./StyledShoppingCart";
 import { CartItem } from "./extensions/CartItem";
 import { CheckoutInfo } from "./extensions/checkout-info/checkout-info";
 
 function ShoppingCart() {
+  const { cartData } = useCartData();
 
-  const {cartData} = useCartData()
+  useEffect(() => {
+    if (cartData && cartData.length <= 0) {
+      SessionStorage.removeDiscount();
+    }
+  }, [cartData]);
 
   return (
     <Container

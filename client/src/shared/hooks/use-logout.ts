@@ -3,6 +3,7 @@ import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useNavigate } from "react-router-dom";
 import { publicInstance } from "services/api/axios";
+import { LocalStorage } from "utils/local-storage";
 
 export const useLogout = () => {
   const dispatch = useStoreDispatch();
@@ -16,8 +17,9 @@ export const useLogout = () => {
       dispatch(clearDataAuth());
       dispatch(clearCart());
 
-      localStorage.removeItem("keepSignedIn");
-      localStorage.removeItem("root");
+      LocalStorage.removeKeepSignIn();
+      LocalStorage.removeRoot();
+
       navigate("/");
     } catch (error) {
       console.error(error);

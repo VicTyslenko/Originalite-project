@@ -1,12 +1,6 @@
 import { setAuth } from "@main/store/slices/auth/authSlice";
-import { clearDataAuth } from "@main/store/slices/auth/authSlice";
-import { clearCart } from "@main/store/slices/cart/cartSlice";
 import { type Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 import { publicInstance } from "services/api/axios";
-
-export const LocalStorage = {
-  deleteAuthToken: () => localStorage.removeItem("persist:auth"),
-};
 
 export const useGetMobileSize = (size: number | Breakpoint) => {
   const theme = useTheme();
@@ -40,4 +34,3 @@ export const refreshToken = async () => {
     console.error(error);
   }
 };
-
