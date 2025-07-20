@@ -14,7 +14,7 @@ export const CheckoutInfo = () => {
 
   const { orderValue } = useCartData();
 
-  const { handleSubmit, discountPrice, discount } = useCheckInfo();
+  const { handleSubmit, discountPrice, token, expErrorMessage } = useCheckInfo();
 
   return (
     <S.Wrapper>
@@ -49,9 +49,9 @@ export const CheckoutInfo = () => {
       <S.Line />
       <S.OrderValue>Order value : {orderValue}</S.OrderValue>
       {/* <S.Delivery>Delivery :</S.Delivery> */}
-
-      <S.Total isActive={discount > 0}>
-        {discount > 0 ? "Discount" : "Total"} price
+      {expErrorMessage && <S.ErrorMessage>{expErrorMessage}</S.ErrorMessage>}
+      <S.Total isActive={Boolean(token)}>
+        {Boolean(token) ? "Discount" : "Total"} price
         <span className="total-price">{discountPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>

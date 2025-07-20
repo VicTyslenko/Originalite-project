@@ -1,11 +1,11 @@
 export type DiscountProps = {
-  code: string;
+  // code: string;
   expiresAt: string;
   isActive: boolean;
-  minOrderValue: number;
+  exp:string,
   type: "percentage" | "fixed";
-  usageLimit: number;
-  usedCount: number;
+  // usageLimit: number;
+  // usedCount: number;
   value: number;
 };
 

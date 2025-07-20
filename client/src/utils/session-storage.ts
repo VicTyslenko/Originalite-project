@@ -1,7 +1,7 @@
 export const SessionStorage = {
-  getDiscount: () => sessionStorage.getItem("discount-value"),
+  setDiscountToken: (value: string) => sessionStorage.setItem("discount-token", value),
 
-  removeDiscount: () => sessionStorage.removeItem("discount-value"),
+  getDiscountToken: () => sessionStorage.getItem("discount-token"),
 
-  setDiscount: (value: string) => sessionStorage.setItem("discount-value", value),
+  removeToken: () => sessionStorage.removeItem("discount-token"),
 };

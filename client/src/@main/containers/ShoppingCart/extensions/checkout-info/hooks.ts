@@ -1,4 +1,5 @@
 import { useCartData } from "hooks/use-cart-data";
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { getDiscount } from "services/api/cartApi";
@@ -7,13 +8,13 @@ import { SessionStorage } from "utils/session-storage";
 import type { DiscountProps, SubmitProps } from "./models";
 
 export const useCheckInfo = () => {
-  const [discount, setDiscount] = useState<number>(() => {
-    return Number(SessionStorage.getDiscount()) || 0;
+  const [token, setToken] = useState<string>(() => {
+    return SessionStorage.getDiscountToken() || "";
   });
 
-  const [discountPrice, setDiscountPrice] = useState<number>(0);
+  const [expErrorMessage, setExpErrorMessage] = useState("");
 
-  const [isActivatedDiscount, setIsActivatedDiscount] = useState(false);
+  const [discountPrice, setDiscountPrice] = useState<number>(0);
 
   const { orderValue } = useCartData();
 
@@ -23,24 +24,12 @@ export const useCheckInfo = () => {
       const res = await getDiscount({ discountCode: values.discount });
 
       if (res.status === 200) {
-        const resultData = res.data.discountData as DiscountProps[];
+        const token = res.data.validDiscountData;
 
-        const validDiscountData = resultData.find(el => {
-          let isNotExpired = new Date(el.expiresAt) > new Date();
-
-          return isNotExpired && el.isActive;
-        });
-
-        if (validDiscountData) {
-          const { value } = validDiscountData;
-
-          setDiscount(value);
-
-          SessionStorage.setDiscount(String(value));
-          setIsActivatedDiscount(true);
-
-          toast.success("Discount code has applied!");
-        }
+        setToken(token);
+        SessionStorage.setDiscountToken(token);
+        toast.success("Discount code applied!");
+        setExpErrorMessage("");
       }
 
       resetForm();
@@ -49,19 +38,33 @@ export const useCheckInfo = () => {
       console.error("error", error.response.data.message);
     }
   };
+  // Setting the total price regarding discount value. If discount is not applied, set to order value
 
   useEffect(() => {
-    if (discount > 0) {
-      const discountValue = (orderValue * discount) / 100;
-
-      setDiscountPrice(() => {
-        const result = Math.ceil(orderValue - discountValue);
-        return result;
-      });
-    } else {
+    if (!token) {
       setDiscountPrice(orderValue);
-    }
-  }, [isActivatedDiscount, orderValue, discount]);
+    } else {
+      const discountData = jwtDecode(token) as DiscountProps;
+      const { exp, value: discount } = discountData;
 
-  return { handleSubmit, discountPrice, isActivatedDiscount, discount };
+      const currentDate = Date.now() / 1000;
+
+      const validToken = currentDate < Number(exp);
+
+      if (discount > 0 && validToken) {
+        const discountValue = (orderValue * discount) / 100;
+
+        setDiscountPrice(() => {
+          const result = Math.ceil(orderValue - discountValue);
+          return result;
+        });
+      } else {
+        setToken("");
+        setExpErrorMessage("Discount code has expired, try again");
+        SessionStorage.removeToken();
+      }
+    }
+  }, [orderValue, token]);
+
+  return { handleSubmit, discountPrice, token, expErrorMessage };
 };

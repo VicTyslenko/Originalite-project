@@ -2,6 +2,7 @@ const Cart = require("../models/Cart");
 const Product = require("../models/Product");
 const Discount = require("../models/Discount");
 const queryCreator = require("../commonHelpers/queryCreator");
+const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 
 exports.createCart = (req, res, next) => {
@@ -75,11 +76,30 @@ exports.applyDiscountToCart = async (req, res) => {
 
   try {
     const dataBaseDiscount = await Discount.findOne({ code: userCode });
-    if (!dataBaseDiscount) return res.status(404).json({ message: "Invalid discount code!" });
 
-    const discountData = await Discount.find();
+    if (!dataBaseDiscount) return res.status(404).json({ message: "Discount code is not found!!" });
 
-    return res.status(200).json({ message: "Discount code found successfully!", discountData });
+    const { expiresAt, value, type, isActive } = dataBaseDiscount;
+    const currentDate = new Date();
+
+    if (!isActive || currentDate > new Date(expiresAt)) return res.status(400).json({ message: "Discount code is not valid!" });
+
+    const payload = {
+      expiresAt,
+      value,
+      type,
+      isActive,
+    };
+
+    const validDiscountData = jwt.sign(
+      {
+        ...payload,
+      },
+      process.env.DISCOUNT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    return res.status(200).json({ message: "Discount code found successfully!", validDiscountData });
   } catch (error) {
     console.error("Error applying discount", error);
 
