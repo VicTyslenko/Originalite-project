@@ -3,18 +3,15 @@ import * as S from "./styles";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
 import { useCartData } from "hooks/use-cart-data";
-import { useNavigate } from "react-router-dom";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
 
 import { initialValues } from "./data";
 import { useCheckInfo } from "./hooks";
 
 export const CheckoutInfo = () => {
-  const navigate = useNavigate();
-
   const { orderValue } = useCartData();
 
-  const { handleSubmit, discountPrice, token, expErrorMessage } = useCheckInfo();
+  const { handleSubmit, discountPrice, token, expErrorMessage, handleCheckout } = useCheckInfo();
 
   return (
     <S.Wrapper>
@@ -55,7 +52,7 @@ export const CheckoutInfo = () => {
         <span className="total-price">{discountPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>
-        <DefaultButton onClick={() => navigate("/address-details")}>Checkout</DefaultButton>
+        <DefaultButton onClick={handleCheckout}>Checkout</DefaultButton>
       </S.ButtonWrapp>
     </S.Wrapper>
   );

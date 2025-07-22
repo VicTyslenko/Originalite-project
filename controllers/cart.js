@@ -77,12 +77,15 @@ exports.applyDiscountToCart = async (req, res) => {
   try {
     const dataBaseDiscount = await Discount.findOne({ code: userCode });
 
+
     if (!dataBaseDiscount) return res.status(404).json({ message: "Discount code is not found!!" });
 
-    const { expiresAt, value, type, isActive } = dataBaseDiscount;
+    const { expiresAt, value, type, isActive, usedCount, usageLimit } = dataBaseDiscount;
+
     const currentDate = new Date();
 
-    if (!isActive || currentDate > new Date(expiresAt)) return res.status(400).json({ message: "Discount code is not valid!" });
+    if (!isActive || currentDate > new Date(expiresAt) || usedCount > usageLimit)
+      return res.status(400).json({ message: "Discount code is not valid!" });
 
     const payload = {
       expiresAt,

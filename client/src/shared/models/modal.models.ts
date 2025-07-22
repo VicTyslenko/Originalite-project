@@ -8,3 +8,10 @@ export interface ModalProps {
   confirmText: string;
   cancelText: any;
 }
+
+export enum LoadingStatus {
+  idle = "idle",
+  loading = "loading",
+  loaded = "loaded",
+  error = "error",
+}

@@ -14,6 +14,7 @@ import type { InitialProps } from "./models";
 const initialState: InitialProps = {
   products: [],
   loader: false,
+  totalSum: 0,
 };
 
 export const cartSlice = createSlice({
@@ -22,6 +23,9 @@ export const cartSlice = createSlice({
   reducers: {
     clearCart(state) {
       state.products = [];
+    },
+    setTotalSum(state, action) {
+      state.totalSum = action.payload;
     },
   },
 
@@ -55,6 +59,6 @@ export const cartSlice = createSlice({
     });
   },
 });
-export const { clearCart } = cartSlice.actions;
+export const { clearCart, setTotalSum } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -1,22 +1,37 @@
+import { setTotalSum } from "@main/store/slices/cart/cartSlice";
 import { useCartData } from "hooks/use-cart-data";
+import { useStoreDispatch } from "hooks/use-store-dispatch";
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { getDiscount } from "services/api/cartApi";
 import { SessionStorage } from "utils/session-storage";
 
 import type { DiscountProps, SubmitProps } from "./models";
 
 export const useCheckInfo = () => {
+  const navigate = useNavigate();
+  const dispatch = useStoreDispatch();
+
   const [token, setToken] = useState<string>(() => {
     return SessionStorage.getDiscountToken() || "";
   });
 
-  const [expErrorMessage, setExpErrorMessage] = useState("");
+  const [discountIsActivated, setDiscountIsActivated] = useState(() => {
+    return SessionStorage.getActivateDiscount() === "true" || false;
+  });
 
+  const [expErrorMessage, setExpErrorMessage] = useState("");
   const [discountPrice, setDiscountPrice] = useState<number>(0);
 
   const { orderValue } = useCartData();
+
+  useEffect(() => {
+    if (!discountIsActivated) {
+      setExpErrorMessage("");
+    }
+  }, [discountIsActivated]);
 
   // Submit discount code function
   const handleSubmit = async ({ values, resetForm, setFieldError }: SubmitProps) => {
@@ -30,6 +45,8 @@ export const useCheckInfo = () => {
         SessionStorage.setDiscountToken(token);
         toast.success("Discount code applied!");
         setExpErrorMessage("");
+        setDiscountIsActivated(true);
+        SessionStorage.setActivateDiscount("true");
       }
 
       resetForm();
@@ -38,6 +55,11 @@ export const useCheckInfo = () => {
       console.error("error", error.response.data.message);
     }
   };
+  const handleCheckout = () => {
+    navigate("/address-details");
+    dispatch(setTotalSum(discountPrice));
+  };
+
   // Setting the total price regarding discount value. If discount is not applied, set to order value
 
   useEffect(() => {
@@ -48,7 +70,6 @@ export const useCheckInfo = () => {
       const { exp, value: discount } = discountData;
 
       const currentDate = Date.now() / 1000;
-
       const validToken = currentDate < Number(exp);
 
       if (discount > 0 && validToken) {
@@ -66,5 +87,5 @@ export const useCheckInfo = () => {
     }
   }, [orderValue, token]);
 
-  return { handleSubmit, discountPrice, token, expErrorMessage };
+  return { handleSubmit, discountPrice, token, expErrorMessage, handleCheckout, discountIsActivated };
 };

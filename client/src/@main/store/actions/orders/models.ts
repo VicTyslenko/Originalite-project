@@ -5,6 +5,7 @@ export type OrdersParamsProps = {
   customerId: string | null;
   products: ProductModels[];
   orderId: string;
+  totalSum: number;
 } & AddressProps;
 
 export type SubmitProps = {

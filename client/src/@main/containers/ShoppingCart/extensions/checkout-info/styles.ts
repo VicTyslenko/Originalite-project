@@ -54,7 +54,7 @@ export const Total = styled.p<TotalProps>`
   font-family: "Open Sans";
   margin-bottom: 10px;
 
-  color: ${({ isActive }) => (isActive ? "green" : "black")};
+  color: ${({ isActive }) => (isActive ? "#004f9d" : "black")};
 
   & .total-price {
     font-size: 18px;
@@ -98,4 +98,3 @@ export const ErrorMessage = styled.p`
   margin: 0;
   padding: 0;
 `;
-

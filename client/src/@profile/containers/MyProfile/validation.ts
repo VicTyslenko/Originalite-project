@@ -14,6 +14,7 @@ const validationSchema = Yup.object().shape({
 		.required("Last name is required"),
 
 	email: Yup.string().email("Invalid email format").required("Email is required"),
+	
 	telephone: Yup.string()
 		.required("Phone number is required")
 		.test("starts-with-plus", "Phone number must start with '+'", value => {

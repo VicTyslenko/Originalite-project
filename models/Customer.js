@@ -5,7 +5,7 @@ const bcrypt = require("bcryptjs");
 
 const CustomerSchema = new Schema(
   {
-    customerNo: {
+    customerId: {
       type: String,
       required: true,
     },
@@ -56,7 +56,10 @@ const CustomerSchema = new Schema(
       type: String,
       default: "",
     },
-
+    emailConfirmed: {
+      type: Boolean,
+      default: false,
+    },
     enabled: {
       type: Boolean,
       required: true,

@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
+import { LoadingStatus } from "shared/models/modal.models";
 
 import { ordersFetchData } from "../../actions/orders/ordersActions";
 import type { InitialOrderState, OrderModel } from "./models";
 
 const initialState: InitialOrderState = {
   data: null,
-  status: "loading",
+  status: LoadingStatus.idle,
   error: null,
 };
 
 const ordersReducer = createSlice({
   name: "orders",
-
   initialState,
 
   reducers: {
@@ -23,18 +23,18 @@ const ordersReducer = createSlice({
 
   extraReducers: builder => {
     builder.addCase(ordersFetchData.pending, state => {
-      state.status = "loading";
+      state.status = LoadingStatus.loading;
       state.data = null;
     });
 
     builder.addCase(ordersFetchData.fulfilled, (state, { payload }: { payload: OrderModel }) => {
-      state.status = "loaded";
+      state.status = LoadingStatus.loaded;
       state.data = payload;
       state.error = null;
     });
 
     builder.addCase(ordersFetchData.rejected, (state, { payload }) => {
-      state.status = "error";
+      state.status = LoadingStatus.error;
 
       state.error = payload as AxiosError;
     });

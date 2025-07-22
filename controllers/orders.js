@@ -27,8 +27,10 @@ exports.placeOrder = async (req, res) => {
         guest: true,
       });
       await newOrder.save();
+
+      res.status(200).json({ message: "Success placing order!", order, orderId: newOrder._id });
     }
-    res.status(200).json({ message: "Success placing order!" });
+
     // if (req.body.address) {
     //   order.address = req.body.address;
     //   customer.address = req.body.address;
@@ -149,34 +151,34 @@ exports.placeOrder = async (req, res) => {
 
 exports.updateOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async (currentOrder) => {
+    console.log("current order", currentOrder);
     if (!currentOrder) {
       return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
     } else {
       const order = _.cloneDeep(req.body);
 
-      if (req.body.deliveryaddress) {
-        order.deliveryaddress = req.body.deliveryaddress;
+      if (req.body.email) {
+        currentOrder.emal = req.body.email;
       }
-
-      if (req.body.shipping) {
-        order.shipping = req.body.shipping;
+      if (req.body.address) {
+        currentOrder.address = req.body.address;
       }
 
       if (req.body.paymentInfo) {
-        order.paymentInfo = req.body.paymentInfo;
+        currentOrder.paymentInfo = req.body.paymentInfo;
       }
 
       if (req.body.customerId) {
-        order.customerId = req.body.customerId;
+        currentOrder.customerId = req.body.customerId;
       }
       if (req.body.paymentStatus) {
-        order.paymentStatus = req.body.paymentStatus;
+        currentOrder.paymentStatus = req.body.paymentStatus;
       }
 
       if (req.body.products) {
-        order.products = req.body.products;
+        currentOrder.products = req.body.products;
 
-        order.totalSum = order.products.reduce((sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity, 0);
+        // order.totalSum = order.products.reduce((sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity, 0);
 
         const productAvailibilityInfo = await productAvailibilityChecker(order.products);
 

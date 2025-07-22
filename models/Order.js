@@ -17,6 +17,7 @@ const OrderSchema = new Schema(
     },
     firstName: String,
     lastName: String,
+
     products: [
       {
         type: Schema.Types.Mixed,

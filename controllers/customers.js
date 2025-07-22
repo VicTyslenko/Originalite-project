@@ -16,7 +16,7 @@ exports.createCustomer = (req, res) => {
 
   const initialQuery = _.cloneDeep(req.body);
 
-  initialQuery.customerNo = rand();
+  initialQuery.customerId = rand();
 
   // Check Validation
   const { errors, isValid } = validateRegistrationForm(req.body);
@@ -135,6 +135,10 @@ exports.verifyCustomer = async (req, res) => {
 
     const user = await Customer.findOne({ email: decoded.email });
     if (!user) return res.status(404).json("User not found");
+
+    if (user.emailConfirmed) {
+      return res.status(400).json({ message: "Email already confirmed" });
+    }
 
     user.emailConfirmed = true;
     await user.save();

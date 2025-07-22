@@ -1,40 +1,13 @@
-
-import type { SubmitProps } from "@main/store/actions/orders/models";
 import { Container, TextField } from "@mui/material";
 import { Formik } from "formik";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
-import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
-import { ordersFetchData } from "../../../@main/store/actions/orders/ordersActions";
-import { useUserData } from "../../../hooks/use-user-data";
 import { validationDeliverySchema } from "../../validation";
 import * as S from "./StyledAddressDetails";
+import { useAddressDetails } from "./hooks";
 
 const AddressDetails = () => {
-  const dispatch = useStoreDispatch();
-  const order = useStoreSelector(state => state.orders.data);
-  const { user } = useUserData();
-
-  const products = useStoreSelector(state => state.cart.products);
-  const navigate = useNavigate();
-  const serverError = useStoreSelector(state => state.orders.error);
-
-  const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
-    if (!products?.length) return;
-
-    const data = await dispatch(
-      ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: order?.orderId! }),
-    );
-
-    if (data.meta.requestStatus === "rejected") return;
-
-    toast.success("Address saved!");
-    navigate("/payment");
-    resetForm();
-  };
+  const { user, handleFormSubmit, serverError } = useAddressDetails();
 
   return (
     <Container
@@ -60,7 +33,7 @@ const AddressDetails = () => {
           <S.ContentForm>
             <form onSubmit={props.handleSubmit}>
               <S.Title>Please, fill the form with your details and delivery address</S.Title>
-              {/* 
+
               <TextField
                 type="text"
                 fullWidth
@@ -74,7 +47,7 @@ const AddressDetails = () => {
                 multiline
                 variant="standard"
                 sx={{ mb: "6px" }}
-              /> */}
+              />
               <TextField
                 type="text"
                 fullWidth
@@ -88,7 +61,7 @@ const AddressDetails = () => {
                 error={props.touched.firstName && Boolean(props.errors.firstName)}
                 helperText={props.touched.firstName && props.errors.firstName}
               />
-              {/* <TextField
+              <TextField
                 name="lastName"
                 type="string"
                 fullWidth
@@ -130,7 +103,7 @@ const AddressDetails = () => {
                 error={props.touched.address && Boolean(props.errors.address)}
                 helperText={props.touched.address && props.errors.address}
                 sx={{ mb: "6px" }}
-              /> */}
+              />
               {serverError && <span className="server-error">{Object.values(serverError)}</span>}
 
               <S.ButtonWrapp>

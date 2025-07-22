@@ -1,6 +1,7 @@
 import * as S from "./styles";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { verifyEmail } from "services/api/verifyEmail";
@@ -9,35 +10,38 @@ const VerificationPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const [serverMessage, setServerMessage] = useState<string>("");
+
   const token = searchParams.get("token");
 
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
     (async function () {
       try {
         if (token) {
-          const response = await verifyEmail({ token });
-          console.log("response", response.data);
-
-          timer = setTimeout(() => {
-            navigate("/login-form", {
-              state: {
-                verified: true,
-              },
-            });
-          }, 2000);
+          await verifyEmail({ token });
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error(error);
+        setServerMessage(error.response.data.message);
       }
     })();
 
+    let timer: ReturnType<typeof setTimeout> = setTimeout(() => {
+      navigate("/login-form", {
+        state: {
+          verified: true,
+        },
+      });
+
+      toast.success("Email verified successfully!");
+    }, 2000);
+
     return () => clearTimeout(timer);
-  }, [token, navigate]);
+  }, [token, navigate, serverMessage]);
 
   return (
     <>
-      <S.Wrapper>We are verifying your email...</S.Wrapper>
+      <S.Wrapper>{serverMessage ? `${serverMessage}, you can login!` : "Verifying your email..."}</S.Wrapper>
     </>
   );
 };
