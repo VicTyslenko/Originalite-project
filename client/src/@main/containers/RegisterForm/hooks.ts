@@ -1,4 +1,5 @@
 import { actionFetchAuth } from "@main/store/actions/authActions";
+import { setLoader } from "@main/store/slices/auth/authSlice";
 import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import toast from "react-hot-toast";
@@ -31,6 +32,7 @@ export const useFormLogin = () => {
       } else if (data.meta.requestStatus === "rejected") {
         toast.error("Login failed, try again later");
         dispatch(closeModal());
+        dispatch(setLoader(false));
       }
     } catch (error) {
       console.error(error);

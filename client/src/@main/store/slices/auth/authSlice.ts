@@ -25,6 +25,9 @@ const authReducer = createSlice({
       state.isLoggedOut = true;
     },
 
+    setLoader(state, action: PayloadAction<boolean>) {
+      state.loader = action.payload;
+    },
     setAuth(state, action: PayloadAction<UserModels>) {
       state.data = action.payload;
       state.isLoggedOut = false;
@@ -61,6 +64,6 @@ const authReducer = createSlice({
   },
 });
 
-export const { clearDataAuth, setAuth } = authReducer.actions;
+export const { clearDataAuth, setAuth, setLoader } = authReducer.actions;
 
 export default authReducer.reducer;
