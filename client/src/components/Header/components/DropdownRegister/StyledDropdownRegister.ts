@@ -24,9 +24,9 @@ export const LoaderWrapp = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-	backdrop-filter: blur(1px);
-	font-weight: 500;
-	font-size: 17px;
+  backdrop-filter: blur(1px);
+  font-weight: 500;
+  font-size: 17px;
 `;
 
 export const BoxWrapp = styled.div`
@@ -98,7 +98,7 @@ export const FormPages = styled.div`
   align-items: center;
 `;
 
-export const LinkItem = styled(Link)`
+export const SignUpNavigate = styled.p`
   display: inline-block;
   padding-top: 4px;
   padding-left: 6px;

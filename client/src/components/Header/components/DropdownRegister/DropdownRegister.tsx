@@ -1,17 +1,10 @@
 import { useFormLogin } from "@main/containers/RegisterForm/hooks";
-import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { Button, Container } from "@mui/material";
 import { Checkbox } from "@mui/material";
 import { Formik } from "formik";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
 import type { Height } from "react-animate-height";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import { DefaultTypography } from "shared/components/typography/default-typography";
-import type { RegisterProps } from "shared/models/auth.models";
-import { LocalStorage } from "utils/local-storage";
 
-import { actionFetchAuth } from "../../../../@main/store/actions/authActions";
 import {
   BoxWrapp,
   ButtonBlock,
@@ -20,35 +13,14 @@ import {
   Header,
   InputItem,
   InputsWrapp,
-  LinkItem,
   LoaderWrapp,
+  SignUpNavigate,
   WrappAnimate,
 } from "./StyledDropdownRegister";
 import { validationSchema } from "./validation";
 
 function DropdownRegister({ active }: { active: Height }) {
-  const dispatch = useStoreDispatch();
-
-  const { errorMessage, loader } = useFormLogin();
-
-  const navigate = useNavigate();
-
-  const handleFormSubmit = async (values: RegisterProps, resetForm: () => void) => {
-    if (values.keepSignedIn) {
-      LocalStorage.setKeepSignIn("true");
-    } else {
-      LocalStorage.removeKeepSignIn();
-    }
-
-    const data = await dispatch(actionFetchAuth(values));
-    console.log(data);
-    if (data.meta.requestStatus === "fulfilled") {
-      toast.success("Login successful!");
-      dispatch(closeModal());
-      navigate("/");
-      resetForm();
-    }
-  };
+  const { errorMessage, loader, handleFormSubmit, handleCloseModal } = useFormLogin();
 
   return (
     <WrappAnimate id="example-panel" duration={500} height={active}>
@@ -111,10 +83,7 @@ function DropdownRegister({ active }: { active: Height }) {
           </Formik>
 
           <FormPages>
-            Not registered yet ?
-            <LinkItem to="/login-form" onClick={() => dispatch(closeModal())}>
-              Sing Up
-            </LinkItem>
+            Not registered yet ?<SignUpNavigate onClick={handleCloseModal}>Sing Up</SignUpNavigate>
           </FormPages>
         </BoxWrapp>
       </Container>
