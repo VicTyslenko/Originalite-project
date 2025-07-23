@@ -173,7 +173,7 @@ exports.loginCustomer = async (req, res) => {
 
     const accessTokenPayload = {
       id: customer.id,
-      customerId: customer.customerId, 
+      customerId: customer.customerId,
       firstName: customer.firstName,
       lastName: customer.lastName,
       isAdmin: customer.isAdmin,
@@ -185,7 +185,7 @@ exports.loginCustomer = async (req, res) => {
     const accessToken = generateAccessToken(accessTokenPayload);
 
     const refreshTokenPayload = {
-      id: customer.id,
+      customerId: customer.customerId,
       email: customer.email,
     };
     const refreshToken = generateRefreshToken(refreshTokenPayload);
