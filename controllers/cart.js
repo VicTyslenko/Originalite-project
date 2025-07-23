@@ -106,7 +106,7 @@ exports.applyDiscountToCart = async (req, res) => {
   } catch (error) {
     console.error("Error applying discount", error);
 
-    return res.sendStatus(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
