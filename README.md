@@ -40,9 +40,17 @@
 # Start development:
 
 ```bash
+
+# in root folder
+npm install
+# install all required dependencies
+
+# start server
+npm run dev
+
 # in client folder
 npm install
-# install all required dependencies for each project (Linux, MacOS)
+# install all required dependencies
 
 npm start
 ```
