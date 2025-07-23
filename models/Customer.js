@@ -7,7 +7,7 @@ const CustomerSchema = new Schema(
   {
     customerId: {
       type: String,
-      required: true,
+      required: false,
     },
     firstName: {
       type: String,

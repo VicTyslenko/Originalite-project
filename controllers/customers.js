@@ -173,6 +173,7 @@ exports.loginCustomer = async (req, res) => {
 
     const accessTokenPayload = {
       id: customer.id,
+      customerId: customer.customerId, 
       firstName: customer.firstName,
       lastName: customer.lastName,
       isAdmin: customer.isAdmin,
