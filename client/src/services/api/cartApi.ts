@@ -6,7 +6,7 @@ import privateInstance from "./axios";
 import type { ProductParams } from "./models";
 
 export function getCart(): Promise<AxiosResponse<CartProps>> {
-  return privateInstance.get<CartProps>("cart");
+  return publicInstance.get<CartProps>("cart");
 }
 export function deleteCart() {
   return privateInstance.delete(`cart`);

@@ -9,5 +9,5 @@ export const SessionStorage = {
 
   getActivateDiscount: () => sessionStorage.getItem("active-discount"),
 
-  
+  removeActiveDiscount: () => sessionStorage.removeItem("active-discount"),
 };

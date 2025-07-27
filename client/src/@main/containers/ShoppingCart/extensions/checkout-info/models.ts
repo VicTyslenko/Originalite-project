@@ -2,7 +2,7 @@ export type DiscountProps = {
   // code: string;
   expiresAt: string;
   isActive: boolean;
-  exp:string,
+  exp: string;
   type: "percentage" | "fixed";
   // usageLimit: number;
   // usedCount: number;

@@ -14,6 +14,7 @@ function ShoppingCart() {
   useEffect(() => {
     if (cartData && cartData.length <= 0) {
       SessionStorage.removeToken();
+      SessionStorage.removeActiveDiscount();
     }
   }, [cartData]);
 
@@ -32,8 +33,8 @@ function ShoppingCart() {
               <CartItem
                 key={i.product._id}
                 product={i.product}
-                currentColor={i.currentColor}
-                currentSize={i.currentSize}
+                currentColor={i.color}
+                currentSize={i.size}
                 cartQuantity={i.cartQuantity}
               />
             ))}

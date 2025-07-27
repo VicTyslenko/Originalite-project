@@ -13,7 +13,7 @@ export const useProductInfo = () => {
 
   const wishList = useStoreSelector(state => state.wishlist.data);
 
-  const itemInCart = cart?.find(item => item.product._id === product?._id);
+  const itemInCart = cart?.find(item => item.product._id === product?._id) || null;
 
   const itemInWishlist = wishList?.find(item => item._id === product?._id);
 

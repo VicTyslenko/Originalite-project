@@ -27,6 +27,7 @@ const PaymentModal = ({
   confirm,
   confirmText,
   cancelText,
+  cancel,
 }: PaymentModalProps) => {
   return (
     <div>
@@ -46,7 +47,7 @@ const PaymentModal = ({
             {text}
           </Typography>
           {actions ? (
-            <ActionButtons confirm={confirm} cancel={close} confirmText={confirmText} cancelText={cancelText} />
+            <ActionButtons onConfirm={confirm} onCancel={cancel} confirmText={confirmText} cancelText={cancelText} />
           ) : (
             <Button
               sx={{

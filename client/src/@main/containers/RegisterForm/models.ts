@@ -12,3 +12,8 @@ export type LoginProps = {
   password: string;
   keepSignedIn: boolean;
 };
+
+export type SubmitProps = {
+  values: RegisterProps;
+  resetForm: () => void;
+};

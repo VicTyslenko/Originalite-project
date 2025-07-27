@@ -16,7 +16,7 @@ import {
   LoginWrapper,
   StyledButton,
 } from "../StyledRegisterForm";
-import { useFormLogin } from "../hooks";
+import { useFormLogin } from "../hooks/use-form-login";
 import type { LoginProps } from "../models";
 
 export const LoginForm = () => {

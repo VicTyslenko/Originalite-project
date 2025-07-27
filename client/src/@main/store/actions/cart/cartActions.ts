@@ -41,11 +41,12 @@ export const addProductToCart = createAsyncThunk<ProductModels[], string, { stat
         },
       });
 
-      return data.products;
+      
+      return data.cart.products;
     }
 
     //if user is not logged in:
-    if (!cart.products.length) return [{ ...product, cartQuantity: 1 }];
+    if (!cart?.products?.length) return [{ ...product, cartQuantity: 1 }];
 
     const existingProduct = cart.products.find(item => item.product._id === id);
 
@@ -62,7 +63,7 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
   async (id, { getState }) => {
     const { auth, cart } = getState();
 
-    const productInCart = cart.products.find(item => item.product._id === id);
+    const productInCart = cart.products?.find(item => item.product._id === id);
 
     if (productInCart && productInCart.cartQuantity > 1) {
       if (auth.data !== null) {
@@ -72,7 +73,7 @@ export const decrementItemInCart = createAsyncThunk<CartProps, string, { state: 
 
         return data;
       } else {
-        const updatedProducts = cart.products.map(item =>
+        const updatedProducts = cart.products?.map(item =>
           item.product._id === id ? { ...item, cartQuantity: item.cartQuantity - 1 } : item,
         );
         return { products: updatedProducts };
@@ -95,7 +96,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
 
       return data;
     } else {
-      const products = cart.products.filter(item => item.product._id !== id);
+      const products = cart.products?.filter(item => item.product._id !== id);
 
       return { products };
     }

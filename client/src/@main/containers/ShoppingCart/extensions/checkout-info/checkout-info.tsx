@@ -6,12 +6,13 @@ import { useCartData } from "hooks/use-cart-data";
 import { DefaultButton } from "shared/components/typography/default-button/default-button";
 
 import { initialValues } from "./data";
-import { useCheckInfo } from "./hooks";
+import { useCheckoutInfo } from "./hooks";
+import { validationSchema } from "./validation";
 
 export const CheckoutInfo = () => {
   const { orderValue } = useCartData();
 
-  const { handleSubmit, discountPrice, token, expErrorMessage, handleCheckout } = useCheckInfo();
+  const { handleSubmit, discountPrice, token, expErrorMessage, handleCheckout } = useCheckoutInfo();
 
   return (
     <S.Wrapper>
@@ -21,26 +22,34 @@ export const CheckoutInfo = () => {
         onSubmit={(values, { resetForm, setFieldError }) => {
           handleSubmit({ values, resetForm, setFieldError });
         }}
+        // validationSchema={validationSchema}
       >
-        {props => (
-          <S.Form onSubmit={props.handleSubmit}>
-            <S.Label htmlFor="discount-code">Add a discount code</S.Label>
+        {props => {
+          return (
+            <S.Form onSubmit={props.handleSubmit}>
+              <S.Label htmlFor="discount-code">Add a discount code</S.Label>
 
-            <S.InputWrapp>
-              <TextField
-                id="discount-code"
-                variant="standard"
-                value={props.values.discount}
-                onChange={props.handleChange}
-                error={props.touched.discount && Boolean(props.errors.discount)}
-                name="discount"
-              />
-              <DefaultButton type="submit">Apply</DefaultButton>
-            </S.InputWrapp>
+              <S.InputWrapp>
+                <TextField
+                  id="discount-code"
+                  variant="standard"
+                  value={props.values.discount}
+                  onChange={e => {
+                    props.handleChange(e);
+                    if (e.target.value === "") {
+                      props.setFieldError("discount", "");
+                    }
+                  }}
+                  error={Boolean(props.errors.discount)}
+                  name="discount"
+                />
+                <DefaultButton type="submit">Apply</DefaultButton>
+              </S.InputWrapp>
 
-            {props.errors.discount && <S.ErrorMessage>{props.errors.discount}</S.ErrorMessage>}
-          </S.Form>
-        )}
+              {props.errors.discount && <S.ErrorMessage>{props.errors.discount}</S.ErrorMessage>}
+            </S.Form>
+          );
+        }}
       </Formik>
 
       <S.Line />

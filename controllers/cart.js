@@ -74,6 +74,8 @@ exports.updateCart = (req, res, next) => {
 exports.applyDiscountToCart = async (req, res) => {
   const userCode = req.body.discountCode;
 
+  if (!userCode) return res.json({ message: "Hello bitch from backend" });
+
   try {
     const dataBaseDiscount = await Discount.findOne({ code: userCode });
 
@@ -133,8 +135,8 @@ exports.addProductToCart = async (req, res, next) => {
           cartData.products = [].concat({
             product: req.params.productId,
             cartQuantity: 1,
-            size: req.body.size,
-            color: req.body.color,
+            currentSize: req.body.size,
+            currentColor: req.body.color,
           });
 
           const newCart = new Cart(queryCreator(cartData));

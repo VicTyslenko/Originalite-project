@@ -20,6 +20,8 @@ exports.placeOrder = async (req, res) => {
 
     const customer = await Customer.findById(order.customerId);
 
+    console.log("customer", customer);
+
     if (!customer) {
       const products = order.products;
       const newOrder = new Order({
@@ -151,7 +153,6 @@ exports.placeOrder = async (req, res) => {
 
 exports.updateOrder = (req, res, next) => {
   Order.findOne({ _id: req.params.id }).then(async (currentOrder) => {
-    console.log("current order", currentOrder);
     if (!currentOrder) {
       return res.status(400).json({ message: `Order with id ${req.params.id} is not found` });
     } else {
@@ -180,14 +181,14 @@ exports.updateOrder = (req, res, next) => {
 
         // order.totalSum = order.products.reduce((sum, cartItem) => sum + cartItem.product.currentPrice * cartItem.cartQuantity, 0);
 
-        const productAvailibilityInfo = await productAvailibilityChecker(order.products);
+        // const productAvailibilityInfo = await productAvailibilityChecker(order.products);
 
-        if (!productAvailibilityInfo.productsAvailibilityStatus) {
-          res.json({
-            message: "Some of your products are unavailable for now",
-            productAvailibilityInfo,
-          });
-        }
+        // if (!productAvailibilityInfo.productsAvailibilityStatus) {
+        //   res.json({
+        //     message: "Some of your products are unavailable for now",
+        //     productAvailibilityInfo,
+        //   });
+        // }
       }
 
       const subscriberMail = req.body.email;

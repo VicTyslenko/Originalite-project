@@ -2,14 +2,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Tab } from "@mui/material";
 import { Container } from "@mui/system";
 import { Formik } from "formik";
-import { useStoreDispatch } from "hooks/use-store-dispatch";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
 
-import { resendLink } from "./utils";
-
-import { registerFetchData } from "../../store/actions/registrationActions";
 import PaymentModal from "../ShoppingCart/Modal/PaymentModal";
 import {
   ButtonWrappReg,
@@ -21,31 +14,12 @@ import {
   StyledButtonReg,
 } from "./StyledRegisterForm";
 import { LoginForm } from "./extensions/LoginForm";
+import { useRegister } from "./hooks/use-register";
 import type { RegisterProps } from "./models";
 import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
-  const dispatch = useStoreDispatch();
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const [open, setOpen] = useState(false);
-
-  const currentTab = searchParams.get("tab") || "login";
-
-  const navigate = useNavigate();
-
-  const handleNavigate = (path: string) => {
-    setSearchParams(searchParameters => {
-      searchParameters.set("tab", path);
-      return searchParameters;
-    });
-  };
-
-  const handleModalClose = () => {
-    setOpen(false);
-    navigate("/");
-  };
+  const { handleModalClose, handleNavigate, currentTab, handleFormSubmit, open, handleResendLink } = useRegister();
 
   return (
     <ContainerWrapper>
@@ -84,14 +58,8 @@ const RegisterForm = () => {
                 confirmPassword: "",
               }}
               validationSchema={validationRegisterSchema}
-              onSubmit={async (values, { resetForm }) => {
-                const data = await dispatch(registerFetchData(values));
-
-                if (data.meta.requestStatus === "rejected") return;
-
-                setOpen(true);
-
-                resetForm();
+              onSubmit={(values, { resetForm }) => {
+                handleFormSubmit({ values, resetForm });
               }}
             >
               {props => (
@@ -175,17 +143,21 @@ const RegisterForm = () => {
                       <StyledButtonReg type="submit">Register</StyledButtonReg>
                     </ButtonWrappReg>
 
-                    {open && (
-                      <PaymentModal
-                        open={open}
-                        close={() => resendLink(props.values.email)}
-                        text="We sent you a link, please, verify your email."
-                        confirm={handleModalClose}
-                        actions
-                        confirmText="Continue to main page"
-                        cancelText="Recend email"
-                      />
-                    )}
+                    <PaymentModal
+                      open={open}
+                      close={handleModalClose}
+                      text="We sent you a link, please, verify your email."
+                      confirm={handleModalClose}
+                      cancel={() => {
+                        handleResendLink(props.values.email);
+
+                        handleModalClose();
+                      }}
+                      actions
+                      confirmText="Continue to main page"
+                      cancelText="Resend email"
+                      customStyles={{ background: "1E1E1E" }}
+                    />
                   </form>
                 </LoginWrapperReg>
               )}

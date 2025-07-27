@@ -1,6 +1,6 @@
 export type ActionButtonsProps = {
-  confirm?: () => void;
-  cancel?: () => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
   confirmText?: string;
   cancelText?: string;
 };
