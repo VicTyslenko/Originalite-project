@@ -15,22 +15,20 @@ const rand = uniqueRandom(1000000, 9999999);
 
 exports.placeOrder = async (req, res) => {
   try {
-    const order = _.cloneDeep(req.body);
-    order.orderNo = String(rand());
+    const orderDetails = _.cloneDeep(req.body);
+    orderDetails.orderNo = String(rand());
 
-    const customer = await Customer.findById(order.customerId);
-
-    console.log("customer", customer);
+    const customer = await Customer.findById(orderDetails.customerId);
 
     if (!customer) {
-      const products = order.products;
       const newOrder = new Order({
-        ...order,
+        ...orderDetails,
         guest: true,
       });
+
       await newOrder.save();
 
-      res.status(200).json({ message: "Success placing order!", order, orderId: newOrder._id });
+      res.status(200).json({ message: "Success placing order!", orderDetails, orderId: newOrder._id });
     }
 
     // if (req.body.address) {

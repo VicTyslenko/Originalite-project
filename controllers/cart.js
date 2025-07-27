@@ -100,7 +100,7 @@ exports.applyDiscountToCart = async (req, res) => {
         ...payload,
       },
       process.env.DISCOUNT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "1m" }
     );
 
     return res.status(200).json({ message: "Discount code found successfully!", validDiscountData });

@@ -3,7 +3,7 @@ export const SessionStorage = {
 
   getDiscountToken: () => sessionStorage.getItem("discount-token"),
 
-  removeToken: () => sessionStorage.removeItem("discount-token"),
+  removeDiscountToken: () => sessionStorage.removeItem("discount-token"),
 
   setActivateDiscount: (value: string) => sessionStorage.setItem("active-discount", value),
 

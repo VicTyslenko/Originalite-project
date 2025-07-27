@@ -7,6 +7,7 @@ export const LoadingWrapper = styled.div`
   left: 0;
   height: 100vh;
   width: 100%;
+  color: #fff;
   background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;

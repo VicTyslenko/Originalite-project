@@ -7,12 +7,11 @@ import { DefaultButton } from "shared/components/typography/default-button/defau
 
 import { initialValues } from "./data";
 import { useCheckoutInfo } from "./hooks";
-import { validationSchema } from "./validation";
 
 export const CheckoutInfo = () => {
   const { orderValue } = useCartData();
 
-  const { handleSubmit, discountPrice, token, expErrorMessage, handleCheckout } = useCheckoutInfo();
+  const { handleSubmit, discountPrice, expErrorMessage, handleCheckout, discountIsActivated } = useCheckoutInfo();
 
   return (
     <S.Wrapper>
@@ -22,7 +21,6 @@ export const CheckoutInfo = () => {
         onSubmit={(values, { resetForm, setFieldError }) => {
           handleSubmit({ values, resetForm, setFieldError });
         }}
-        // validationSchema={validationSchema}
       >
         {props => {
           return (
@@ -56,8 +54,8 @@ export const CheckoutInfo = () => {
       <S.OrderValue>Order value : {orderValue}</S.OrderValue>
       {/* <S.Delivery>Delivery :</S.Delivery> */}
       {expErrorMessage && <S.ErrorMessage>{expErrorMessage}</S.ErrorMessage>}
-      <S.Total isActive={Boolean(token)}>
-        {Boolean(token) ? "Discount" : "Total"} price
+      <S.Total isActive={discountIsActivated}>
+        {discountIsActivated ? "Discount" : "Total"} price
         <span className="total-price">{discountPrice} $ </span>
       </S.Total>
       <S.ButtonWrapp>

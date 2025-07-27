@@ -21,7 +21,7 @@ export type OrderData = {
 
 export type OrderModel = {
   message: string;
-  order: OrderData;
+  orderDetails: OrderData;
   orderId: string | null;
 };
 

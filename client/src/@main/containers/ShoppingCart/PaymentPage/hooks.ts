@@ -26,6 +26,7 @@ export const usePaymentPage = () => {
   const handleCleanOrder = () => {
     dispatch(clearOrderData());
     SessionStorage.removeToken();
+    SessionStorage.removeActiveDiscount();
     setModal(true);
   };
 

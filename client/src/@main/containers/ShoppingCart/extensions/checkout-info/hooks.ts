@@ -41,7 +41,7 @@ export const useCheckoutInfo = () => {
     }
     // if input value is empty, the request will not be sent
     if (values.discount.trim() === "") {
-      setFieldError("discount", "please, provide the discount code!");
+      setFieldError("discount", "Please, provide the discount code!");
       return;
     }
 
@@ -58,6 +58,7 @@ export const useCheckoutInfo = () => {
         setDiscountIsActivated(true);
         SessionStorage.setActivateDiscount("true");
       }
+
       resetForm();
     } catch (error: any) {
       setFieldError("discount", error.response.data.message);
@@ -81,7 +82,7 @@ export const useCheckoutInfo = () => {
 
       const currentDate = Date.now() / 1000;
       const validToken = currentDate < Number(exp);
-
+      
       if (discountValue > 0 && validToken) {
         const calculatedDiscountValue = (orderValue * discountValue) / 100;
 
@@ -90,9 +91,10 @@ export const useCheckoutInfo = () => {
           return result;
         });
       } else {
-        setToken("");
+        setDiscountPrice(orderValue);
         setExpErrorMessage("Discount code has expired, try again");
-        SessionStorage.removeToken();
+        SessionStorage.removeActiveDiscount();
+        setDiscountIsActivated(false);
       }
     }
   }, [orderValue, token]);

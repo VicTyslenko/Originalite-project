@@ -10,7 +10,7 @@ export const useAddressDetails = () => {
   const dispatch = useStoreDispatch();
   const navigate = useNavigate();
 
-  const order = useStoreSelector(state => state.orders.data);
+  const orderData = useStoreSelector(state => state.orders.data);
   const totalSum = useStoreSelector(state => state.cart.totalSum);
   const products = useStoreSelector(state => state.cart.products);
   const serverError = useStoreSelector(state => state.orders.error);
@@ -20,9 +20,9 @@ export const useAddressDetails = () => {
   // submit form handler
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
     if (!products?.length) return;
-    
+
     const data = await dispatch(
-      ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: order?.orderId!, totalSum }),
+      ordersFetchData({ ...values, customerId: user?.id || null, products, orderId: orderData?.orderId!, totalSum }),
     );
 
     if (data.meta.requestStatus === "rejected") return;
@@ -32,5 +32,13 @@ export const useAddressDetails = () => {
     resetForm();
   };
 
-  return { handleFormSubmit, serverError, user };
+  const initialValues = {
+    firstName: orderData?.orderDetails.firstName || user?.firstName || "",
+    lastName: user?.lastName || orderData?.orderDetails.lastName || "",
+    email: user?.email || orderData?.orderDetails.email || "",
+    telephone: user?.telephone || orderData?.orderDetails.telephone || "",
+    address: user?.address || orderData?.orderDetails.address || "",
+  };
+
+  return { handleFormSubmit, serverError, initialValues };
 };

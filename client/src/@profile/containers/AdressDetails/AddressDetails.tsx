@@ -7,7 +7,7 @@ import * as S from "./StyledAddressDetails";
 import { useAddressDetails } from "./hooks";
 
 const AddressDetails = () => {
-  const { user, handleFormSubmit, serverError } = useAddressDetails();
+  const { handleFormSubmit, serverError, initialValues } = useAddressDetails();
 
   return (
     <Container
@@ -18,13 +18,7 @@ const AddressDetails = () => {
       }}
     >
       <Formik
-        initialValues={{
-          firstName: user?.firstName || "",
-          lastName: user?.lastName || "",
-          email: user?.email || "",
-          telephone: user?.telephone || "",
-          address: user?.address || "",
-        }}
+        initialValues={initialValues}
         enableReinitialize
         validationSchema={validationDeliverySchema}
         onSubmit={(values, { resetForm }) => handleFormSubmit({ values, resetForm })}
