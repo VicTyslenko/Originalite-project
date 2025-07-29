@@ -13,7 +13,7 @@ function ShoppingCart() {
 
   useEffect(() => {
     if (cartData && cartData.length <= 0) {
-      SessionStorage.removeToken();
+      SessionStorage.removeDiscountToken();
       SessionStorage.removeActiveDiscount();
     }
   }, [cartData]);

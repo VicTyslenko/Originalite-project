@@ -25,7 +25,7 @@ export const usePaymentPage = () => {
 
   const handleCleanOrder = () => {
     dispatch(clearOrderData());
-    SessionStorage.removeToken();
+    SessionStorage.removeDiscountToken();
     SessionStorage.removeActiveDiscount();
     setModal(true);
   };
@@ -43,7 +43,7 @@ export const usePaymentPage = () => {
           updateOrder({
             orderId: orderData.orderId,
             params: {
-              email: user?.email || orderData.order.email,
+              email: user?.email || orderData.orderDetails.email,
               letterSubject: "Order Payment Confirmation",
               letterHtml: "<p>Your order has been successfully paid. Thank you for shopping with us!</p>",
               paymentStatus: "paid",

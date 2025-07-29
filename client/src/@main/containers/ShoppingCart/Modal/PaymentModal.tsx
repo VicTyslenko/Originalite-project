@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { ActionButtons } from "./components";
 import type { PaymentModalProps } from "./models";
 
-const style = {
+const BoxStyle = {
   position: "absolute",
   top: "42%",
   left: "50%",
@@ -17,6 +17,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 
 const PaymentModal = ({
   open,
@@ -32,7 +33,7 @@ const PaymentModal = ({
   return (
     <div>
       <Modal open={open} onClose={close}>
-        <Box sx={{ ...style, ...customStyles }}>
+        <Box sx={{ ...BoxStyle, ...customStyles }}>
           <Typography
             id="modal-modal-description"
             sx={{

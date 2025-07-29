@@ -6,7 +6,7 @@ export const FlexWrapp = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 48px;
-	padding: 55px 0 50px 40px;
+	padding: 78px 0 50px 40px;
 	background-color: black;
 	color: white;
 

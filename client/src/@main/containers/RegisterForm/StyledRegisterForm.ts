@@ -58,7 +58,7 @@ export const LoginWrapper = styled.div`
 export const ButtonWrapp = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 107px;
+  margin-top: 18px;
 `;
 export const StyledButton = styled(Button)`
   &&& {

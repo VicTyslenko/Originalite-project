@@ -18,7 +18,7 @@ function Wishlist() {
 
   const { wishList, cart, isLoading } = useGetWishlist();
 
-  const itemInCart = (id: string) => cart.some(cartItem => cartItem.product._id === id);
+  const itemInCart = (id: string) => cart?.some(cartItem => cartItem.product._id === id);
 
   const handleClick = (id: string) => {
     if (itemInCart(id)) {

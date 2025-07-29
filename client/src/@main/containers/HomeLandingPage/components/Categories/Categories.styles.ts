@@ -34,6 +34,7 @@ export const ImageText = styled.p`
   color: #ffffff;
   background-color: rgba(18, 18, 18, 0.7);
 `;
+
 export const FlexContainer = styled.div`
   display: flex;
   gap: 24px;

@@ -50,6 +50,7 @@ export const CartItem = ({ product, currentColor, currentSize, cartQuantity }: P
           close={() => setOpen(false)}
           text="Do you want to remove this item?"
           actions
+          cancel={() => setOpen(false)}
           customStyles={{
             minWidth: "450px",
           }}

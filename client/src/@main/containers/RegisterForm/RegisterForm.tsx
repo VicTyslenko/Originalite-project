@@ -156,7 +156,7 @@ const RegisterForm = () => {
                       actions
                       confirmText="Continue to main page"
                       cancelText="Resend email"
-                      customStyles={{ background: "1E1E1E" }}
+                      customStyles={{ minWidth: "500px" }}
                     />
                   </form>
                 </LoginWrapperReg>

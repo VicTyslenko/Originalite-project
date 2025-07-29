@@ -15,7 +15,6 @@ function MyProfile() {
   const dispatch = useStoreDispatch();
 
   const { user } = useUserData();
-  console.log(user);
   const errorMessage = useStoreSelector(state => state.auth.error);
 
   const handleSubmit = async ({ values, resetForm }: { values: UpdateCustomerProps; resetForm: () => void }) => {

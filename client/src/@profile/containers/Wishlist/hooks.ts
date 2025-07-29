@@ -5,7 +5,7 @@ export const useGetWishlist = () => {
 
   const isLoading = useStoreSelector(state => state.wishlist.loading);
 
-  const cart = useStoreSelector(state => state.cart.data);
+  const cart = useStoreSelector(state => state.cart.products);
 
   return { wishList, isLoading, cart };
 };
