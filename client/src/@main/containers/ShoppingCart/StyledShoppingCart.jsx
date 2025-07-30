@@ -8,6 +8,8 @@ export const ShoppingCartWrapp = styled.div`
 	gap: 3rem;
 `;
 
+
+
 export const StyledLink = styled(Link)`
 	width: 270px;
 	background-color: black;

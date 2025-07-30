@@ -113,13 +113,9 @@ function MyProfile() {
                   placeholder="dd-mm-yyyy"
                   variant="standard"
                   helperText={props.touched.birthday && props.errors.birthday}
-                  error={Boolean(props.errors.birthday && props.errors.birthday)}
+                  error={props.touched.birthday && Boolean(props.errors.birthday)}
                   sx={{ mb: "6px" }}
                 />
-
-                {/* {errorMessage && !Object.keys(props?.errors).length && (
-									<span className="error-message">{Object.values(errorMessage)}</span>
-								)} */}
 
                 <Button
                   type="submit"

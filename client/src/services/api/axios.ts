@@ -42,11 +42,6 @@ privateInstance.interceptors.response.use(
         prevRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return privateInstance(prevRequest);
       } catch (error) {
-        // localStorage.removeItem("root");
-        // localStorage.removeItem("keepSignedIn");
-
-        // const test = await userLogout();
-        // console.log(test);
         return Promise.reject(error);
       }
     }

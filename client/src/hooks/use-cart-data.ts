@@ -7,6 +7,7 @@ export const useCartData = () => {
 
   const orderValue = allPrices?.reduce((sum, el) => sum + el, 0) || 0;
 
+  const loadingCartData = useStoreSelector(state => state.cart.loader);
 
-  return { orderValue, cartData };
+  return { orderValue, cartData, loadingCartData };
 };

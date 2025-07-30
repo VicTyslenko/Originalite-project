@@ -1,3 +1,4 @@
+import { EmptyCart } from "@main/containers/ShoppingCart/EmptyCart/EmptyCart";
 import AddressDetails from "@profile/containers/AdressDetails/AddressDetails";
 import VerificationPage from "components/Verification/VerificationPage";
 import { Route, Routes } from "react-router-dom";
@@ -13,7 +14,6 @@ import ProductPage from "../containers/ProductPage/ProductPage";
 import QuestionsLandingPage from "../containers/QuestionsLandingPage";
 import RegisterForm from "../containers/RegisterForm/RegisterForm";
 import ShoppingCart from "../containers/ShoppingCart";
-import EmptyCart from "../containers/ShoppingCart/EmptyCart/EmptyCart";
 import PaymentPage from "../containers/ShoppingCart/PaymentPage/PaymentPage";
 import WorkUsLandingPage from "../containers/WorkUsLandingPage";
 

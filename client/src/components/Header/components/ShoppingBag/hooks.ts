@@ -15,7 +15,7 @@ export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
   const isLoggedOut = useStoreSelector(state => state.auth.isLoggedOut);
 
   const dataProducts = useStoreSelector(state => state.cart.products);
-  const loader = useStoreSelector(state => state.cart.loader);
+  const loadingCartData = useStoreSelector(state => state.cart.loader);
 
   const handleBasketClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const button = event.currentTarget;
@@ -39,5 +39,5 @@ export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
     }
   }, [isShoppingBag, isLoggedOut]);
 
-  return { handleBasketClick, dataProducts, handleModalClose, loader, orderValue };
+  return { handleBasketClick, dataProducts, handleModalClose, loadingCartData, orderValue };
 };

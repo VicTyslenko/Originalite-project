@@ -146,7 +146,7 @@ const RegisterForm = () => {
                     <PaymentModal
                       open={open}
                       close={handleModalClose}
-                      text="We sent you a link, please, verify your email."
+                      text="We sent you a link, please verify your email."
                       confirm={handleModalClose}
                       cancel={() => {
                         handleResendLink(props.values.email);
@@ -156,7 +156,7 @@ const RegisterForm = () => {
                       actions
                       confirmText="Continue to main page"
                       cancelText="Resend email"
-                      customStyles={{ minWidth: "500px" }}
+                      customStyles={{ minWidth: "500px", border: "1px solid #fff" }}
                     />
                   </form>
                 </LoginWrapperReg>

@@ -3,6 +3,7 @@ import { Container, Typography } from "@mui/material";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { useEffect, useState } from "react";
 import { DefaultTypography } from "shared/components/typography/default-typography";
+import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 
 import { addProductToCart } from "../../../@main/store/actions/cart/cartActions";
 import { deleteProductFromCart } from "../../../@main/store/actions/cart/cartActions";
@@ -13,6 +14,7 @@ import { useGetWishlist } from "./hooks";
 
 function Wishlist() {
   const dispatch = useStoreDispatch();
+  const auth = useStoreSelector(state => state.auth.data);
 
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
@@ -29,8 +31,12 @@ function Wishlist() {
   };
 
   useEffect(() => {
-    dispatch(getWishlist());
-  }, []);
+    const accessToken = auth?.accessToken;
+
+    if (accessToken) {
+      dispatch(getWishlist());
+    }
+  }, [auth?.accessToken]);
 
   const MainContent = wishList?.map(({ name, currentPrice, imageUrls, colors, sizes, _id }) => (
     <Content key={_id}>
