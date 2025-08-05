@@ -179,6 +179,7 @@ exports.loginCustomer = async (req, res) => {
       address: customer.address,
       telephone: customer.telephone,
       birthday: customer.birthday,
+      id: customer.id,
     };
     const accessToken = generateAccessToken(accessTokenPayload);
 
@@ -217,13 +218,11 @@ exports.refreshToken = async (req, res) => {
   try {
     const cookies = req.cookies;
 
-    // if (!cookies?.jwt) return res.sendStatus(401); // No cookie = unauthorized
-
     const refreshToken = cookies.jwt;
 
     const foundUser = await Customer.findOne({ refreshToken });
 
-    if (!foundUser) return res.status(403).json({ message: "Forbidden, cookies not found" }); 
+    if (!foundUser) return res.status(403).json({ message: "Forbidden, cookies not found" });
 
     jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (error) => {
       if (error) return res.sendStatus(403); // Token not associated with any user

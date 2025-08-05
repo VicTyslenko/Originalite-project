@@ -1,7 +1,6 @@
 import { getCart } from "@main/store/actions/cart/cartActions";
 import { closeModal } from "@main/store/slices/modal/modalSlice";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
-import { useUserData } from "hooks/use-user-data";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStoreSelector } from "shared/hooks/global/use-store-selector";
@@ -10,12 +9,13 @@ import type { ShoppingBagProps } from "./models";
 
 export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
   const dispatch = useStoreDispatch();
-  const { user } = useUserData();
-  const accessToken = useStoreSelector(state => state.auth.data?.accessToken);
+
   const navigate = useNavigate();
 
   const dataProducts = useStoreSelector(state => state.cart.products);
   const loadingCartData = useStoreSelector(state => state.cart.loader);
+
+  const isLoggedOut = useStoreSelector(state => state.auth.isLoggedOut);
 
   const handleBasketClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const button = event.currentTarget;
@@ -35,10 +35,10 @@ export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
 
   // Get user cart data server request:
   useEffect(() => {
-    if (isShoppingBag && user) {
+    if (isShoppingBag && !isLoggedOut) {
       dispatch(getCart());
     }
-  }, [isShoppingBag, user]);
+  }, [isShoppingBag, isLoggedOut]);
 
   return { handleBasketClick, dataProducts, handleModalClose, loadingCartData, orderValue };
 };

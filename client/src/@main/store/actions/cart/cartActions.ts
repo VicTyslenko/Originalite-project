@@ -24,21 +24,7 @@ export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { messag
     }
   },
 );
-// export const getCart = createAsyncThunk<
-//   CartProps,
-//   string, // 👈 accessToken is passed here
-//   { rejectValue: { message: string } }
-// >(
-//   "cart/getCart",
-//   async (accessToken, { rejectWithValue }) => {
-//     try {
-//       const response = await fetchCart(accessToken);
-//       return response.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.response?.data || { message: error.message });
-//     }
-//   }
-// );
+
 export const addProductToCart = createAsyncThunk<CartProps, string, { state: RootState }>(
   "cart/addProductToCart",
   async (id, { getState }) => {

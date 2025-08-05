@@ -20,8 +20,6 @@ privateInstance.interceptors.request.use(
   async config => {
     const { store } = require("../../store/index");
     const token = store.getState().auth.data?.accessToken;
-    console.log("testing token", store.getState().auth);
-
     if (token && !config.headers["Authorization"]) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
@@ -39,6 +37,7 @@ privateInstance.interceptors.response.use(
 
       try {
         const newToken = await refreshToken();
+
         prevRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return privateInstance(prevRequest);
       } catch (error) {

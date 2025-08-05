@@ -8,13 +8,7 @@ import type { ProductParams } from "./models";
 export function getCart(): Promise<AxiosResponse<CartProps>> {
   return privateInstance.get<CartProps>("cart");
 }
-// export function getCart(token: string): Promise<AxiosResponse<CartProps>> {
-//   return privateInstance.get<CartProps>("cart", {
-//     headers: {
-//       Authorization: `Bearer ${token}`,
-//     },
-//   });
-// }
+
 export function deleteCart() {
   return privateInstance.delete(`cart`);
 }
