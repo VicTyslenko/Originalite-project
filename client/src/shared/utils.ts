@@ -1,6 +1,7 @@
 import { setAuth } from "@main/store/slices/auth/authSlice";
 import { type Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 import { publicInstance } from "services/api/axios";
+import { LocalStorage } from "utils/local-storage";
 
 export const useGetMobileSize = (size: number | Breakpoint) => {
   const theme = useTheme();
@@ -27,10 +28,13 @@ export const refreshToken = async () => {
           accessToken,
         }),
       );
+
       return accessToken;
     }
+
     return null;
   } catch (error) {
+    LocalStorage.removeKeepSignIn();
     console.error(error);
   }
 };

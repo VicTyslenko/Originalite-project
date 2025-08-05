@@ -21,7 +21,7 @@ function ProductInfoActions({ id }: { id: string }) {
     } else {
       dispatch(addProductToCart(id));
     }
-  }, [id, itemInCart, dispatch]);
+  }, [id, itemInCart]);
 
   const handleClickWishlist = useCallback(() => {
     if (itemInWishlist) {
@@ -29,7 +29,7 @@ function ProductInfoActions({ id }: { id: string }) {
     } else {
       dispatch(addProductToWishlist(id));
     }
-  }, [id, itemInWishlist, dispatch]);
+  }, [id, itemInWishlist]);
 
   const handleOpenTooltip = () => {
     if ((!currentSize || !currentColor) && !itemInCart) {

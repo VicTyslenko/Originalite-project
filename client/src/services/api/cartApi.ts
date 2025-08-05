@@ -8,6 +8,13 @@ import type { ProductParams } from "./models";
 export function getCart(): Promise<AxiosResponse<CartProps>> {
   return privateInstance.get<CartProps>("cart");
 }
+// export function getCart(token: string): Promise<AxiosResponse<CartProps>> {
+//   return privateInstance.get<CartProps>("cart", {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+// }
 export function deleteCart() {
   return privateInstance.delete(`cart`);
 }
@@ -15,8 +22,8 @@ export function decreaseQuantity({ id }: { id: string }) {
   return privateInstance.delete(`cart/product/${id}`);
 }
 
-export function addProductToCart({ data, id }: ProductParams) {
-  return privateInstance.put(`cart/${id}`, data);
+export function addProductToCart({ data, id }: ProductParams): Promise<AxiosResponse<CartProps>> {
+  return privateInstance.put<CartProps>(`cart/${id}`, data);
 }
 
 export function deleteProductFromCart({ id }: { id: string }) {

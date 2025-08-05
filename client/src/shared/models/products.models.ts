@@ -24,6 +24,11 @@ export interface ProductData {
   date?: string | Date;
 }
 
+export type Products = {
+  cartQuantity: number;
+  product: ProductData;
+}[];
+
 export interface ProductModels {
   cartQuantity: number;
   color: string;

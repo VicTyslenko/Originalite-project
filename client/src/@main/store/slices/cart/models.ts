@@ -1,6 +1,7 @@
-import type { CartProps } from "shared/models/cart.models";
+import type { Products } from "shared/models/products.models";
 
-export interface InitialProps extends CartProps {
+export interface InitialProps {
   loader: boolean;
   totalSum: number;
+  products: Products;
 }

@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { CartProps } from "shared/models/cart.models";
-import type { ProductModels } from "shared/models/products.models";
 import { type RootState } from "store";
 
 import {
@@ -11,7 +10,7 @@ import {
   addProductToCart as fetchProductToCart,
 } from "../../../../services/api/cartApi";
 
-// CartProps types defined for returned data from server, void as a second arg(we don't pass any arguments in this function)
+// GetCartProps types defined for returned data from server, void as a second arg(we don't pass any arguments in this function)
 
 export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { message: string } }>(
   "cart/getCart",
@@ -25,8 +24,22 @@ export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { messag
     }
   },
 );
-
-export const addProductToCart = createAsyncThunk<ProductModels[], string, { state: RootState }>(
+// export const getCart = createAsyncThunk<
+//   CartProps,
+//   string, // 👈 accessToken is passed here
+//   { rejectValue: { message: string } }
+// >(
+//   "cart/getCart",
+//   async (accessToken, { rejectWithValue }) => {
+//     try {
+//       const response = await fetchCart(accessToken);
+//       return response.data;
+//     } catch (error: any) {
+//       return rejectWithValue(error.response?.data || { message: error.message });
+//     }
+//   }
+// );
+export const addProductToCart = createAsyncThunk<CartProps, string, { state: RootState }>(
   "cart/addProductToCart",
   async (id, { getState }) => {
     const { auth, product, cart } = getState();
@@ -40,11 +53,9 @@ export const addProductToCart = createAsyncThunk<ProductModels[], string, { stat
           color: product.currentColor,
         },
       });
-
-      
-      return data.cart.products;
+      console.log("data from back", data);
+      return data;
     }
-
     //if user is not logged in:
     if (!cart?.products?.length) return [{ ...product, cartQuantity: 1 }];
 

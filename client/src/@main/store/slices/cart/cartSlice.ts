@@ -6,8 +6,7 @@ import {
   getCart,
 } from "@main/store/actions/cart/cartActions";
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
-import type { CartProps } from "shared/models/cart.models";
-import type { ProductModels } from "shared/models/products.models";
+import { type CartProps } from "shared/models/cart.models";
 
 import type { InitialProps } from "./models";
 
@@ -35,18 +34,29 @@ export const cartSlice = createSlice({
       state.loader = true;
     });
 
-    builder.addCase(getCart.fulfilled, (state, action: PayloadAction<CartProps | undefined>) => {
+    builder.addCase(getCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       state.products = action.payload?.products || [];
 
       state.loader = false;
     });
 
-    builder.addCase(addProductToCart.fulfilled, (state, action: PayloadAction<ProductModels[]>) => {
-      state.products = [...action.payload];
-    });
+    builder
+      .addCase(addProductToCart.pending, state => {
+        state.loader = true;
+      })
+      .addCase(addProductToCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
+        const { products } = action.payload;
+        state.products = products;
+        state.loader = false;
+      })
+      .addCase(addProductToCart.rejected, (state, action) => {
+        state.loader = false;
+        console.log(" addProductToCart rejected:", action.error);
+      });
 
     builder.addCase(deleteProductFromCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
       const { products } = action.payload;
+
       state.products = [...(products ?? [])];
     });
 

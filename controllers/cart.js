@@ -140,7 +140,6 @@ exports.addProductToCart = async (req, res, next) => {
           });
 
           const newCart = new Cart(queryCreator(cartData));
-
           newCart.populate("products.product").populate("customerId").execPopulate();
 
           newCart
@@ -308,14 +307,19 @@ exports.deleteProductFromCart = async (req, res, next) => {
     );
 };
 
-exports.getCart = (req, res) => {
-  Cart.findOne({ customerId: req.user.id })
-    .populate("products.product")
-    .populate("customerId")
-    .then((cart) => res.json(cart))
-    .catch((err) =>
-      res.status(400).json({
-        message: `Error happened on server: "${err}" `,
-      })
-    );
+exports.getCart = async (req, res) => {
+  try {
+    const customerCart = await Cart.findOne({ customerId: req.user.id }).populate("products.product").populate("customerId");
+
+    if (!customerCart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    return res.json(customerCart);
+  } catch (err) {
+    console.error("Error fetching cart:", err);
+    return res.status(500).json({
+      message: `Error happened on server: "${err.message}"`,
+    });
+  }
 };

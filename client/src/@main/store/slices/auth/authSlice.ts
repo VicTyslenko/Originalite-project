@@ -43,6 +43,7 @@ const authReducer = createSlice({
     builder.addCase(actionFetchAuth.fulfilled, (state, action: PayloadAction<UserModels>) => {
       state.status = "loaded";
       state.data = action.payload;
+
       state.isLoggedOut = false;
       state.loader = false;
     });

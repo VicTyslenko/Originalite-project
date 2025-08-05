@@ -16,11 +16,7 @@ export const useAutoLogin = () => {
   useEffect(() => {
     if (!user && !isLoggedOut && keepSignedIn) {
       async function refreshIfNeedeed() {
-        try {
-          await refreshToken();
-        } catch (error) {
-          console.error(error);
-        }
+        await refreshToken();
       }
 
       refreshIfNeedeed();

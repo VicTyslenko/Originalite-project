@@ -1,5 +1,6 @@
-import type { ProductModels } from "./products.models";
+import type { Products } from "./products.models";
 
 export interface CartProps {
-  products: ProductModels[] | null;
+  customerId: string;
+  products: Products;
 }

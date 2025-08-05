@@ -223,7 +223,7 @@ exports.refreshToken = async (req, res) => {
 
     const foundUser = await Customer.findOne({ refreshToken });
 
-    if (!foundUser) return res.sendStatus(403); // Forbidden
+    if (!foundUser) return res.status(403).json({ message: "Forbidden, cookies not found" }); 
 
     jwt.verify(refreshToken, process.env.SECRET_REFRESH_KEY, (error) => {
       if (error) return res.sendStatus(403); // Token not associated with any user
