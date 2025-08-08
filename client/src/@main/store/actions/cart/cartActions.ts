@@ -17,7 +17,6 @@ export const getCart = createAsyncThunk<CartProps, void, { rejectValue: { messag
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetchCart();
-
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -39,7 +38,7 @@ export const addProductToCart = createAsyncThunk<CartProps, string, { state: Roo
           color: product.currentColor,
         },
       });
-      console.log("data from back", data);
+
       return data;
     }
     //if user is not logged in:
@@ -90,7 +89,7 @@ export const deleteProductFromCart = createAsyncThunk<CartProps, string, { state
       const { data } = await fetchProductFromCart({
         id,
       });
-
+    
       return data;
     } else {
       const products = cart.products?.filter(item => item.product._id !== id);

@@ -124,7 +124,7 @@ exports.addProductToCart = async (req, res, next) => {
 
   if (!productToAdd) {
     res.status(400).json({
-      message: `Product with _id (ObjectId) "${req.params.productId}" does not exist`,
+      message: `Product with _id (ObjectId) "${req.params.productId}"does not exist`,
     });
   } else {
     Cart.findOne({ customerId: req.user.id })
@@ -144,7 +144,7 @@ exports.addProductToCart = async (req, res, next) => {
 
           newCart
             .save()
-            .then((cart) => res.json({ message: "Product added to cart successfully!", cart }))
+            .then(({ products }) => res.json({ message: "Product added to cart successfully!", products }))
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,
@@ -155,7 +155,7 @@ exports.addProductToCart = async (req, res, next) => {
 
           const isProductExistInCart = cart.products.some((item) => item.product.toString() === req.params.productId);
 
-          // if product exist in cart, could be problems with props: color and size
+          // if product exists in cart, could be problems with props: color and size
           if (isProductExistInCart) {
             cartData.products = cart.products.map((item) => {
               if (item.product.toString() === req.params.productId) {
@@ -176,9 +176,9 @@ exports.addProductToCart = async (req, res, next) => {
           const updatedCart = queryCreator(cartData);
 
           Cart.findOneAndUpdate({ customerId: req.user.id }, { $set: updatedCart }, { new: true })
+            .select("products")
             .populate("products.product")
-            .populate("customerId")
-            .then((cart) => res.json(cart))
+            .then(({ products }) => res.json({ message: "Cart updated successfully!", products }))
             .catch((err) =>
               res.status(400).json({
                 message: `Error happened on server: "${err}" `,

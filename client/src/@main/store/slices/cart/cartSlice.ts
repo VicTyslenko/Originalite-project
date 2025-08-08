@@ -30,7 +30,6 @@ export const cartSlice = createSlice({
 
   extraReducers: builder => {
     builder.addCase(getCart.pending, state => {
-      state.products = [];
       state.loader = true;
     });
 
@@ -46,12 +45,12 @@ export const cartSlice = createSlice({
       })
       .addCase(addProductToCart.fulfilled, (state, action: PayloadAction<CartProps>) => {
         const { products } = action.payload;
+
         state.products = products;
         state.loader = false;
       })
       .addCase(addProductToCart.rejected, (state, action) => {
         state.loader = false;
-        console.log(" addProductToCart rejected:", action.error);
       });
 
     builder.addCase(deleteProductFromCart.fulfilled, (state, action: PayloadAction<CartProps>) => {

@@ -32,7 +32,6 @@ export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
   const allPrices = dataProducts?.map(el => el.product.currentPrice * el.cartQuantity);
 
   const orderValue = allPrices?.reduce((sum, el) => sum + el, 0) || 0;
-
   // Get user cart data server request:
   useEffect(() => {
     if (isShoppingBag && !isLoggedOut) {
