@@ -3,12 +3,12 @@ import { closeModal } from "@main/store/slices/modal/modalSlice";
 import CloseIcon from "@mui/icons-material/Close";
 import { useStoreDispatch } from "hooks/use-store-dispatch";
 import { Link } from "react-router-dom";
-import type { ProductModels } from "shared/models/products.models";
+import type { Products } from "shared/models/products.models";
 
 import * as S from "../StyledShoppingBag";
 
 type Props = {
-  products: ProductModels[];
+  products: Products;
 };
 
 export const ShoppingBagItem = ({ products }: Props) => {

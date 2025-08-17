@@ -26,7 +26,9 @@ export interface ProductData {
 
 export type Products = {
   cartQuantity: number;
-  product: ProductData;
+  product: ProductData | null;
+  currentColor?: string;
+  currentSize?: string;
 }[];
 
 export interface ProductModels {

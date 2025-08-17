@@ -14,6 +14,8 @@ const uniqueRandom = require("unique-random");
 const rand = uniqueRandom(1000000, 9999999);
 
 exports.placeOrder = async (req, res) => {
+
+  
   try {
     const orderDetails = _.cloneDeep(req.body);
     orderDetails.orderNo = String(rand());
@@ -27,7 +29,7 @@ exports.placeOrder = async (req, res) => {
       });
 
       await newOrder.save();
-
+      console.log("order details", orderDetails);
       res.status(200).json({ message: "Success placing order!", orderDetails, orderId: newOrder._id });
     }
 

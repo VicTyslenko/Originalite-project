@@ -30,10 +30,10 @@ function ShoppingCart() {
             <S.LeftSideWrapp>
               {cartData.map(i => (
                 <CartItem
-                  key={i.product._id}
+                  key={i.product?._id}
                   product={i.product}
-                  currentColor={i.color}
-                  currentSize={i.size}
+                  currentColor={i.currentColor || ""}
+                  currentSize={i.currentSize || ""}
                   cartQuantity={i.cartQuantity}
                 />
               ))}

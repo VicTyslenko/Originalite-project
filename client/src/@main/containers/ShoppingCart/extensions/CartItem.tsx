@@ -6,7 +6,7 @@ import { Content, ContentWrapp, RemoveButton, StyledDiv } from "../StyledShoppin
 import { useCartItem } from "./hooks";
 
 type Props = {
-  product: ProductData;
+  product: ProductData | null;
   currentColor: string;
   currentSize: string;
   cartQuantity: number;
@@ -19,29 +19,29 @@ export const CartItem = ({ product, currentColor, currentSize, cartQuantity }: P
     <ContentWrapp>
       <Content>
         <div className="image-wrapp">
-          <Link to={`/product/${product.itemNo}`}>
-            <img className="image" src={product.imageUrls[0]} alt="" />
+          <Link to={`/product/${product?.itemNo}`}>
+            <img className="image" src={product?.imageUrls[0]} alt="" />
           </Link>
         </div>
         <StyledDiv>
           <ul className="list">
-            <li className="title">{product.name}</li>
+            <li className="title">{product?.name}</li>
             <li className="color">Color : {currentColor}</li>
             <li className="size">Size : {currentSize}</li>
             <div className="btn-wrapp">
-              <button className="btn-qnt" onClick={() => product._id && hanleDecrement(product._id)}>
+              <button className="btn-qnt" onClick={() => product?._id && hanleDecrement(product._id)}>
                 -
               </button>
               {cartQuantity}
-              <button className="btn-qnt" onClick={() => product._id && handleIncrement(product._id)}>
+              <button className="btn-qnt" onClick={() => product?._id && handleIncrement(product._id)}>
                 +
               </button>
             </div>
 
-            <li className="price">Price : {product.currentPrice} $ </li>
-            <li className="total">Total : {product.currentPrice * cartQuantity} $</li>
+            <li className="price">Price : {product?.currentPrice} $ </li>
+            <li className="total">Total : {product?.currentPrice ? product.currentPrice * cartQuantity : 0} $</li>
           </ul>
-          <RemoveButton onClick={() => handleOpenModal(product._id)}>Remove</RemoveButton>
+          {product && <RemoveButton onClick={() => handleOpenModal(product._id)}>Remove</RemoveButton>}
         </StyledDiv>
       </Content>
       {open && (

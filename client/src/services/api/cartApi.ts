@@ -1,10 +1,15 @@
 import { type AxiosResponse } from "axios";
 import type { CartProps } from "shared/models/cart.models";
+import type { Products } from "shared/models/products.models";
 
 import { publicInstance } from "./axios";
 import privateInstance from "./axios";
 import type { ProductParams } from "./models";
 
+export type CartResponse = {
+  products: Products;
+  message: string;
+};
 export function getCart(): Promise<AxiosResponse<CartProps>> {
   return privateInstance.get<CartProps>("cart");
 }
@@ -16,8 +21,8 @@ export function decreaseQuantity({ id }: { id: string }) {
   return privateInstance.delete(`cart/product/${id}`);
 }
 
-export function addProductToCart({ data, id }: ProductParams): Promise<AxiosResponse<CartProps>> {
-  return privateInstance.put<CartProps>(`cart/${id}`, data);
+export function addProductToCart({ data, id }: ProductParams): Promise<AxiosResponse<CartResponse>> {
+  return privateInstance.put<CartResponse>(`cart/${id}`, data);
 }
 
 export function deleteProductFromCart({ id }: { id: string }) {

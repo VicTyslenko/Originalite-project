@@ -5,7 +5,7 @@ import type { ProductData } from "shared/models/products.models";
 import type { ProductProps } from "./models";
 
 const initialState: ProductProps = {
-  product: null,
+  product:null,
   currentColor: null,
   currentSize: null,
 };

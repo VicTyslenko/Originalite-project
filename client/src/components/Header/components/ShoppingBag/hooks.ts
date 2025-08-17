@@ -29,7 +29,7 @@ export const useShoppingBag = ({ isShoppingBag }: ShoppingBagProps) => {
     dispatch(closeModal());
   };
 
-  const allPrices = dataProducts?.map(el => el.product.currentPrice * el.cartQuantity);
+  const allPrices = dataProducts?.map(el => (el.product ? el.product.currentPrice * el.cartQuantity : 0));
 
   const orderValue = allPrices?.reduce((sum, el) => sum + el, 0) || 0;
   // Get user cart data server request:

@@ -9,7 +9,7 @@ export const ordersFetchData = createAsyncThunk<OrderModel, OrdersParamsProps>(
   "orders/actionFetchData",
   async (params, { rejectWithValue }) => {
     try {
-      const { data } = await publicInstance.post("/orders/", params);
+      const { data } = await privateInstance.post("/orders/", params);
 
       return data;
     } catch (err: any) {

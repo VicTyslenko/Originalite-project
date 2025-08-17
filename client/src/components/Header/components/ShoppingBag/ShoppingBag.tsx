@@ -11,7 +11,6 @@ function ShoppingBag({ isShoppingBag }: ShoppingBagProps) {
   const { dataProducts, orderValue, handleModalClose, handleBasketClick } = useShoppingBag({
     isShoppingBag,
   });
-
   return (
     <>
       <Drawer anchor="right" open={isShoppingBag} onClose={handleModalClose}>
