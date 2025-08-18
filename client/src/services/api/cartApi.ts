@@ -10,6 +10,7 @@ export type CartResponse = {
   products: Products;
   message: string;
 };
+
 export function getCart(): Promise<AxiosResponse<CartProps>> {
   return privateInstance.get<CartProps>("cart");
 }

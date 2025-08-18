@@ -12,7 +12,7 @@ export const useRegister = () => {
   const dispatch = useStoreDispatch();
 
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [errorMessage, setErrorMessage] = useState("");
   const [open, setOpen] = useState(false);
 
   const currentTab = searchParams.get("tab") || "login";
@@ -28,11 +28,12 @@ export const useRegister = () => {
   // form submit handler
   const handleFormSubmit = async ({ values, resetForm }: SubmitProps) => {
     try {
-      await dispatch(registerFetchData(values));
+      await dispatch(registerFetchData(values)).unwrap();
 
-      setOpen(true);
-      resetForm();
-    } catch (error) {
+      // setOpen(true);
+      // resetForm();
+    } catch (error: any) {
+      setErrorMessage(error.message);
       console.error(error);
     }
   };
@@ -57,5 +58,5 @@ export const useRegister = () => {
     }
   };
 
-  return { handleModalClose, handleNavigate, currentTab, handleFormSubmit, open, handleResendLink };
+  return { handleModalClose, handleNavigate, currentTab, handleFormSubmit, open, handleResendLink, errorMessage };
 };

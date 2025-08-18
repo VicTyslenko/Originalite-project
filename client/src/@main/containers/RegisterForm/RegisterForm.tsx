@@ -8,6 +8,7 @@ import {
   ButtonWrappReg,
   ContainerWrapper,
   CssTextField,
+  ErrorMessage,
   HeadWrapp,
   InputsWrappReg,
   LoginWrapperReg,
@@ -19,7 +20,8 @@ import type { RegisterProps } from "./models";
 import { validationRegisterSchema } from "./validation";
 
 const RegisterForm = () => {
-  const { handleModalClose, handleNavigate, currentTab, handleFormSubmit, open, handleResendLink } = useRegister();
+  const { handleModalClose, handleNavigate, currentTab, handleFormSubmit, open, handleResendLink, errorMessage } =
+    useRegister();
 
   return (
     <ContainerWrapper>
@@ -138,7 +140,7 @@ const RegisterForm = () => {
                         helperText={props.touched.confirmPassword && props.errors.confirmPassword}
                       />
                     </InputsWrappReg>
-
+                    {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
                     <ButtonWrappReg>
                       <StyledButtonReg type="submit">Register</StyledButtonReg>
                     </ButtonWrappReg>

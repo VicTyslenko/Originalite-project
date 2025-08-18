@@ -54,7 +54,13 @@ export const LoginWrapper = styled.div`
     font-weight: 600;
   }
 `;
-
+export const ErrorMessage = styled.p`
+  font-size: 14px;
+  color: #d32f2f;
+  border-bottom: 1px solid #d32f2f;
+  display: inline-block;
+  font-weight: 600;
+`;
 export const ButtonWrapp = styled.div`
   display: flex;
   justify-content: center;
