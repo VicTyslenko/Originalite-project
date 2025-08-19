@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { resendEmailLink } from "services/api/resendLink";
 
-import type { SubmitProps } from "../models";
 
+import type { SubmitProps } from "../models";
 export const useRegister = () => {
   const dispatch = useStoreDispatch();
 

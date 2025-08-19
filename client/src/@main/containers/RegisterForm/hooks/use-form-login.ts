@@ -8,7 +8,6 @@ import { useStoreSelector } from "shared/hooks/global/use-store-selector";
 import type { RegisterProps } from "shared/models/auth.models";
 import { LocalStorage } from "utils/local-storage";
 
-
 export const useFormLogin = () => {
   const dispatch = useStoreDispatch();
   const navigate = useNavigate();
@@ -23,19 +22,15 @@ export const useFormLogin = () => {
       LocalStorage.removeKeepSignIn();
     }
     try {
-      const data = await dispatch(actionFetchAuth(values));
+      await dispatch(actionFetchAuth(values)).unwrap();
 
-      if (data.meta.requestStatus === "fulfilled") {
-        toast.success("Login successful!");
-        dispatch(closeModal());
-        navigate("/");
-        resetForm();
-      } else if (data.meta.requestStatus === "rejected") {
-        toast.error("Login failed, try again later");
-        dispatch(closeModal());
-        dispatch(setLoader(false));
-      }
+      toast.success("Login successful!");
+      dispatch(closeModal());
+      navigate("/");
+      resetForm();
     } catch (error) {
+      toast.error("Login failed, try again later");
+      dispatch(setLoader(false));
       console.error(error);
     }
   };
@@ -47,4 +42,3 @@ export const useFormLogin = () => {
 
   return { errorMessage, loader, handleFormSubmit, handleCloseModal };
 };
-
