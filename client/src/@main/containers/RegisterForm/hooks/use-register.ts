@@ -33,7 +33,8 @@ export const useRegister = () => {
       // setOpen(true);
       // resetForm();
     } catch (error: any) {
-      setErrorMessage(error.message);
+      const message = error?.message || Object.values(error || {}).join(", ");
+      setErrorMessage(message);
       console.error(error);
     }
   };

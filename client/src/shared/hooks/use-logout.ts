@@ -13,7 +13,9 @@ export const useLogout = () => {
   const signOut = async () => {
     try {
       await publicInstance.post("customers/logout");
-
+    } catch (error) {
+      console.error(error);
+    } finally {
       dispatch(clearDataAuth());
       dispatch(clearCart());
 
@@ -21,8 +23,6 @@ export const useLogout = () => {
       LocalStorage.removeRoot();
 
       navigate("/");
-    } catch (error) {
-      console.error(error);
     }
   };
 

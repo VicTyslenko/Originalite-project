@@ -1,4 +1,4 @@
-import { setAuth } from "@main/store/slices/auth/authSlice";
+import { clearDataAuth, setAuth } from "@main/store/slices/auth/authSlice";
 import { type Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 import { publicInstance } from "services/api/axios";
 import { LocalStorage } from "utils/local-storage";
@@ -35,6 +35,8 @@ export const refreshToken = async () => {
     return null;
   } catch (error) {
     LocalStorage.removeKeepSignIn();
+    store.dispatch(clearDataAuth());
     console.error(error);
+    throw error;
   }
 };

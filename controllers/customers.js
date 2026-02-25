@@ -80,6 +80,10 @@ exports.createCustomer = (req, res) => {
                 });
               } catch (err) {
                 console.log(err);
+                res.json({
+                  success: true,
+                  message: "User registered successfully.",
+                });
               }
             })
 

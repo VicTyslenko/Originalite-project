@@ -28,6 +28,8 @@ privateInstance.interceptors.request.use(
   },
   error => Promise.reject(error),
 );
+let refreshPromise: Promise<string | null> | null = null;
+
 privateInstance.interceptors.response.use(
   res => res,
   async error => {
@@ -36,8 +38,13 @@ privateInstance.interceptors.response.use(
       prevRequest.sent = true;
 
       try {
-        const newToken = await refreshToken();
+        if (!refreshPromise) {
+          refreshPromise = refreshToken().finally(() => {
+            refreshPromise = null;
+          });
+        }
 
+        const newToken = await refreshPromise;
         prevRequest.headers["Authorization"] = `Bearer ${newToken}`;
         return privateInstance(prevRequest);
       } catch (error) {

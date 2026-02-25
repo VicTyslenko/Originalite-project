@@ -1,7 +1,7 @@
 import type { RegisterProps } from "@main/containers/RegisterForm/models";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import axiosInstance from "../../../services/api/axios";
+import { publicInstance } from "../../../services/api/axios";
 
 type ResponseData = {
   success: boolean;
@@ -12,7 +12,7 @@ export const registerFetchData = createAsyncThunk<ResponseData, RegisterProps>(
   "register/actionFetchData",
   async (params, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/customers/", {
+      const { data } = await publicInstance.post("/customers/", {
         ...params,
       });
       return data;

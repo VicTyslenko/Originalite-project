@@ -51,9 +51,8 @@ const authReducer = createSlice({
 
     builder.addCase(actionFetchAuth.rejected, (state, { payload }) => {
       state.status = "error";
-      console.log("payload", payload);
       state.error = payload as AxiosError;
-      state.loader = true;
+      state.loader = false;
     });
 
     builder.addCase(updateCustomer.fulfilled, (state, action: PayloadAction<UserModels>) => {
