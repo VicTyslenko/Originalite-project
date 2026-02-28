@@ -27,6 +27,8 @@ const wishlist = require("./routers/wishlist");
 const credentials = require("./middleware/credentials");
 const corsOptions = require("./config/corsOptions");
 const cookieParser = require("cookie-parser");
+const mongoSanitize = require("express-mongo-sanitize");
+const logger = require("./utils/logger");
 
 app.use(cookieParser());
 
@@ -37,6 +39,7 @@ app.use(cors(corsOptions));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(mongoSanitize());
 
 const PORT = process.env.PORT || 4444;
 const db = require("./config/keys").mongoURI;
@@ -46,8 +49,8 @@ mongoose
     useNewUrlParser: true,
     useFindAndModify: false,
   })
-  .then(() => console.log(`MongoDB connected...`))
-  .catch((error) => console.log(error));
+  .then(() => logger.info("MongoDB connected"))
+  .catch((error) => logger.error("MongoDB connection error", error));
 
 require("./config/passport")(passport);
 app.use(passport.initialize());
@@ -71,9 +74,9 @@ app.use("/api/slides", slides);
 app.use("/api/subscribers", subscribers);
 app.use("/api/wishlist", wishlist);
 
-app.listen(4444, (err) => {
+app.listen(PORT, (err) => {
   if (err) {
-    return console.log(err);
+    return logger.error("Server failed to start", err);
   }
-  console.log(`Server ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });

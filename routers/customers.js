@@ -1,6 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const rateLimit = require("express-rate-limit");
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: { message: "Too many attempts from this IP, please try again after 15 minutes." },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Import controllers
 const {
@@ -19,11 +28,11 @@ const {
 // @route   POST /customers
 // @desc    Register customer
 // @access  Public
-router.post("/", createCustomer);
+router.post("/", authLimiter, createCustomer);
 
 router.get("/", getCustomers);
 
-router.post("/resend-email", resendEmail);
+router.post("/resend-email", authLimiter, resendEmail);
 
 router.get("/verify/:token", verifyCustomer);
 // @route   POST /customers/login
@@ -31,7 +40,7 @@ router.get("/verify/:token", verifyCustomer);
 // @access  Public
 
 router.post("/logout", handleLogout);
-router.post("/login", loginCustomer);
+router.post("/login", authLimiter, loginCustomer);
 // @route  GET /
 // @desc   Return access token
 router.get("/refresh", refreshToken);

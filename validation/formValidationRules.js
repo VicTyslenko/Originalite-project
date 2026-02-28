@@ -1,5 +1,4 @@
 const FormValidator = require("./FormValidator");
-const moment = require("moment");
 
 // Rules for all form fields for validation
 const formValidationRules = [

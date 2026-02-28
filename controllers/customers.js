@@ -9,6 +9,7 @@ const { generateAccessToken, generateRefreshToken } = require("../utils/tokens")
 const Customer = require("../models/Customer");
 const validateRegistrationForm = require("../validation/validationHelper");
 const queryCreator = require("../commonHelpers/queryCreator");
+const logger = require("../utils/logger");
 
 // Controller for creating customer and saving to DB
 exports.createCustomer = (req, res) => {
@@ -62,11 +63,11 @@ exports.createCustomer = (req, res) => {
                   {
                     email: customer.email,
                   },
-                  process.env.NODEMAILER_PASSWORD,
+                  process.env.EMAIL_SECRET,
                   { expiresIn: "1d" }
                 );
 
-                const confirmLink = `http://localhost:3000/verify?token=${emailToken}`;
+                const confirmLink = `${process.env.CLIENT_URL || "http://localhost:3000"}/verify?token=${emailToken}`;
 
                 await sendMail(
                   customer.email,
@@ -79,7 +80,7 @@ exports.createCustomer = (req, res) => {
                   message: "User registered. Please check your email to confirm your account.",
                 });
               } catch (err) {
-                console.log(err);
+                logger.error("Failed to send verification email", err);
               }
             })
 
@@ -105,9 +106,9 @@ exports.resendEmail = async (req, res) => {
     const customer = await Customer.findOne({ email: userEmail });
 
     if (!customer) return res.status(404).json("Customer not found");
-    const emailToken = jwt.sign({ email: customer.email }, process.env.NODEMAILER_PASSWORD, { expiresIn: "1d" });
+    const emailToken = jwt.sign({ email: customer.email }, process.env.EMAIL_SECRET, { expiresIn: "1d" });
 
-    const confirmLink = `http://localhost:3000/verify?token=${emailToken}`;
+    const confirmLink = `${process.env.CLIENT_URL || "http://localhost:3000"}/verify?token=${emailToken}`;
 
     await sendMail(
       customer.email,
@@ -118,7 +119,7 @@ exports.resendEmail = async (req, res) => {
 
     res.json({ message: `The link to ${customer.email} was sent successfully` });
   } catch (error) {
-    console.error(error);
+    logger.error("resendEmail error", error);
     res.status(500).json({ message: "Failed to send confirmation email" });
   }
 };
@@ -131,7 +132,7 @@ exports.verifyCustomer = async (req, res) => {
   if (!token) return res.status(400).json("No token provided");
 
   try {
-    const decoded = jwt.verify(token, process.env.NODEMAILER_PASSWORD);
+    const decoded = jwt.verify(token, process.env.EMAIL_SECRET);
 
     const user = await Customer.findOne({ email: decoded.email });
     if (!user) return res.status(404).json("User not found");
@@ -145,8 +146,8 @@ exports.verifyCustomer = async (req, res) => {
 
     return res.status(200).json({ message: "Email confirmed!" });
   } catch (err) {
-    console.error(err);
-    return res.status(400).json("Invalid or expired token");
+    logger.error("verifyCustomer error", err);
+    return res.status(400).json({ message: "Invalid or expired token" });
   }
 };
 
@@ -207,7 +208,7 @@ exports.loginCustomer = async (req, res) => {
       test: isProduction,
     });
   } catch (err) {
-    console.error("Error in login:", err);
+    logger.error("loginCustomer error", err);
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -236,11 +237,11 @@ exports.refreshToken = async (req, res) => {
         { expiresIn: "15m" }
       );
 
-      res.json({ accessToken, cookies });
+      res.json({ accessToken });
     });
   } catch (err) {
-    console.log("Error in refreshToken handler:", err);
-    res.sendStatus(500); // Internal server error
+    logger.error("refreshToken error", err);
+    res.sendStatus(500);
   }
 };
 
@@ -374,7 +375,7 @@ exports.editCustomerInfo = async (req, res) => {
       });
     });
   } catch (error) {
-    console.error(error);
+    logger.error("editCustomerInfo error", error);
     return res.status(500).json({ message: "Server error" });
   }
 };
